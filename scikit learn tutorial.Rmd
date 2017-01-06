@@ -1,0 +1,1429 @@
+---
+title: "Scikit-Learn Tutorial: Python Machine Learning"
+output:
+  html_document:
+    self_contained: false
+---
+
+```{r, include=FALSE}
+tutorial::go_interactive()
+```
+
+## Machine Learning with Python
+
+Machine learning is a branch in computer science that studies the design of algorithms that can learn. 
+
+Typical machine learning tasks are concept learning, function learning or “predictive modeling”, clustering and finding predictive patterns. These tasks are learned through available data that were observed through experiences or instructions, for example. 
+
+Machine learning hopes that including the experience into its tasks will eventually improve the learning. But this improvement needs to happen in such a way that the learning itself becomes automatic so that humans like ourselves don't need to interfere anymore is the ultimate goal of machine learning. 
+
+Machine learning has close ties with Knowledge Discovery, Data Mining, Artificial Intelligence (AI) and Statistics. Typical applications of machine learning can be classified into scientific knowledge discovery and more commercial applications, ranging from the “Robot Scientist” to anti-spam filtering and recommender systems.
+
+But above all, you will know machine learning because it's one of the topics that you need to master if you want to excel in data science. 
+
+Today's tutorial will introduce you to the basics of machine learning with Python: step-by-step, it will show you how to use Python to work with some well-known unsupervised machine learning algorithms. 
+
+If you're more interested in a tutorial that covers machine learning with the help of R, check out our [Machine Learning with R for Beginners tutorial](https://www.datacamp.com/community/tutorials/machine-learning-in-r)
+
+### Loading Your Data Set
+
+The first step to about anything in data science is loading in your data. This is also the starting point of this tutorial. 
+
+Machine learning typically works with observed data. This data might be collected by yourself or you can browse through other sources to find data sets. But if you're not a researcher or otherwise involved in experiments, you'll probably do the latter.
+
+If you're new to machine learning and you want to start tackling machine learning problems on your own, finding these data sets might prove to be a challenge. However, you can typically find good data sets at the [UCI Machine Learning Repository](http://archive.ics.uci.edu/ml/datasets) or on the [Kaggle](www.kaggle.com) website. Also, check out [this KD Nuggets list with resources](http://www.kdnuggets.com/datasets/index.html).
+
+For now, you should warm up, not worry about finding any data by yourself and just load in the `digits` data set that comes with the Python's machine learning package, called scikit-learn. 
+
+Fun fact: did you know the name originates from the fact that this package is a scientific toolbox built around SciPy? By the way, there is [more than just one scikit](https://scikits.appspot.com/scikits) out there. This scikit contains modules specifically for machine learning and data mining, which explains the second component of the package name. :)
+
+To load in the data, you import the module `datasets` from `sklearn`. Then, you can use the `load_digits()` method from `datasets` to load in the data:
+
+```{python ex="scikit_load", type="sample-code"}
+# Import `datasets` from `sklearn`
+from sklearn import ________
+
+# Load in the `digits` data
+digits = datasets.load_digits()
+
+# Print the `digits` data 
+print(______)
+```
+
+```{python ex="scikit_load", type="solution"}
+# Import `datasets` from `sklearn`
+from sklearn import datasets
+
+# Load in the `digits` data
+digits = datasets.load_digits()
+
+# Print the `digits` data 
+print(digits)
+```
+
+```{python ex="scikit_load", type="sct"}
+import_msg="Did you import `datasets` from `sklearn`?"
+incorrect_import_msg="Don't forget to import the `datasets` module from `sklearn`!"
+not_called_msg="Did you use `datasets.load_digits()` to load in the `digits` data?"
+incorrect_msg="Use `datasets.load_digits()` to load in the `digits` data!"
+predef_msg="Did you call the `print()` function?"
+test_import("sklearn.datasets", same_as = True, not_imported_msg = import_msg, incorrect_as_msg = incorrect_import_msg)
+test_function("sklearn.datasets.load_digits", not_called_msg = not_called_msg, incorrect_msg = incorrect_msg)
+# Test `print()` function
+test_function(
+    "print",
+    not_called_msg=predef_msg,
+    incorrect_msg=predef_msg,
+    do_eval=False
+)
+success_msg="Perfect! You're ready to go!"
+```
+
+
+Note that the `datasets` module contains other methods to load and fetch popular reference datasets, and you can also count on this module in case you need artificial data generators. In addition, this data set is also available through the UCI Machine Learning Repository: you can find the data [here](http://archive.ics.uci.edu/ml/machine-learning-databases/optdigits/).
+
+If you would have decided to pull the data from the latter page, your data import would've looked like this:
+
+```{python ex="pandas_load", type="sample-code"}
+# Import the `pandas` library as `pd`
+import ______ as __
+
+# Load in the data with `read_csv()`
+digits = pd.read_csv("http://archive.ics.uci.edu/ml/machine-learning-databases/optdigits/optdigits.tra", header=None)
+
+# Print out `digits`
+print(______)
+```
+
+```{python ex="pandas_load", type="solution"}
+# Import the `pandas` library as `pd`
+import pandas as pd
+
+# Load in the data with `read_csv()`
+digits = pd.read_csv("http://archive.ics.uci.edu/ml/machine-learning-databases/optdigits/optdigits.tra", header=None)
+
+# Print out `digits`
+print(digits)
+```
+
+```{python ex="pandas_load", type="sct"}
+import_msg="Did you add some code to import `pandas` as `pd`?"
+incorrect_import_msg="Don't forget to import the 'pandas' library as `pd`!"
+csv_msg="Did you use the `read_csv()` method from pandas to load in the data?"
+csv_incorrect_msg="Use `read_csv()` from the pandas library to load in the data "
+predef_msg="Did you call the `print()` function?"
+# Test import `pandas`
+test_import("pandas", same_as = True, not_imported_msg = import_msg, incorrect_as_msg = incorrect_import_msg)
+# Test `read_csv()`
+test_function("pandas.read_csv", not_called_msg = csv_msg, incorrect_msg = csv_incorrect_msg)
+# Test `print()` function
+test_function(
+    "print",
+    not_called_msg=predef_msg,
+    incorrect_msg=predef_msg,
+    do_eval=False
+)
+success_msg("Awesome job!")
+```
+
+
+Note that if you download the data from the UCI Machine Learning Repository, the data is already split up in a training and a test set, indicated by the extensions `.tra` and `.tes`. You'll need to load in both files to elaborate your machine learning project. With the command above, you only load in the training set. 
+
+Tip: if you want to know more about importing data with the Python data manipulation library Pandas, consider taking DataCamp's [Importing Data in Python course](https://www.datacamp.com/courses/importing-data-in-python-part-1). 
+
+### Explore Your Data 
+
+When first starting out with a data set, it's always a good idea to go through the data description and see what you can already learn. When it comes to scikit-learn, you don't immediately have this information readily available, but in the case where you import data from a source like the UCI Machine Learning Repository, the information is usually sufficient to already gather some insights into your data.
+
+However, these insights are not merely deep enough for the analysis that you are going to perform. You really need to have a good working knowledge about the data set. 
+
+Performing an exploratory data analysis on a data set like the one that this tutorial now has might seem difficult. 
+
+Where do you start exploring these handwritten digits? 
+
+#### Gathering Basic Information on Your Data
+
+Let's say you haven't checked any data description folder (or maybe you want to double-check the information that has been given to you). 
+
+You should start with gathering the basic information.
+
+You will have noticed that, when you printed out the `digits` data after having loaded it with the help of the scikit-learn `datasets` module, that there is already a lot of information available. You already have knowledge of things such as the target values and the description of your data. You can access the `digits` data through the attribute `data`. Similarly, you can also access the target values or labels through the `target` attribute and the description through the `DESCR` attribute.
+
+To see which keys you have available to already get to know your data, you can just run `digits.keys()`.
+
+Try this all out in the following DataCamp Light blocks:
+
+```{python ex="digits", type="pre-exercise-code"}
+from sklearn import datasets
+digits = datasets.load_digits()
+```
+
+```{python ex="digits", type="sample-code"}
+# Get the keys of the `digits` data
+print(digits.______)
+
+# Print out the data
+print(digits.____)
+
+# Print out the target values
+print(digits.______)
+
+# Print out the description of the `digits` data
+print(digits.DESCR)
+```
+
+```{python ex="digits", type="solution"}
+# Get the keys of the `digits` data
+print(digits.keys())
+
+# Print out the data
+print(digits.data)
+
+# Print out the target values
+print(digits.target)
+
+# Print out the description of the `digits` data
+print(digits.DESCR)
+```
+
+```{python ex="digits", type="sct"}
+# Test `print` 
+test_function(
+    "print",
+    1,
+    not_called_msg="Did you print out the keys of `digits`?",
+    incorrect_msg="Don't forget to print out the keys of `digits`!",
+    do_eval=False
+)
+# Test `print`
+test_function(
+    "print",
+    2,
+    not_called_msg="Did you print out the data?",
+    incorrect_msg="Don't forget to print out the data!",
+    do_eval=False
+)
+# Test `print`
+test_function(
+    "print",
+    3,
+    not_called_msg="Did you print out the target values of the data?",
+    incorrect_msg="Don't forget to print out the target values of the data!",
+    do_eval=False
+)
+# Test `print` 
+test_function(
+    "print",
+    4,
+    not_called_msg="Did you print out the description of `digits`?",
+    incorrect_msg="Don't forget to print out the description of `digits`!",
+    do_eval=False
+)
+success_msg("Awesome!")
+```
+
+
+The next thing that you can (double)check is the type of your data. 
+
+If you used `read_csv()` to import the data, you would have had a data frame that contains just the data. There wouldn't be any description component, but you would be able to resort to, for example, `head()` or `tail()` to inspect your data. In these cases, it's always wise to read up on the data description folder! 
+
+But this tutorial assumes that you make use of the scikit-learn data and the type of the `digits` variable is not that straightforward if you're not familiar with the library. Look at the print out in the first code chunk. You'll see that `digits` actually contains numpy arrays! 
+
+This is already quite some important information. But how do you access these arays?
+
+It's very easy, actually. You use attributes to access the relevant arrays.
+
+Remember that you have already seen which attributes are available when you printed `digits.keys()`. For instance, you have the `data` attribute to isolate the data, `target` to see the target values and the `DESCR` for the description, ... 
+
+But what then?
+
+The first thing that you should know of an array is its shape. That is, the number of dimensions and items that is contained within an array. The array's shape is a tuple of integers that specify the sizes of each dimension. In other words, if you have a 3d array like this ```y = np.zeros((2, 3, 4))```, the shape of your array will be ```(2,3,4)```. 
+
+Now let's try to see what the shape is of these three arrays that you have distinguished (the `data`, `target` and `DESCR` arrays). 
+
+Use first the `data` attribute to isolate the numpy array from the `digits` data and then use the `shape` attribute to find out more. You can do the same for the `target` and `DESCR`. There's also the `images` attribute, which is basically the data in images. You're also going to test this out. 
+
+Check up on this statement by using the `shape` attribute on the array:
+
+```{python ex="digits_shape", type="pre-exercise-code"}
+from sklearn import datasets
+import numpy as np
+digits = datasets.load_digits()
+```
+
+```{python ex="digits_shape", type="sample-code"}
+# Isolate the `digits` data
+digits_data = digits.data
+
+# Inspect the shape
+print(digits_data.shape)
+
+# Isolate the target values with `target`
+digits_target = digits.______
+
+# Inspect the shape
+print(digits_target._____)
+
+# Print the number of unique labels
+number_digits = len(np.unique(digits.target))
+
+# Isolate the `images`
+digits_images = digits.images
+
+# Inspect the shape
+print(digits_images.shape)
+```
+
+```{python ex="digits_shape", type="solution"}
+# Isolate the `digits` data
+digits_data = digits.data
+
+# Inspect the shape
+print(digits_data.shape)
+
+# Isolate the target values with `target`
+digits_target = digits.target
+
+# Inspect the shape
+print(digits_target.shape)
+
+# Print the number of unique labels
+number_digits = len(np.unique(digits.target))
+
+# Isolate the `images`
+digits_images = digits.images
+
+# Inspect the shape
+print(digits_images.shape)
+```
+
+```{python ex="digits_shape", type="sct"}
+msg_data="Did you add `shape` to get the number of dimensions and items of the `digits_data` array?"
+msg_target="Did you add `shape` to get the number of dimensions and items of the `digits_target` array?"
+msg_image="Did you add `shape` to get the number of dimensions and items of the `digits_images` array?"
+# Test object `digits_data`
+test_object("digits_data", undefined_msg="Did you define the `digits_data` object?", incorrect_msg="Did you use the `data` attribute to isolate the data of `digits`?")
+# Test object `digits_target`
+test_object("digits_target", undefined_msg="Did you define the `digits_target` object?", incorrect_msg="Did you use the `target` attribute to isolate the target values of the `digits` data?")
+# Test `shape` of `digits_data`
+#test function print
+test_function(
+    "print",
+    1,
+    not_called_msg="Did you print out the shape of thedata?",
+    incorrect_msg="Don't forget to print out the shape of the data!",
+    do_eval=False
+)
+test_object_accessed("digits_data.shape", not_accessed_msg=msg_data)
+# Test `print`
+test_function(
+    "print",
+    2,
+    not_called_msg="Did you print out the shape of the target values of the data?",
+    incorrect_msg="Don't forget to print out the shape of the target values of the data!",
+    do_eval=False
+)
+# Test access `shape` of `digits_target`
+test_object_accessed("digits_target.shape", not_accessed_msg=msg_target)
+# Test object `number_digits`
+test_object("number_digits", undefined_msg="Did you define the `number_digits` object?", incorrect_msg="Did you use `np.unique()` to give back the unique target values? Don't forget to give back the length of this array with `len()`!")
+# Test object `digits_images`
+test_object("digits_images", undefined_msg="Did you define the `digits_images` object?", incorrect_msg="Did you use the `images` attribute to isolate the images of the `digits` data?")
+# Test `shape` of `digits_images`
+test_object_accessed("digits_images.shape", not_accessed_msg=msg_image)
+# Test `print` 
+test_function(
+    "print",
+    3,
+    not_called_msg="Did you print out the shape of the images of `digits`?",
+    incorrect_msg="Don't forget to print out the shape of the images of `digits`!",
+    do_eval=False
+)
+success_msg("Well done!")
+```
+
+
+To recap: by inspecting `digits.data`, you see that there are 1797 samples and that there are 64 features. Because you have 1797 samples, you also have 1797 target values. 
+
+But all those target values contain 10 unique values, namely, from 0 to 9. In other words, all 1797 target values are made up of numbers that lie between 0 and 9. This means that the digits that your model will need to recognize are numbers from 0 to 9. 
+
+Lastly, you see that the `images` data contains three dimensions: there are 1797 instances that are 8 by 8 pixels big. You can visually check that the `images` and the `data` are related by reshaping the `images` array to two dimensions: `digits.images.reshape((1797, 64))`.
+
+But if you want to be completely sure, better to check with ```print(np.all(digits.images.reshape((1797,64)) == digits.data))```. With the numpy method `all()`, you test whether all array elements along a given axis evaluate to `True`. In this case, you evaluate if it's true that the reshaped `images` array equals `digits.data`. You'll see that the result will be `True` in this case. 
+
+#### Visualize Your Data Images With `matplotlib`
+
+Then, you can take your exploration up a notch by visualizing the images that you'll be working with. You can use one of Python's data visualization libraries, such as [matplotlib](http://matplotlib.org/), for this purpose:
+
+```
+# Import matplotlib
+import matplotlib.pyplot as plt
+
+# Figure size (width, height) in inches
+fig = plt.figure(figsize=(6, 6))
+
+# Adjust the subplots 
+fig.subplots_adjust(left=0, right=1, bottom=0, top=1, hspace=0.05, wspace=0.05)
+
+# For each of the 64 images
+for i in range(64):
+    # Initialize the subplots: add a subplot in the grid of 8 by 8, at the i+1-th position
+    ax = fig.add_subplot(8, 8, i + 1, xticks=[], yticks=[])
+    # Display an image at the i-th position
+    ax.imshow(digits.images[i], cmap=plt.cm.binary, interpolation='nearest')
+    # label the image with the target value
+    ax.text(0, 7, str(digits.target[i]))
+
+# Show the plot
+plt.show()
+```
+
+The code chunk seems quite lenghty at first sight and this might be overwhelming. But, what happens in the code chunk above is actually pretty easy once you break it down into parts:
+
+- You import the `matplotlib` library.
+- Next, you set up a figure with a figure size of `6` inches wide and `6` inches long. This is your blank canvas where all the subplots with the images will appear.
+- Then you go to the level of the subplots to adjust some parameters: you set the left side of the suplots of the figure to `0`, the right side of the suplots of the figure to `1`, the bottom to `0` and the top to `1`. The height of the blank space between the suplots is set at `0.005` and the width is set at `0.05`. These are merely layout adjustments. 
+- After that, you start filling up the figure that you have made with the help of a for loop. 
+- You initialize the suplots one by one, adding one at each position in the grid that is `8` by `8` images big.
+- You display each time one of the images at each position in the grid. As a color map, you take binary colors, which in this case will result in black, gray values and white colors. The interpolation method that you use is `'nearest'`, which means that your data is interpolated in such a way that it isn't smooth. You can see the effect of the different interpolation methods [here](http://matplotlib.org/examples/images_contours_and_fields/interpolation_methods.html). 
+- The cherry on the pie is the addition of text to your subplots. The target labels are printed at coordinates (0,7) of each subplot, which in practice means that they will appear in the bottom-left of each of the subplots. 
+- Don't forget to show the plot with `plt.show()`!
+
+In the end, you'll get to see the following:
+[INSERT VISUALIZATION/PLOT1]
+
+On a more simple note, you can also visualize the target labels with an image, just like this:
+
+```
+# Import matplotlib
+import matplotlib.pyplot as plt 
+
+# Join the images and target labels in a list
+images_and_labels = list(zip(digits.images, digits.target))
+
+# for every element in the list
+for index, (image, label) in enumerate(images_and_labels[:8]):
+    # initialize a subplot of 2X4 at the i+1-th position
+    plt.subplot(2, 4, index + 1)
+    # Don't plot any axes
+    plt.axis('off')
+    # Display images in all subplots 
+    plt.imshow(image, cmap=plt.cm.gray_r,interpolation='nearest')
+    # Add a title to each subplot
+    plt.title('Training: ' + str(label))
+
+# Show the plot
+plt.show()
+```
+
+Which will render the following visualization:
+[INSERT PICTURE HERE/PLOT2]
+
+
+Note that in this case, after you have imported the `matplotlib` library, you zip the two numpy arrays together and save it into a variable called `images_and_labels`. You'll see now that this list contains suples of each time an instance of `digits.images` and a corresponding `digits.target` value. 
+
+Then, you say that for the first eight elements of `images_and_labels` -note that the index starts at 0!-, you initialize subplots in a grid of 2 by 4 at each position. You turn of the plotting of the axes and you display images in all the subplots with a color map `plt.cm.gray_r` (which returns all grey colors) and the interpolation method used is `nearest`. You give a title to each subplot, and you show it.
+
+Not too hard, huh? 
+
+And now you know a very good idea of the data that you'll be working with!
+
+#### Visualizing Your Data: Principal Component Analysis (PCA)
+
+But what about the data? Is there no other way to visualize it?
+
+As the `digits` data set contains 64 features, this might prove to be a challenging task. You can imagine that it's very hard to understand the structure and keep the overview of the `digits` data. In such cases, it is said that you're working with a high dimensional data set. 
+
+High dimensionality of data is a direct result of trying to describe the objects via a collection of features. Other examples of high dimensional data are, for example, financial data, climate data, neuroimaging, ... 
+
+But, as you might have gathered already, this is not always easy. In some cases, high dimensionality can be problematic, as your machine learning algorithms will need to take into account too many features. In such cases, you speak of the curse of dimensionality. Because having a lot of dimensions can also mean that your data points are far away from virtually every other point, which makes the distances between the data points uninformative. 
+
+Dont' worry, though, because the curse of dimensionality is not simply a matter of counting the number of features. There are also cases in which the effective dimensionality might be much smaller than the number of the features, such as in data sets where some features are irrelevant. 
+
+In addition, you can also understand that data with only two or three dimensions is easier to grasp and can also be visualized easily.
+
+That all explains why you're going to visualize the data with the help of one of the Dimensionality Reduction techniques, namely Principal Component Analysis (PCA). The idea in PCA is to find a linear combination of the two variables that contains most of the information. This new variable or "principal component" can replace the two original variables. 
+
+In short, it's a linear transformation method that yields the directions (principal components) that maximize the variance of the data. Remember that the variance indicates how far a set of data points lie apart. If you want to know more, go to [this page](http://www.lauradhamilton.com/introduction-to-principal-component-analysis-pca). 
+
+You can easily apply PCA do your data with the help of scikit-learn:
+
+```{python ex="pca", type="pre-exercise-code"}
+from sklearn import datasets
+digits = datasets.load_digits()
+from sklearn.decomposition import RandomizedPCA
+from sklearn.decomposition import PCA
+import numpy as np
+```
+
+```{python ex="pca", type="sample-code"}
+# Create a Randomized PCA model that takes two components
+randomized_pca = RandomizedPCA(n_components=2)
+
+# Fit and transform the data to the model
+reduced_data_rpca = randomized_pca.fit_transform(digits.data)
+
+# Create a regular PCA model 
+pca = PCA(n_components=2)
+
+# Fit and transform the data to the model
+reduced_data_pca = pca.fit_transform(digits.data)
+
+# Inspect the shape
+reduced_data_pca.shape
+
+# Print out the data
+print(reduced_data_rpca)
+print(reduced_data_pca)
+```
+
+```{python ex="pca", type="solution"}
+# Create a Randomized PCA model that takes two components
+randomized_pca = RandomizedPCA(n_components=2)
+
+# Fit and transform the data to the model
+reduced_data_rpca = randomized_pca.fit_transform(digits.data)
+
+# Create a regular PCA model 
+pca = PCA(n_components=2)
+
+# Fit and transform the data to the model
+reduced_data_pca = pca.fit_transform(digits.data)
+
+# Inspect the shape
+reduced_data_pca.shape
+
+# Print out the data
+print(reduced_data_rpca)
+print(reduced_data_pca)
+```
+
+```{python ex="pca", type="sct"}
+test_object("randomized_pca", do_eval=False)
+test_object("reduced_data_rpca", do_eval=False)
+test_object("pca", do_eval=False)
+test_object("reduced_data_pca", do_eval=False)
+predef_msg="Did you inspect the shape of `reduced_data_pca`?"
+test_object_accessed("reduced_data_pca.shape", not_accessed_msg=predef_msg)
+# Test `print` 
+test_function(
+    "print",
+    1,
+    not_called_msg="Did you print out the `reduced_data_rpca` data?",
+    incorrect_msg="Don't forget to print out the `reduced_data_rpca` data!",
+    do_eval=False
+)
+test_function(
+    "print",
+    2,
+    not_called_msg="Did you print out the `reduced_data_pca` data?",
+    incorrect_msg="Don't forget to print out the `reduced_data_pca` data!",
+    do_eval=False
+)
+success_msg("Amazing!")
+```
+
+
+**Tip**: you have used the `RandomizedPCA()` here because it performs better when there's a high number of dimensions. Try replacing the randomized PCA model or estimator object with a regular PCA model and see what the difference is. 
+
+Note how you explicitly tell the model to only keep two components. This is to make sure that you have two-dimensional data to plot. Also, note that you don't pass the target class with the labels to the PCA transformation because you want to investigate if the PCA reveals the distribution of the different labels and if you can clearly separate the instances from each other. 
+
+You can now build a scatterplot to visualize the data:
+
+```
+colors = ['black', 'blue', 'purple', 'yellow', 'white', 'red', 'lime', 'cyan', 'orange', 'gray']
+for i in range(len(colors)):
+    x = reduced_data_rpca[:, 0][digits.target == i]
+    y = reduced_data_rpca[:, 1][digits.target == i]
+    plt.scatter(x, y, c=colors[i])
+plt.legend(digits.target_names, bbox_to_anchor=(1.05, 1), loc=2, borderaxespad=0.)
+plt.xlabel('First Principal Component')
+plt.ylabel('Second Principal Component')
+plt.title("PCA Scatter Plot")
+plt.show()
+```
+
+Which looks like this:
+
+[INSERT PICTURE HERE/PLOT3]
+
+
+Again you use matplotlib to visualize the data. It's good for a quick visualization of what you're working with, but you might have to consider something a little bit more fancy if you're working on making this part of your data science portfolio. 
+
+Also note that the last call to show the plot (`plt.show()`) is not necessary if you're working in Jupyter Notebook, as you'll want to put the images inline. When in doubt, you can always check out our [Definitive Guide to Jupyter Notebook](https://www.datacamp.com/community/tutorials/tutorial-jupyter-notebook). 
+
+What happens in the code chunk above is the following: 
+
+1. You put your colors together in a list. 
+Note that you list ten colors, which is equal to the number of labels that you have. This way, you make sure that your data points can be colored in according to the labels. Then, you set up a range that goes from 0 to 10. Mind you that this range is not inclusive! Remember that this is the same for indices of a list, for example.
+2. You set up your `x` and `y` coordinates. 
+You take the first or the second column of `reduced_data_rpca`, and you select only those data points for which the label equals the index that you're considering. That means that in the first run, you'll consider the data points with label `0`, then label `1`, ... and so on.
+3. You construct the scatter plot.
+Fill in the `x` and `y` coordinates and assign a color to the batch that you're processing. The first run, you'll give the color `black` to all data points, the next run `blue`, ... and so on.
+4. You add a legend to your scatter plot. Use the `target_names` key to get the right labels for your data points.
+5. Add labels to your `x` and `y` axes that are meaningful. 
+6. Reveal the resulting plot. 
+
+### Where To Go Now?
+
+Now that you have even more information about your data and you have a visualization ready, it does seem a bit like the data points sort of group together, but you also see there is quite some overlap. 
+
+This might be interesting to investigate further. 
+
+Do you think that, in a case where you knew that there are 10 possible digits labels to assign to the data points, but you have no access to the labels, the observations would group or "cluster" together by some criterion in such a way that you could infer the lables?
+
+Now this is a research question!
+
+In general, when you have acquired a good understanding of your data, you have to decide on the use cases that would be relevant to your data set. In other words, you think about what your data set might teach you or what you think you can learn from your data. 
+
+From there on, you can think about what kind of algorithms you would be able to apply to your data set in order to get the results that you think you can obtain.
+
+**Tip:** the more familiar you are with your data, the easier it will be to assess the use cases for your specific data set. The same also holds for finding the appropriate machine algorithm. 
+
+However, when you're first getting started with scikit-learn, you'll see that the package is pretty vast and you might still want additional help when you're doing the assessment for your data set. That's why [this scikit-learn machine learning map](http://scikit-learn.org/stable/tutorial/machine_learning_map/) will come in handy. 
+
+Note that this map does require you to have some knowledge about the machine learning algorithms that are included in the scikit-learn package. This, by the way, also holds some truth for taking this next step in your machine learning project: if you have no idea what is possible with machine learning, it will be very hard to decide on what your use case will be for the data.
+
+As your use case was one for clustering, you can follow the path on the machine learning map towards "KMeans". You'll see the use case that you have just thought about requires you to have more than 50 samples ("check!"), to have labeled data ("check!"), to know the number of categories that you want to predict ("check!") and to have less than 10K samples ("check!").
+
+But what exactly is the K-Means algorithm?
+
+It is one of the simplest and widely used unsupervised learning algorithms to solve clustering problems. The procedure follows a simple and easy way to classify a given data set through a certain number of clusters that you have set before you run the algorithm. This number of clusters is called `k` and you select this number at random.
+
+Then, the k-means algorithm will find the nearest cluster center for each data point and assign the data point closest to that cluster. 
+
+Once all data points have been assigned to clusters, the cluster centers will be recomputed. In other words, new cluster centers will emerge from the average of the values of the cluster data points. This process is repeated until most data points stick to the same cluster. The cluster membership should stabilize. 
+
+You can already see that, because the k-means algorithm works the way it does, the initial set of cluster centers that you give up can have a big effect on the clusters that are eventually found. You can, of course, deal with this effect, as you will see further on.
+
+However, before you can go into making a model for your data, you should definitely take a look into preparing your data for this purpose. 
+
+### Preprocessing Your Data
+
+As you have read in the previous section, before modeling your data, you'll do well by preparing it first. This preparation step is called "preprocessing".
+
+#### Data Normalization
+
+The first thing that we're going to do is preprocessing the data. You can standardize the `digits` data by, for example, making use of the `scale()` method: 
+
+```{python ex="normalization", type="pre-exercise-code"}
+from sklearn import datasets
+digits = datasets.load_digits()
+```
+
+```{python ex="normalization", type="sample-code"}
+# Import
+from sklearn.preprocessing import scale
+
+# Apply `scale()` to the `digits` data
+data = _____(digits.data)
+```
+
+```{python ex="normalization", type="solution"}
+# Import
+from sklearn.preprocessing import scale
+
+# Apply `scale()` to the `digits` data
+data = scale(digits.data)
+```
+
+```{python ex="normalization", type="sct"}
+test_function(
+    "sklearn.preprocessing.scale",
+    not_called_msg="Did you standardize the `digits` data?",
+    incorrect_msg="Don't forget to standardize the `digits` data with `scale()`!",
+    do_eval=False
+)
+success_msg("Awesome!")
+```
+
+
+By scaling the data, you shift the distribution of each attribute to have a mean of zero and a standard deviation of one (unit variance).
+
+#### Splitting Your Data Into Training And Test Sets
+
+In order to assess your model's performance later, you will also need to divide the data set into two parts: a training set and a test set. The first is used to train the system, while the second is used to evaluate the learned or trained system. 
+
+In practice, the division of your data set into a test and a training sets is disjoint: the most common splitting choice is to take 2/3 of your original data set as the training set, while the 1/3 that remains will compose the test set.
+
+You will try to do this also here. You see in the code chunk below that this 'traditional' splitting choice is respected: in the arguments of the `train_test_split()` method, you clearly see that the `test_size` is set to `0.25`. 
+
+You'll also note that the argument `random_state` has the value `42` assigned to it. With this argument, you can guarantee that your split will always be the same. That is particularly handy if you want reproducible results.
+
+```{python ex="train_test_split", type="pre-exercise-code"}
+from sklearn import datasets
+digits = datasets.load_digits()
+from sklearn.preprocessing import scale
+data = scale(digits.data)
+```
+
+```{python ex="train_test_split", type="sample-code"}
+# Import `train_test_split`
+from sklearn.cross_validation import ________________
+
+# Split the `digits` data into training and test sets
+X_train, X_test, y_train, y_test, images_train, images_test = train_test_split(data, digits.target, digits.images, test_size=0.25, random_state=42)
+```
+
+```{python ex="train_test_split", type="solution"}
+# Import `train_test_split`
+from sklearn.cross_validation import train_test_split
+
+# Split the `digits` data into training and test sets
+X_train, X_test, y_train, y_test, images_train, images_test = train_test_split(data, digits.target, digits.images, test_size=0.25, random_state=42)
+```
+
+```{python ex="train_test_split", type="sct"}
+import_msg="Did you import `train_test_split` from `sklearn.cross_validation`?"
+predef_msg="Don't forget to fill in `train_test_split`!"
+test_import("sklearn.cross_validation.train_test_split", same_as = True, not_imported_msg = import_msg, incorrect_as_msg = predef_msg)
+test_object("X_train", do_eval=False,  undefined_msg="Did you leave out `X_train` or any of the other variables?")
+test_object("X_test", do_eval=False, undefined_msg="Did you define `X_test`?")
+test_object("y_train", do_eval=False, undefined_msg="Did you define `y_train`?")
+test_object("y_test", do_eval=False, undefined_msg="Did you define `y_test`?")
+test_object("images_train", do_eval=False, undefined_msg="Did you define `images_train`?")
+test_object("images_test", do_eval=False, undefined_msg="Did you define `images_test`?")
+success_msg("Great job!")
+```
+
+
+After you have split up your data set into train and test sets, you can quickly inspect the numbers before you go and model the data:
+
+```{python ex="inspect", type="pre-exercise-code"}
+from sklearn import datasets
+from sklearn.cross_validation import train_test_split
+from sklearn.preprocessing import scale
+import numpy as np
+digits = datasets.load_digits()
+data = scale(digits.data)
+X_train, X_test, y_train, y_test, images_train, images_test = train_test_split(data, digits.target, digits.images, test_size=0.25, random_state=42)
+```
+
+```{python ex="inspect", type="sample-code"}
+# Number of training features
+n_samples, n_features = X_train.shape
+
+# Print out `n_samples`
+print(_________)
+
+# Print out `n_features`
+print(__________)
+
+# Number of Training labels
+n_digits = len(np.unique(y_train))
+
+# Inspect `y_train`
+print(len(_______))
+```
+
+```{python ex="inspect", type="solution"}
+# Number of training features
+n_samples, n_features = X_train.shape
+
+# Print out `n_samples`
+print(n_samples)
+
+# Print out `n_features`
+print(n_features)
+
+# Number of Training labels
+n_digits = len(np.unique(y_train))
+
+# Inspect `y_train`
+print(len(y_train))
+```
+
+```{python ex="inspect", type="sct"}
+test_object("n_samples", undefined_msg="did you leave out `n_samples` or `n_features`?")
+test_object("n_features")
+test_function(
+    "print",
+    1,
+    not_called_msg="Did you print out the number of samples of the `digits` training data?",
+    incorrect_msg="Don't forget to print out the number of samples!",
+    do_eval=False
+)
+test_function(
+    "print",
+    2,
+    not_called_msg="Did you print out the number of features of the `digits` training data?",
+    incorrect_msg="Don't forget to print out the number of features!",
+    do_eval=False
+)
+test_object("n_digits", incorrect_msg="did you define `n_digits` correctly?")
+test_function(
+    "print",
+    3,
+    not_called_msg="Did you print out the number of training labels for the `digits` data?",
+    incorrect_msg="Don't forget to print out the number of training labels with `len(y_train)`!",
+    do_eval=False
+)
+success_msg("Well done!")
+```
+
+
+You'll see that the training set `X_train` now contains 1347 samples, which is exactly 2/3d of the samples that the original data set contained, and 64 features, which hasn't changed. The `y_train` training set also contains 2/3d of the labels of the original data set. This means that the test sets `X_train` and `y_train` contain 450 samples. 
+
+### Clustering The `digits` Data 
+
+After all these preparation steps, you have made sure that all your known (training) data is stored. No actual model or learning was performed up until this moment. 
+
+Now, it's finally time to find those clusters of your training set. Use `KMeans()` from the `cluster` module to set up your model. You'll see that there are three arguments that are passed to this method: `init`, `n_clusters` and the `random_state`. 
+
+You might still remember this last argument from before when you split the data into training and test sets. This argument basically guaranteed that you got reproducible results. 
+
+```{python ex="kmeans_model", type="pre-exercise-code"}
+from sklearn import datasets
+from sklearn.cross_validation import train_test_split
+from sklearn.preprocessing import scale
+import numpy as np
+digits = datasets.load_digits()
+data = scale(digits.data)
+X_train, X_test, y_train, y_test, images_train, images_test = train_test_split(data, digits.target, digits.images, test_size=0.25, random_state=42)
+```
+
+```{python ex="kmeans_model", type="sample-code"}
+# Import the `cluster` module
+from sklearn import ________
+
+# Create the KMeans model
+clf = cluster.KMeans(init='k-means++', n_clusters=10, random_state=42)
+
+# Fit the training data `X_train`to the model
+clf.fit(________)
+```
+
+```{python ex="kmeans_model", type="solution"}
+# Import the `cluster` module
+from sklearn import cluster
+
+# Create the KMeans model
+clf = cluster.KMeans(init='k-means++', n_clusters=10, random_state=42)
+
+# Fit the training data to the model
+clf.fit(X_train)
+```
+
+```{python ex="kmeans_model", type="sct"}
+import_msg="Did you import `cluster` from `sklearn`?"
+predef_msg="Don't forget to import `cluster from `sklearn`!"
+test_import("sklearn.cluster", same_as = True, not_imported_msg = import_msg, incorrect_as_msg = predef_msg)
+test_object("clf", do_eval=False, incorrect_msg="did create the KMeans model correctly?")
+test_function("clf.fit", do_eval=False)
+success_msg("Woohoo!")
+```
+
+
+The `init` indicates the method for initialization and even though it defaults to ‘k-means++’, you see it explicitly coming back in the code. That means that you can leave it out if you want. Try it out in the DataCamp Light chunk above!
+
+Next, you also see that the `n_clusters` argument is set to `10`. This number not only indicates the number of clusters or groups you want your data to form, but also the number of centroids to generate. Remember that a cluster centroid is the middle of a cluster. 
+
+Do you also still remember how the previous section described this as one of the possible disadvantages of the K-Means algorithm? 
+
+That is, that the initial set of cluster centers that you give up can have a big effect on the clusters that are eventually found? 
+
+Usually, you try to deal with this effect by trying several initial sets in multiple runs and by selecting the set of clusters with the minimum sum of the squared errors (SSE). In other words, you want to minimize the distance of each point in the cluster to the mean or centroid of that cluster. 
+
+By adding the `n-init` argument to `KMeans()`, you can determine how many different centroid configurations the algorithm will try. 
+
+**Note** again that you don't want to insert the test labels when you fit the model to your data: these will be used to see if your model is good at predicting the actual classes of your instances!
+
+You can also visualize the images that make up the cluster centers as follows:
+
+```
+# Import matplotlib
+import matplotlib.pyplot as plt
+
+# Figure size in inches
+fig = plt.figure(figsize=(8, 3))
+
+# Add title
+fig.suptitle('Cluster Center Images', fontsize=14, fontweight='bold')
+
+# For all labels (0-9)
+for i in range(10):
+    # Initialize subplots in a grid of 2X5, at i+1th position
+    ax = fig.add_subplot(2, 5, 1 + i)
+    # Display images
+    ax.imshow(clf.cluster_centers_[i].reshape((8, 8)), cmap=plt.cm.binary)
+    # Don't show the axes
+    plt.axis('off')
+
+# Show the plot
+plt.show()
+```
+
+[INSERT IMAGES HERE/PLOT4]
+
+The next step is to predict the labels of the test set:
+
+```{python ex="predict", type="pre-exercise-code"}
+from sklearn import datasets
+from sklearn.cross_validation import train_test_split
+from sklearn.preprocessing import scale
+from sklearn import cluster
+digits = datasets.load_digits()
+data = scale(digits.data)
+X_train, X_test, y_train, y_test, images_train, images_test = train_test_split(data, digits.target, digits.images, test_size=0.25, random_state=42)
+clf = cluster.KMeans(init='k-means++', n_clusters=10, random_state=42)
+clf.fit(X_train)
+```
+
+```{python ex="predict", type="sample-code"}
+# Predict the labels for `X_test`
+y_pred=clf.predict(X_test)
+
+# Print out the first 100 instances of `y_pred`
+print(y_pred[:100])
+
+# Print out the first 100 instances of `y_test`
+print(y_test[:100])
+
+# Study the shape of the cluster centers
+clf.cluster_centers_._____
+```
+
+```{python ex="predict", type="solution"}
+# Predict the labels for `X_test`
+y_pred=clf.predict(X_test)
+
+# Print out the first 100 instances of `y_pred`
+print(y_pred[:100])
+
+# Print out the first 100 instances of `y_test`
+print(y_test[:100])
+
+# Study the shape of the cluster centers
+clf.cluster_centers_.shape
+```
+
+```{python ex="predict", type="sct"}
+test_object("y_pred")
+test_function(
+    "print",
+    1,
+    not_called_msg="Did you print out the first 100 instances of `y_pred`?",
+    incorrect_msg="Don't forget to print out the first 100 instances of `y_pred`!",
+    do_eval=False
+)
+test_function(
+    "print",
+    2,
+    not_called_msg="Did you print out the first 100 instances of `y_test`?",
+    incorrect_msg="Don't forget to print out the first 100 instances of `y_test`!",
+    do_eval=False
+)
+msg_data="Did you fill in `shape` to print out the shape of the cluster centers?"
+test_object_accessed("clf.cluster_centers_.shape", not_accessed_msg=msg_data)
+success_msg="Awesome!"
+```
+
+
+In the code chunk above, you predict the values for the test set, which contains 450 samples. You store the result in `y_pred`. You also print out the first 100 instances of `y_pred` and `y_test` and you immediately see some results. 
+
+In addition, you can study the shape of the cluster centers: you immediately see that there are 10 clusters with each 64 features. 
+
+But this doesn't tell you much because we set the number of clusters to 10 and you already knew that there were 64 features. 
+
+Maybe a visualization would be more helpful. 
+
+Let's visualize the predicted labels:
+
+```
+# Import `Isomap()`
+from sklearn.manifold import Isomap
+
+# Create an isomap and fit the `digits` data to it
+X_iso = Isomap(n_neighbors=10).fit_transform(X_train)
+
+# Compute cluster centers and predict cluster index for each sample
+clusters = clf.fit_predict(X_train)
+
+# Create a plot with subplots in a grid of 1X2
+fig, ax = plt.subplots(1, 2, figsize=(8, 4))
+
+# Adjust layout
+fig.suptitle('Predicted Versus Training Labels', fontsize=14, fontweight='bold')
+fig.subplots_adjust(top=0.85)
+
+# Add scatterplots to the subplots 
+ax[0].scatter(X_iso[:, 0], X_iso[:, 1], c=clusters)
+ax[0].set_title('Predicted Training Labels')
+ax[1].scatter(X_iso[:, 0], X_iso[:, 1], c=y_train)
+ax[1].set_title('Actual Training Labels')
+
+# Show the plots
+plt.show()
+```
+
+You use `Isomap()` as a way to reduce the dimensions of your high-dimensional data set `digits`. The difference with the PCA method is that the Isomap is a non-linear reduction method.
+
+[INSERT IMAGE HERE/PLOT5]
+
+**Tip**: run the code from above again, but use the PCA reduction method instead of the Isomap to study the effect of reduction methods yourself. 
+
+You will find the solution here:
+
+```
+# Import `PCA()`
+from sklearn.decomposition import PCA
+
+# Model and fit the `digits` data to the PCA model
+X_pca = PCA(n_components=2).fit_transform(X_train)
+
+# Compute cluster centers and predict cluster index for each sample
+clusters = clf.fit_predict(X_train)
+
+# Create a plot with subplots in a grid of 1X2
+fig, ax = plt.subplots(1, 2, figsize=(8, 4))
+
+# Adjust layout
+fig.suptitle('Predicted Versus Training Labels', fontsize=14, fontweight='bold')
+fig.subplots_adjust(top=0.85)
+
+# Add scatterplots to the subplots 
+ax[0].scatter(X_pca[:, 0], X_pca[:, 1], c=clusters)
+ax[0].set_title('Predicted Training Labels')
+ax[1].scatter(X_pca[:, 0], X_pca[:, 1], c=y_train)
+ax[1].set_title('Actual Training Labels')
+
+# Show the plots
+plt.show()
+```
+
+[INSERT IMAGE HERE/PLOT6]
+
+At first sight, the visualization doesn't seem to indicate that the model works well.
+
+But this needs some further investigation.
+
+### Evaluation of Your Clustering Model
+
+And this need for further investigation brings you to the next essential step in machine learning, which is the evaluation of your model's performance. In other words, you want to analyze the degree of correctness of the model's predictions.
+
+Let's print out a confusion matrix:
+
+```{python ex="confusion", type="pre-exercise-code"}
+from sklearn import datasets
+from sklearn.cross_validation import train_test_split
+from sklearn.preprocessing import scale
+from sklearn import cluster
+digits = datasets.load_digits()
+data = scale(digits.data)
+X_train, X_test, y_train, y_test, images_train, images_test = train_test_split(data, digits.target, digits.images, test_size=0.25, random_state=42)
+clf = cluster.KMeans(init='k-means++', n_clusters=10, random_state=42)
+clf.fit(X_train)
+y_pred=clf.predict(X_test)
+```
+
+```{python ex="confusion", type="sample-code"}
+# Import `metrics` from `sklearn`
+from sklearn import _______
+
+# Print out the confusion matrix with `confusion_matrix()`
+print(metrics.confusion_matrix(y_test, y_pred))
+```
+
+```{python ex="confusion", type="solution"}
+# Import `metrics` from `sklearn`
+from sklearn import metrics
+
+# Print out the confusion matrix with `confusion_matrix()`
+print(metrics.confusion_matrix(y_test, y_pred))
+```
+
+```{python ex="confusion", type="sct"}
+test_import("sklearn.metrics", same_as = True, not_imported_msg = "Did you import `metrics` from `sklearn`?", incorrect_as_msg = "Don't forget to import `metrics` from `sklearn`!")
+test_function(
+    "print",
+    not_called_msg="Did you print out the confusion matrix?",
+    incorrect_msg="Don't forget to print out the confusion matrix!",
+    do_eval=False
+)
+success_msg="Well done! Now, what do the results tell you?"
+```
+
+
+At first sight, the results seem to confirm our first thoughts that you gathered from the visualizations. Only the digit `5` was classified correctly in 41 cases. Also, the digit `8` was classified correctly in 11 instances. But this is not really a success. 
+
+You might need to know a bit more about the results than just the confusion matrix. 
+
+Let's try to figure out something more about the quality of the clusters by applying different cluster quality metrics. That way, you can judge the goodness of fit of the cluster labels to the correct labels.
+
+```{python ex="clustering_performance", type="pre-exercise-code"}
+from sklearn import datasets
+from sklearn.cross_validation import train_test_split
+from sklearn.preprocessing import scale
+from sklearn import cluster
+from sklearn.metrics import homogeneity_score, completeness_score, v_measure_score, adjusted_rand_score, adjusted_mutual_info_score, silhouette_score
+digits = datasets.load_digits()
+data = scale(digits.data)
+X_train, X_test, y_train, y_test, images_train, images_test = train_test_split(data, digits.target, digits.images, test_size=0.25, random_state=42)
+clf = cluster.KMeans(init='k-means++', n_clusters=10, random_state=42)
+clf.fit(X_train)
+y_pred=clf.predict(X_test)
+```
+
+```{python ex="clustering_performance", type="sample-code"}
+from sklearn.metrics import homogeneity_score, completeness_score, v_measure_score, adjusted_rand_score, adjusted_mutual_info_score, silhouette_score
+print('% 9s' % 'inertia    homo   compl  v-meas     ARI AMI  silhouette')
+print('%i   %.3f   %.3f   %.3f   %.3f   %.3f    %.3f'
+          %(clf.inertia_,
+      homogeneity_score(y_test, y_pred),
+      completeness_score(y_test, y_pred),
+      v_measure_score(y_test, y_pred),
+      adjusted_rand_score(y_test, y_pred),
+      adjusted_mutual_info_score(y_test, y_pred),
+      silhouette_score(X_test, y_pred, metric='euclidean')))
+```
+
+
+You'll see that there are quite some metrics to consider:
+
+* The homogeneity score tells you to what extent all of the clusters contain only data points which are members of a single class.
+* The completeness score measures the extent to which all of the data points that are members of a given class are also elements of the same cluster.
+* The V-measure score is the harmonic mean between homogeneity and completeness.
+* The adjusted Rand score measures the similarity between two clusterings and considers all pairs of samples and counting pairs that are assigned in the same or different clusters in the predicted and true clusterings.
+* The Adjusted Mutual Info (AMI) score is used to compare clusters. It measures the similarity between the data points that are in the clusterings, accounting for chance groupings and takes a maximum value of 1 when clusterings are equivalent.
+* The silhouette score measures how similar an object is to its own cluster compared to other clusters. The silhouette scores ranges from -1 to 1, where a higher value indicates that the object is better matched to its own cluster and worse mached to neighboring clusters. If many points have a high value, the clusteirng configuration is good. 
+
+
+You clearly see that these scores aren't fantastic: for example, you see that the value for the silhouette score is close to 0, which indicates that the sample is on or very close to the decision boundary between two neighboring clusters. This could indicate that the samples could have been assigned to the wrong cluster. 
+
+Also the ARI measure seems to indicate that not all data points in a given cluster are similar and the completeness score tells you that there are definitely data points that weren't put in the right cluster. 
+
+Clearly, you should consider another estimator to predict the labels for the `digits` data.
+
+### Trying Out Another Model: Support Vector Machines (SVM)
+
+You saw before that, when you recap all of the information that you have gathered out of the data exploration, that you could build a machine learning model to predict which digit belongs to an image. Clustering assumes that you don't know the labels.
+
+Let's assume that you depart from the case where the `digits` data and the labels for the data are known. That means that you could also classify the instances while knowing the labels. This is a classification task.
+
+If you follow the scikit-learn machine learning map, you'll see that the first model that you meet is the linear SVC. Let's apply this now to the `digits` data:
+
+```{python ex="svm", type="pre-exercise-code"}
+from sklearn import datasets
+from sklearn.preprocessing import scale
+from sklearn import cluster
+digits = datasets.load_digits()
+data = scale(digits.data)
+```
+
+```{python ex="svm", type="sample-code"}
+# Import `train_test_split`
+from sklearn.cross_validation import train_test_split
+
+# Split the data into training and test sets 
+X_train, X_test, y_train, y_test, images_train, images_test = train_test_split(digits.data, digits.target, digits.images, test_size=0.25, random_state=42)
+
+# Import the `svm` model
+from sklearn import svm
+
+# Create the SVC model 
+svc_model = svm.SVC(gamma=0.001, C=100., kernel='linear')
+
+# Fit the data to the SVC model
+svc_model.fit(X_train, y_train)
+```
+
+```{python ex="svm", type="solution"}
+# Import `train_test_split`
+from sklearn.cross_validation import train_test_split
+
+# Split the data into training and test sets 
+X_train, X_test, y_train, y_test, images_train, images_test = train_test_split(digits.data, digits.target, digits.images, test_size=0.25, random_state=42)
+
+# Import the `svm` model
+from sklearn import svm
+
+# Create the SVC model 
+svc_model = svm.SVC(gamma=0.001, C=100., kernel='linear')
+
+# Fit the data to the SVC model
+svc_model.fit(X_train, y_train)
+```
+
+```{python ex="svm", type="sct"}
+test_import("sklearn.cross_validation.train_test_split", same_as = True, not_imported_msg = "Did you import `train_test_split` from `sklearn.cross_validation`?", incorrect_as_msg = "Don't forget to import `train_test_split` from `sklearn.cross_validation`!")
+test_object("X_train", do_eval=False, undefined_msg="did you define `X_train`?")
+test_object("X_test", do_eval=False, undefined_msg="did you define `X_test`?")
+test_object("y_train", do_eval=False, undefined_msg="did you define `y_train`?")
+test_object("y_test", do_eval=False, undefined_msg="did you define `y_test`?")
+test_object("images_train", do_eval=False, undefined_msg="did you define `images_train`?")
+test_object("images_test", do_eval=False, undefined_msg="did you define `images_test`?")
+test_import("sklearn.svm", same_as = True, not_imported_msg = "Did you import `svm` from `sklearn`?", incorrect_as_msg = "Don't forget to import `svm` from `sklearn`!")
+test_object("svc_model", do_eval=False)
+test_function("svc_model.fit", do_eval=False)
+success_msg="Great job!"
+```
+
+
+Note that in this example we set the value of `gamma` manually. It is possible to automatically find good values for the parameters by using tools such as grid search and cross validation. However, this will not be the focus for this tutorial. 
+
+If you would have used grid search to adjust your parameters, you would have done something like the following:
+
+```{python ex="grid_search", type="pre-exercise-code"}
+from sklearn import svm
+from sklearn import datasets
+from sklearn.cross_validation import train_test_split
+digits = datasets.load_digits()
+```
+
+```{python ex="grid_search", type="sample-code"}
+# Split the `digits` data into two equal sets
+X_train, X_test, y_train, y_test = train_test_split(digits.data, digits.target, test_size=0.5, random_state=0)
+
+# Import GridSearchCV
+from sklearn.grid_search import GridSearchCV
+
+# Set the parameter candidates
+parameter_candidates = [
+  {'C': [1, 10, 100, 1000], 'kernel': ['linear']},
+  {'C': [1, 10, 100, 1000], 'gamma': [0.001, 0.0001], 'kernel': ['rbf']},
+]
+
+# Create a classifier with the parameter candidates
+clf = GridSearchCV(estimator=svm.SVC(), param_grid=parameter_candidates, n_jobs=-1)
+
+# Train the classifier on training data
+clf.fit(X_train, y_train)
+
+# Print out the results 
+print('Best score for training data:', clf.best_score_)
+print('Best `C`:',clf.best_estimator_.C)
+print('Best kernel:',clf.best_estimator_.kernel)
+print('Best `gamma`:',clf.best_estimator_.gamma)
+```
+
+
+Next, you use the classifier with the classifier and parameter candidates that you have just created to apply it to the second part of your data set. Next, you also train a new classifier using the best parameters found by the grid search. You score the result to see if the best parameters that were found in the grid search are actually working. 
+
+```{python ex="fit_grid_search", type="pre-exercise-code"}
+from sklearn import svm
+from sklearn import datasets
+from sklearn.cross_validation import train_test_split
+digits = datasets.load_digits()
+X_train, X_test, y_train, y_test = train_test_split(digits.data, digits.target, test_size=0.5, random_state=0)
+from sklearn.grid_search import GridSearchCV
+parameter_candidates = [
+  {'C': [1, 10, 100, 1000], 'kernel': ['linear']},
+  {'C': [1, 10, 100, 1000], 'gamma': [0.001, 0.0001], 'kernel': ['rbf']},
+]
+clf = GridSearchCV(estimator=svm.SVC(), param_grid=parameter_candidates, n_jobs=-1)
+clf.fit(X_train, y_train)
+```
+
+```{python ex="fit_grid_search", type="sample-code"}
+# Apply the classifier to the test data, and view the accuracy score
+clf.score(X_test, y_test)  
+
+# Train and score a new classifier with the grid search parameters
+svm.SVC(C=10, kernel='rbf', gamma=0.001).fit(X_train, y_train).score(X_test, y_test)
+```
+
+
+The parameters indeed work well!
+
+Now what does this new knowledge tell you about the SVC classifier that you had modeled before you had done the grid search?
+
+Let's back up to the model that you had made before.
+
+You see that in the SVM classifier, the penalty parameter `C` of the error term is specified at `100.`. Lastly, you see that the kernel has been explicitly specified as a `linear` one. The `kernel `argument specifies the kernel type that you're going to use in the algorithm and by default, this is `rbf`. In other cases, you can specify others such as `linear`, `poly`, ... 
+
+But what is a kernel exactly?
+
+A kernel is a similarity function, which is used to compute similarity between the training data points. When you provide a kernel to a machine learning algorithm, together with the training data and the labels, you will get a classifier, as is the case here. You will have trained a model that assigns new unseen objects into a particular category. For the SVM, you will typicall try to linearly divide your data points.  
+
+However, the grid search tells you that an `rbf` kernel would've worked better. The penalty parameter and the gamma were specified correctly. 
+
+**Tip:** try out the classifier with an `rbf` kernel.
+
+For now, let's just say you just continue with a linear kernel and predict the values for the test set:
+
+```{python ex="svm_predict", type="pre-exercise-code"}
+from sklearn import datasets
+from sklearn.preprocessing import scale
+from sklearn import cluster
+digits = datasets.load_digits()
+data = scale(digits.data)
+from sklearn.cross_validation import train_test_split
+X_train, X_test, y_train, y_test, images_train, images_test = train_test_split(digits.data, digits.target, digits.images, test_size=0.25, random_state=42)
+from sklearn import svm
+svc_model = svm.SVC(gamma=0.001, C=100., kernel='linear')
+svc_model.fit(X_train, y_train)
+```
+
+```{python ex="svm_predict", type="sample-code"}
+# Predict the label of `X_test`
+print(svc_model.predict(______))
+
+# Print `y_test` to check the results
+print(______)
+```
+
+```{python ex="svm_predict", type="solution"}
+# Predict the label of `X_test`
+print(svc_model.predict(X_test))
+
+# Print `y_test` to check the results
+print(y_test)
+```
+
+```{python ex="svm_predict", type="sct"}
+test_function(
+    "print",
+    1,
+    not_called_msg="Did you print out the predicted labels of `X_test`?",
+    incorrect_msg="Don't forget to print out the predicted labels of `X_test`!",
+    do_eval=False
+)
+test_function(
+    "print",
+    2,
+    not_called_msg="Did you print out the true labels of `y_test`?",
+    incorrect_msg="Don't forget to revealing the true labels by printing out `y_test`!",
+    do_eval=False
+)
+success_msg("Well done!")
+```
+
+
+You can also visualize the images and their predicted labels:
+
+```
+# Import matplotlib
+import matplotlib.pyplot as plt
+
+# Assign the predicted values to `predicted`
+predicted = svc_model.predict(X_test)
+
+# Zip together the `images_test` and `predicted` values in `images_and_predictions`
+images_and_predictions = list(zip(images_test, predicted))
+
+# For the first 4 elements in `images_and_predictions`
+for index, (image, prediction) in enumerate(images_and_predictions[:4]):
+    # Initialize subplots in a grid of 1 by 4 at positions i+1
+    plt.subplot(1, 4, index + 1)
+    # Don't show axes
+    plt.axis('off')
+    # Display images in all subplots in the grid
+    plt.imshow(image, cmap=plt.cm.gray_r, interpolation='nearest')
+    # Add a title to the plot
+    plt.title('Predicted: ' + str(prediction))
+
+# Show the plot
+plt.show()
+```
+
+This plot is very similar to the plot that you made when you were exploring the data:
+
+[INSERT IMAGE/PLOT7]
+
+Only this time, you zip together the images and the predicted values and you only take the first 4 elements of `images_and_predictions`.  
+
+But now the biggest question: how does this model perform?
+
+```{python ex="svc_performance", type="pre-exercise-code"}
+from sklearn import datasets
+from sklearn.preprocessing import scale
+from sklearn import cluster
+digits = datasets.load_digits()
+data = scale(digits.data)
+from sklearn.cross_validation import train_test_split
+X_train, X_test, y_train, y_test, images_train, images_test = train_test_split(digits.data, digits.target, digits.images, test_size=0.25, random_state=42)
+from sklearn import svm
+svc_model = svm.SVC(gamma=0.001, C=100., kernel='linear')
+svc_model.fit(X_train, y_train)
+predicted = svc_model.predict(X_test)
+```
+
+```{python ex="svc_performance", type="sample-code"}
+# Import `metrics`
+from sklearn import metrics
+
+# Print the classification report of `y_test` and `predicted`
+print(metrics.classification_report(______, _________))
+
+# Print the confusion matrix of `y_test` and `predicted`
+print(metrics.confusion_matrix(______, _________))
+```
+
+```{python ex="svc_performance", type="solution"}
+# Import `metrics`
+from sklearn import metrics
+
+# Print the classification report of `y_test` and `predicted`
+print(metrics.classification_report(y_test, predicted))
+
+# Print the confusion matrix
+print(metrics.confusion_matrix(y_test, predicted))
+```
+
+```{python ex="svc_performance", type="sct"}
+test_import("sklearn.metrics", same_as = True, not_imported_msg = "Did you import `metrics` from `sklearn`?", incorrect_as_msg = "Don't forget to import `metrics` from `sklearn`!")
+not_called_msg="Did you fill in `y_test` and `predicted`?"
+incorrect_msg="Don't forget to fill in `y_test` as the first argument, `predicted` as the second argument!"
+test_function("print", 1, do_eval=False, not_called_msg = not_called_msg, incorrect_msg = incorrect_msg)
+test_function("print", 2, do_eval=False, not_called_msg = not_called_msg, incorrect_msg = incorrect_msg)
+success_msg="Well done! Now, check the results of the confusion matrix. Does this model perform better?"
+```
+
+
+You clearly see that this model performs a whole lot better than the clustering model that you used earlier.
+
+You can also see it when you visualize the predicted and the actual labels with the help of `Isomap()`:
+
+```
+# Import `Isomap()`
+from sklearn.manifold import Isomap
+
+# Create an isomap and fit the `digits` data to it
+X_iso = Isomap(n_neighbors=10).fit_transform(X_train)
+
+# Compute cluster centers and predict cluster index for each sample
+predicted = svc_model.predict(X_train)
+
+# Create a plot with subplots in a grid of 1X2
+fig, ax = plt.subplots(1, 2, figsize=(8, 4))
+
+# Adjust the layout
+fig.subplots_adjust(top=0.85)
+
+# Add scatterplots to the subplots 
+ax[0].scatter(X_iso[:, 0], X_iso[:, 1], c=predicted)
+ax[0].set_title('Predicted labels')
+ax[1].scatter(X_iso[:, 0], X_iso[:, 1], c=y_train)
+ax[1].set_title('Actual Labels')
+
+
+# Add title
+fig.suptitle('Predicted versus actual labels', fontsize=14, fontweight='bold')
+
+# Show the plot
+plt.show()
+```
+
+This will give you the following scatterplots:
+[INSERT IMAGE/PLOT8]
+
+
+You'll see that this visualization confirms your classification report, which is very good news. :) 
+
+### What's Next?
+
+#### Digit Recognition in Natural Images 
+
+Congratulations, you have reached the end of this tutorial that showed you how you can use supervised and unsupervised machine learning techniques on the `digits` data set. 
+
+If you want to start your own machine learning project, you should not miss out on the MNIST data set, which you can download [here](http://yann.lecun.com/exdb/mnist/). 
+
+The steps that you will need to take are very similar to the ones that you have gone through with this tutorial, but if you still feel that you can use some help, you should check out [this page](http://johnloeber.com/docs/kmeans.html), which works with the MNIST data and applies the KMeans algorithm. 
+
+Working with the digits data set was the first step in classifying characters with scikit-learn. If you're done with this, you might consider trying out an even more challenging proble, namely, classifying alphanumeric characters in natural images.   
+
+A well-known data set that you can use for this problem is the Chars74K dataset, which contains more than 74,000 images of digits from 0 to 9 and the both lowercase and highercase letters of the English alphabet, such as 'a' and 'A'. You can download the dataset [here](http://www.ee.surrey.ac.uk/CVSSP/demos/chars74k/).
+
+#### Data Visualization and `pandas` 
+
+This tutorial was meant to introduce you to machine learning with Python. But this is definitely not the end of your journey of data science with Python: consider checking out our [Interactive Data Visualization with Bokeh course](https://www.datacamp.com/courses/interactive-data-visualization-with-bokeh) to go deeper into data visualization with Python or our [pandas Foundation course](https://www.datacamp.com/courses/pandas-foundations), to learn more about working with data frames in Python. 
