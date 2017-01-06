@@ -1,0 +1,640 @@
+<script src="data:application/x-javascript;base64,LyoKIERhdGFDYW1wIExpZ2h0CiBWZXJzaW9uIDEuMS4wCiAqLwohZnVuY3Rpb24oKXsidXNlIHN0cmljdCI7ZnVuY3Rpb24gZSgpe2Z1bmN0aW9uIGUoZSl7cmV0dXJuIG51bGwhPT1sb2NhdGlvbi5ob3N0bmFtZS5tYXRjaChlKX1mdW5jdGlvbiB0KGUpe2Zvcih2YXIgdD0wO3Q8aS5sZW5ndGg7dCsrKWlbdF0uZ2V0RWxlbWVudHNCeVRhZ05hbWUoImEiKVswXS5ocmVmPWV9ZnVuY3Rpb24gYSgpe2Zvcig7aVswXTspaVswXS5wYXJlbnROb2RlLnJlbW92ZUNoaWxkKGlbMF0pfXZhciBpPWRvY3VtZW50LmdldEVsZW1lbnRzQnlDbGFzc05hbWUoInBvd2VyZWQtYnktZGF0YWNhbXAiKTtlKCJyLWJsb2dnZXJzLmNvbSIpP3QoImh0dHBzOi8vd3d3LmRhdGFjYW1wLmNvbT90YXBfYT01NjQ0LWRjZTY2ZiZ0YXBfcz0xMDkwNy0yODcyMjkiKTplKCJkYXRhY2FtcC5jb20iKSYmYSgpfWZ1bmN0aW9uIHQoZSl7ZS5jbGFzc05hbWUrPSIgZGF0YWNhbXAtZXhlcmNpc2UiO2lmKCJoZWlnaHQiaW4gZS5kYXRhc2V0JiYiYXV0byIhPT1lLmRhdGFzZXQuaGVpZ2h0KXt2YXIgdD1NYXRoLnJvdW5kKGUuZGF0YXNldC5oZWlnaHQpO2lmKGlzTmFOKHQpKWNvbnNvbGUubG9nKCJJbnZhbGlkIGhlaWdodCBhdHRyaWJ1dGUuIik7ZWxzZSBpZih0Pj1wKXtlLnN0eWxlLmhlaWdodD10KyJweCI7dmFyIGE9ImhlaWdodDoiK3QrInB4OyI7ZS5zZXRBdHRyaWJ1dGUoInN0eWxlIixhKX1lbHNlIGNvbnNvbGUubG9nKCJUaGUgaGVpZ2h0IGF0dHJpYnV0ZSBzaG91bGQgYmUgPj0gIitwKyIuIil9ImVuY29kZWQiaW4gZS5kYXRhc2V0JiYoZS5pbm5lckhUTUw9JzxkaXYgY2xhc3M9ImVuY29kZWQiPicrZS5pbm5lckhUTUwudHJpbSgpKyI8L2Rpdj4iKSxlLmlubmVySFRNTCs9JzwhLS1baWYgbHQgSUUgMTBdPjxwIGNsYXNzPSJicm93c2VoYXBweSI+WW91IGFyZSB1c2luZyBhbiA8c3Ryb25nPm91dGRhdGVkPC9zdHJvbmc+IGJyb3dzZXIuIFBsZWFzZSA8YSBocmVmPSJodHRwOi8vYnJvd3NlaGFwcHkuY29tLyI+dXBncmFkZSB5b3VyIGJyb3dzZXI8L2E+IHRvIGltcHJvdmUgeW91ciBleHBlcmllbmNlLjwvcD48IVtlbmRpZl0tLT48ZGl2IG5nLWNvbnRyb2xsZXI9Ik5vcm1hbEV4ZXJjaXNlQ29udHJvbGxlciI+PGRpdiBjbGFzcz0iZGNsLWV4ZXJjaXNlLWFyZWEiIHJlc2l6ZS1sYXlvdXQ9IiI+PGRpdiBjbGFzcz0iZGNsLWxlZnQtcGFuZSIgbmctY2xhc3M9IntcJ2RjbC1taW5pXCc6IHVzZU1pbmlMYXlvdXR9Ij48dWwgY2xhc3M9ImRjbC1jb250ZW50LS10YWIiPjxsaT48YSBocmVmPSIiIG5nLWNsaWNrPSJhY3RpdmF0ZUxlZnRUYWIoXCd1c2VyY29kZVwnKSIgbmctY2xhc3M9IntcJ2RjbC1hY3RpdmVcJzogaXNBY3RpdmVMZWZ0VGFiKFwndXNlcmNvZGVcJyl9Ij5zY3JpcHQue3tiYWNrZW5kQ29uZmlnLmV4dGVuc2lvbn19PC9hPjwvbGk+PGxpIG5nLXNob3c9InNvbHV0aW9uVGFiU2hvd24iPjxhIGNsYXNzPSJkY2wtYW5pbWF0aW9uLS1mbGFzaCIgaHJlZj0iIiBuZy1jbGljaz0iYWN0aXZhdGVMZWZ0VGFiKFwnc29sdXRpb25cJykiIG5nLWNsYXNzPSJ7XCdkY2wtYWN0aXZlXCc6IGlzQWN0aXZlTGVmdFRhYihcJ3NvbHV0aW9uXCcpfSI+c29sdXRpb24ue3tiYWNrZW5kQ29uZmlnLmV4dGVuc2lvbn19PC9hPjwvbGk+PGxpPjxhIGhyZWY9IiIgbmctc2hvdz0idXNlTWluaUxheW91dCIgbmctY2xpY2s9ImFjdGl2YXRlTGVmdFRhYihcJ2NvbnNvbGVcJykiIG5nLWNsYXNzPSJ7XCdkY2wtYWN0aXZlXCc6IGlzQWN0aXZlTGVmdFRhYihcJ2NvbnNvbGVcJyl9Ij57e2JhY2tlbmRDb25maWcuY29uc29sZX19PC9hPjwvbGk+PGxpPjxhIGhyZWY9IiIgbmctc2hvdz0idXNlTWluaUxheW91dCAmJiBwbG90VGFiU2hvd24iIG5nLWNsaWNrPSJhY3RpdmF0ZUxlZnRUYWIoXCdwbG90c1wnKSIgbmctY2xhc3M9IntcJ2RjbC1hY3RpdmVcJzogaXNBY3RpdmVMZWZ0VGFiKFwncGxvdHNcJyl9Ij5QbG90czwvYT48L2xpPjwvdWw+PGRpdiBjbGFzcz0iZGNsLWNvbnRlbnQtLXRhYi1ib2R5Ij48ZGl2IGNvZGUtZWRpdG9yPSIiIGNvbnRyb2w9ImVkaXRvciIgbmctc2hvdz0iaXNBY3RpdmVMZWZ0VGFiKFwndXNlcmNvZGVcJykgfHwgaXNBY3RpdmVMZWZ0VGFiKFwnc29sdXRpb25cJykiIG5nLW1vZGVsPSJ1c2VyQ29kZSI+PC9kaXY+PGRpdiBuZy1zaG93PSJpc0FjdGl2ZUxlZnRUYWIoXCdjb25zb2xlXCcpIiBjbGFzcz0iZGNsLWNvbnNvbGUtdGFyZ2V0IGRjbC1jb25zb2xlLW1pbmktdGFyZ2V0Ij48L2Rpdj48ZGl2IG5nLXNob3c9ImlzQWN0aXZlTGVmdFRhYihcJ3Bsb3RzXCcpIiBjbGFzcz0iZGNsLXBsb3RzLW1pbmktdGFyZ2V0Ij48L2Rpdj48ZGl2IGdyb3dsPSIiIG5nLXNob3c9IiFpc0FjdGl2ZUxlZnRUYWIoXCdwbG90c1wnKSIgaW5saW5lPSJ0cnVlIiBsaW1pdC1tZXNzYWdlcz0iMSIgc2N0LWZlZWRiYWNrPSIiIGNsYXNzPSJzY3QtZmVlZGJhY2stY29udGFpbmVyIj48L2Rpdj48L2Rpdj48L2Rpdj48ZGl2IG5nLXNob3c9IiF1c2VNaW5pTGF5b3V0IiBjbGFzcz0iZGNsLXJpZ2h0LXBhbmUgY2xlYXJmaXgiPjxhIGNsYXNzPSJkY2wtZ2l0aHViLWxpbmsgZGNsLW5vLWxpbmstc3R5bGUiIGhyZWY9Imh0dHBzOi8vZ2l0aHViLmNvbS9kYXRhY2FtcC9kYXRhY2FtcC1saWdodCIgdWliLXRvb2x0aXA9IlZpZXcgRGF0YUNhbXAgTGlnaHQgb24gR2l0aHViIiB0b29sdGlwLXBsYWNlbWVudD0ibGVmdCIgdGFyZ2V0PSJfYmxhbmsiPjxkaXYgY2xhc3M9ImRjbC1naXRodWItbG9nbyI+PC9kaXY+PC9hPjx1bCBjbGFzcz0iZGNsLWNvbnRlbnQtLXRhYiI+PGxpPjxhIGhyZWY9IiIgbmctY2xpY2s9ImFjdGl2YXRlUmlnaHRUYWIoXCdjb25zb2xlXCcpIiBuZy1jbGFzcz0ie1wnZGNsLWFjdGl2ZVwnOiBpc0FjdGl2ZVJpZ2h0VGFiKFwnY29uc29sZVwnKX0iPnt7YmFja2VuZENvbmZpZy5jb25zb2xlfX08L2E+PC9saT48bGk+PGEgbmctc2hvdz0icGxvdFRhYlNob3duIiBocmVmPSIiIG5nLWNsaWNrPSJhY3RpdmF0ZVJpZ2h0VGFiKFwncGxvdHNcJykiIG5nLWNsYXNzPSJ7XCdkY2wtYWN0aXZlXCc6IGlzQWN0aXZlUmlnaHRUYWIoXCdwbG90c1wnKX0iPlBsb3RzPC9hPjwvbGk+PC91bD48ZGl2IGNsYXNzPSJkY2wtY29udGVudC0tdGFiLWJvZHkiPjxkaXYgbmctc2hvdz0iaXNBY3RpdmVSaWdodFRhYihcJ2NvbnNvbGVcJykiIGNvbnRyb2w9ImNvbnNvbGUiIGNsYXNzPSJkY2wtY29uc29sZS10YXJnZXQgZGNsLWNvbnNvbGUtZnVsbC10YXJnZXQiPjxjb25zb2xlIGNsYXNzPSJkY2wtY29uc29sZSI+PC9jb25zb2xlPjwvZGl2PjxkaXYgbmctc2hvdz0iaXNBY3RpdmVSaWdodFRhYihcJ3Bsb3RzXCcpIiBjbGFzcz0iZGNsLXBsb3RzLWZ1bGwtdGFyZ2V0Ij48cGxvdHMtY29udGFpbmVyIGNsYXNzPSJkY2wtcGxvdHMtY29udGFpbmVyIj48L3Bsb3RzLWNvbnRhaW5lcj48L2Rpdj48L2Rpdj48L2Rpdj48L2Rpdj48YWN0aW9uLXBhbmVsIGV4ZXJjaXNlPSJleGVyY2lzZSI+PC9hY3Rpb24tcGFuZWw+PC9kaXY+Jzt2YXIgaT0nPGRpdiBjbGFzcz0icG93ZXJlZC1ieS1kYXRhY2FtcCI+PGEgaHJlZj0iaHR0cHM6Ly93d3cuZGF0YWNhbXAuY29tIj5Qb3dlcmVkIGJ5IERhdGFDYW1wPGRpdiBjbGFzcz0ibG9nbyI+PC9kaXY+PC9hPjwvZGl2Picsbz1kb2N1bWVudC5jcmVhdGVFbGVtZW50KCJkaXYiKTtvLmlubmVySFRNTD1pO3ZhciBjPW8uZmlyc3RDaGlsZDtlLnBhcmVudE5vZGUuaW5zZXJ0QmVmb3JlKGMsZS5uZXh0U2libGluZyl9ZnVuY3Rpb24gYShlKXt2YXIgdD1kb2N1bWVudC5jcmVhdGVFbGVtZW50KCJzY3JpcHQiKTt0LnR5cGU9InRleHQvamF2YXNjcmlwdCIsdC5zcmM9ZSx0LmNoYXJzZXQ9InV0Zi04IixsKCJib2R5Iix0KX1mdW5jdGlvbiBpKGUpe3ZhciB0PWRvY3VtZW50LmNyZWF0ZUVsZW1lbnQoImxpbmsiKTt0LnR5cGU9InRleHQvY3NzIix0LnJlbD0ic3R5bGVzaGVldCIsdC5ocmVmPWUsbCgiaGVhZCIsdCl9ZnVuY3Rpb24gbygpe3ZhciBhPWRvY3VtZW50LnF1ZXJ5U2VsZWN0b3JBbGwoIltkYXRhLWRhdGFjYW1wLWV4ZXJjaXNlXSIpOzA9PT1hLmxlbmd0aCYmY29uc29sZS5sb2coIk5vIERhdGFDYW1wIExpZ2h0IGV4ZXJjaXNlcyBmb3VuZC4gTWFrZSBzdXJlIHRoZSBleGVyY2lzZSBoYXMgdGhlICdkYXRhLWRhdGFjYW1wLWV4ZXJjaXNlJyBhdHRyaWJ1dGUuIik7Zm9yKHZhciBpPTA7aTxhLmxlbmd0aDtpKyspIWZ1bmN0aW9uKGUpe3ZhciBpPWFbZV07KCIgIitpLmNsYXNzTmFtZSsiICIpLmluZGV4T2YoIiBkYXRhY2FtcC1leGVyY2lzZSAiKT4tMXx8dChpKX0oaSk7ZSgpfWZ1bmN0aW9uIGMoKXtvKCksYShnKyJzY3JpcHQtNDFlYjI3ZjdjYy5qcyIpfWZ1bmN0aW9uIG4oKXtvKCksd2luZG93LmJvb3RzdHJhcERDTGlnaHRFeGVyY2lzZXMoKX1mdW5jdGlvbiBzKCl7ZCgpO2Zvcih2YXIgZT1bZysic3R5bGUtYjVkN2ZiZTNmMS5jc3MiLCJodHRwczovL21heGNkbi5ib290c3RyYXBjZG4uY29tL2ZvbnQtYXdlc29tZS80LjUuMC9jc3MvZm9udC1hd2Vzb21lLm1pbi5jc3MiXSx0PTA7dDxlLmxlbmd0aDt0KyspaShlW3RdKX1mdW5jdGlvbiBsKGUsdCl7ZG9jdW1lbnQuZ2V0RWxlbWVudHNCeVRhZ05hbWUoZSlbMF0uYXBwZW5kQ2hpbGQodCl9ZnVuY3Rpb24gZCgpe3ZhciBlPWRvY3VtZW50LmNyZWF0ZUVsZW1lbnQoInN0eWxlIik7ZS50eXBlPSJ0ZXh0L2NzcyIsbCgiaGVhZCIsZSk7dmFyIHQ9J2Rpdi5kYXRhY2FtcC1leGVyY2lzZSB7ICBtYXJnaW46IDA7ICBib3JkZXI6IDFweCBzb2xpZCAjZDVlYWVmOyAgYmFja2dyb3VuZDogbm9uZTsgIHBvc2l0aW9uOiByZWxhdGl2ZTsgIG1pbi1oZWlnaHQ6IDMwMHB4OyAgY29sb3I6IGJsYWNrOyAgYm94LXNoYWRvdzogbm9uZTt9ZGl2W2RhdGEtZGF0YWNhbXAtZXhlcmNpc2VdIHsgIG1hcmdpbjogMDsgIGJvcmRlcjogMXB4IHNvbGlkICNkNWVhZWY7ICBiYWNrZ3JvdW5kOiAjZmZmIHVybChodHRwczovL2Nkbi5kYXRhY2FtcC5jb20vc3Bpbm5lci5naWYpIG5vLXJlcGVhdCBjZW50ZXIgY2VudGVyICFpbXBvcnRhbnQ7ICBiYWNrZ3JvdW5kLXNpemU6IGF1dG8gODBweCAhaW1wb3J0YW50OyAgcG9zaXRpb246IHJlbGF0aXZlOyAgbWluLWhlaWdodDogMzAwcHg7ICBjb2xvcjogdHJhbnNwYXJlbnQ7ICBib3gtc2hhZG93OiBub25lO31kaXZbZGF0YS1kYXRhY2FtcC1leGVyY2lzZV0gPiBjb2RlLGRpdltkYXRhLWRhdGFjYW1wLWV4ZXJjaXNlXSA+IGRpdixkaXZbZGF0YS1kYXRhY2FtcC1leGVyY2lzZV0gPiBwIHsgIGRpc3BsYXk6IG5vbmU7fWRpdi5wb3dlcmVkLWJ5LWRhdGFjYW1wIHsgIG1hcmdpbjogNXB4IDA7ICBkaXNwbGF5OiBibG9jazt9ZGl2LnBvd2VyZWQtYnktZGF0YWNhbXAgYSB7QGltcG9ydCAiaHR0cHM6Ly9mb250cy5nb29nbGVhcGlzLmNvbS9jc3M/ZmFtaWx5PU9wZW4rU2FucyI7ICBmb250LWZhbWlseTogIk9wZW4gU2FucyIsIHNhbnMtc2VyaWY7ICB0ZXh0LWRlY29yYXRpb246IG5vbmU7ICBib3JkZXI6IDA7ICBjb2xvcjogIzNhYzsgIGZvbnQtc2l6ZTogMjBweDt9ZGl2LnBvd2VyZWQtYnktZGF0YWNhbXAgLmxvZ28geyAgdmVydGljYWwtYWxpZ246IHN1YjsgIGRpc3BsYXk6IGlubGluZS1ibG9jazsgIGJhY2tncm91bmQ6IHVybCgiaHR0cHM6Ly9jZG4uZGF0YWNhbXAuY29tL2RjbC9hc3NldHMvaW1hZ2VzL2xvZ29fYmx1ZS5zdmciKSBuby1yZXBlYXQgY2VudGVyIGNlbnRlcjsgIGJhY2tncm91bmQtc2l6ZTogY29udGFpbjsgIGhlaWdodDogMjdweDsgIHdpZHRoOiAyM3B4OyAgbWFyZ2luLWxlZnQ6IDRweDt9JztlLnN0eWxlU2hlZXQ/ZS5zdHlsZVNoZWV0LmNzc1RleHQ9dDplLmlubmVySFRNTD10fWZ1bmN0aW9uIHIoKXtyZXR1cm4iZnVuY3Rpb24iPT10eXBlb2Ygd2luZG93LmluaXRBZGRlZERDTGlnaHRFeGVyY2lzZXN9dmFyIHA9MzAwLGc9Imh0dHBzOi8vY2RuLmRhdGFjYW1wLmNvbS9kY2wvIjtyKCk/Y29uc29sZS5sb2coIldhcm5pbmc6IHRyaWVkIHRvIGxvYWQgRGF0YUNhbXAgTGlnaHQgbXVsdGlwbGUgdGltZXMuIik6KHdpbmRvdy5pbml0QWRkZWREQ0xpZ2h0RXhlcmNpc2VzPW4scygpLCJjb21wbGV0ZSI9PWRvY3VtZW50LnJlYWR5U3RhdGV8fCJsb2FkZWQiPT1kb2N1bWVudC5yZWFkeVN0YXRlP2MoKTpkb2N1bWVudC5hZGRFdmVudExpc3RlbmVyKCJET01Db250ZW50TG9hZGVkIixjKSl9KCk7"></script>
+<div class="section level2" id="machine-learning-with-python">
+<h2>Machine Learning with Python</h2>
+
+<p>Machine learning is a branch in computer science that studies the design of algorithms that can learn.</p>
+
+<p>Typical tasks are concept learning, function learning or &ldquo;predictive modeling&rdquo;, clustering and finding predictive patterns. These tasks are learned through available data that were observed through experiences or instructions, for example.</p>
+
+<p>The hope that comes with this discipline is that including the experience into its tasks will eventually improve the learning. But this improvement needs to happen in such a way that the learning itself becomes automatic so that humans like ourselves don&rsquo;t need to interfere anymore is the ultimate goal.</p>
+
+<p>There are close ties between this discipline and Knowledge Discovery, Data Mining, Artificial Intelligence (AI) and Statistics. Typical applications can be classified into scientific knowledge discovery and more commercial ones, ranging from the &ldquo;Robot Scientist&rdquo; to anti-spam filtering and recommender systems.</p>
+
+<p>But above all, you will know this discipline because it&rsquo;s one of the topics that you need to master if you want to excel in data science.</p>
+
+<p>Today&rsquo;s scikit-learn tutorial will introduce you to the basics of Python machine learning: step-by-step, it will show you how to use Python and its libraries to explore your data with the help of <code>matplotlib</code>, work with the well-known algorithms KMeans and Support Vector Machines (SVM) to construct models, to fit the data to these models, to predict values and to validate the models that you have build.</p>
+
+<p>If you&rsquo;re more interested in an R tutorial, check out our <a href="https://www.datacamp.com/community/tutorials/machine-learning-in-r">Machine Learning with R for Beginners tutorial</a></p>
+
+<div class="section level3" id="loading-your-data-set">
+<h3>Loading Your Data Set</h3>
+
+<p>The first step to about anything in data science is loading in your data. This is also the starting point of this scikit-learn tutorial.</p>
+
+<p>This discipline typically works with observed data. This data might be collected by yourself or you can browse through other sources to find data sets. But if you&rsquo;re not a researcher or otherwise involved in experiments, you&rsquo;ll probably do the latter.</p>
+
+<p>If you&rsquo;re new to this and you want to start problems on your own, finding these data sets might prove to be a challenge. However, you can typically find good data sets at the <a href="http://archive.ics.uci.edu/ml/datasets">UCI Machine Learning Repository</a> or on the <a href="www.kaggle.com">Kaggle</a> website. Also, check out <a href="http://www.kdnuggets.com/datasets/index.html">this KD Nuggets list with resources</a>.</p>
+
+<p>For now, you should warm up, not worry about finding any data by yourself and just load in the <code>digits</code> data set that comes with a Python library, called <code>scikit-learn</code>.</p>
+
+<p>Fun fact: did you know the name originates from the fact that this library is a scientific toolbox built around SciPy? By the way, there is <a href="https://scikits.appspot.com/scikits">more than just one scikit</a> out there. This scikit contains modules specifically for machine learning and data mining, which explains the second component of the library name. :)</p>
+
+<p>To load in the data, you import the module <code>datasets</code> from <code>sklearn</code>. Then, you can use the <code>load_digits()</code> method from <code>datasets</code> to load in the data:</p>
+
+<div data-datacamp-exercise data-height="300" data-encoded="true">
+eyJsYW5ndWFnZSI6InB5dGhvbiIsInNhbXBsZSI6IiMgSW1wb3J0IGBkYXRhc2V0c2AgZnJvbSBgc2tsZWFybmBcbmZyb20gc2tsZWFybiBpbXBvcnQgX19fX19fX19cblxuIyBMb2FkIGluIHRoZSBgZGlnaXRzYCBkYXRhXG5kaWdpdHMgPSBkYXRhc2V0cy5sb2FkX2RpZ2l0cygpXG5cbiMgUHJpbnQgdGhlIGBkaWdpdHNgIGRhdGEgXG5wcmludChfX19fX18pIiwic29sdXRpb24iOiIjIEltcG9ydCBgZGF0YXNldHNgIGZyb20gYHNrbGVhcm5gXG5mcm9tIHNrbGVhcm4gaW1wb3J0IGRhdGFzZXRzXG5cbiMgTG9hZCBpbiB0aGUgYGRpZ2l0c2AgZGF0YVxuZGlnaXRzID0gZGF0YXNldHMubG9hZF9kaWdpdHMoKVxuXG4jIFByaW50IHRoZSBgZGlnaXRzYCBkYXRhIFxucHJpbnQoZGlnaXRzKSIsInNjdCI6ImltcG9ydF9tc2c9XCJEaWQgeW91IGltcG9ydCBgZGF0YXNldHNgIGZyb20gYHNrbGVhcm5gP1wiXG5pbmNvcnJlY3RfaW1wb3J0X21zZz1cIkRvbid0IGZvcmdldCB0byBpbXBvcnQgdGhlIGBkYXRhc2V0c2AgbW9kdWxlIGZyb20gYHNrbGVhcm5gIVwiXG5ub3RfY2FsbGVkX21zZz1cIkRpZCB5b3UgdXNlIGBkYXRhc2V0cy5sb2FkX2RpZ2l0cygpYCB0byBsb2FkIGluIHRoZSBgZGlnaXRzYCBkYXRhP1wiXG5pbmNvcnJlY3RfbXNnPVwiVXNlIGBkYXRhc2V0cy5sb2FkX2RpZ2l0cygpYCB0byBsb2FkIGluIHRoZSBgZGlnaXRzYCBkYXRhIVwiXG5wcmVkZWZfbXNnPVwiRGlkIHlvdSBjYWxsIHRoZSBgcHJpbnQoKWAgZnVuY3Rpb24/XCJcbnRlc3RfaW1wb3J0KFwic2tsZWFybi5kYXRhc2V0c1wiLCBzYW1lX2FzID0gVHJ1ZSwgbm90X2ltcG9ydGVkX21zZyA9IGltcG9ydF9tc2csIGluY29ycmVjdF9hc19tc2cgPSBpbmNvcnJlY3RfaW1wb3J0X21zZylcbnRlc3RfZnVuY3Rpb24oXCJza2xlYXJuLmRhdGFzZXRzLmxvYWRfZGlnaXRzXCIsIG5vdF9jYWxsZWRfbXNnID0gbm90X2NhbGxlZF9tc2csIGluY29ycmVjdF9tc2cgPSBpbmNvcnJlY3RfbXNnKVxuIyBUZXN0IGBwcmludCgpYCBmdW5jdGlvblxudGVzdF9mdW5jdGlvbihcbiAgICBcInByaW50XCIsXG4gICAgbm90X2NhbGxlZF9tc2c9cHJlZGVmX21zZyxcbiAgICBpbmNvcnJlY3RfbXNnPXByZWRlZl9tc2csXG4gICAgZG9fZXZhbD1GYWxzZVxuKVxuc3VjY2Vzc19tc2c9XCJQZXJmZWN0ISBZb3UncmUgcmVhZHkgdG8gZ28hXCIifQ==
+</div>
+
+<p>Note that the <code>datasets</code> module contains other methods to load and fetch popular reference datasets, and you can also count on this module in case you need artificial data generators. In addition, this data set is also available through the UCI Repository that was mentioned above: you can find the data <a href="http://archive.ics.uci.edu/ml/machine-learning-databases/optdigits/">here</a>.</p>
+
+<p>If you would have decided to pull the data from the latter page, your data import would&rsquo;ve looked like this:</p>
+
+<div data-datacamp-exercise data-height="300" data-encoded="true">
+eyJsYW5ndWFnZSI6InB5dGhvbiIsInNhbXBsZSI6IiMgSW1wb3J0IHRoZSBgcGFuZGFzYCBsaWJyYXJ5IGFzIGBwZGBcbmltcG9ydCBfX19fX18gYXMgX19cblxuIyBMb2FkIGluIHRoZSBkYXRhIHdpdGggYHJlYWRfY3N2KClgXG5kaWdpdHMgPSBwZC5yZWFkX2NzdihcImh0dHA6Ly9hcmNoaXZlLmljcy51Y2kuZWR1L21sL21hY2hpbmUtbGVhcm5pbmctZGF0YWJhc2VzL29wdGRpZ2l0cy9vcHRkaWdpdHMudHJhXCIsIGhlYWRlcj1Ob25lKVxuXG4jIFByaW50IG91dCBgZGlnaXRzYFxucHJpbnQoX19fX19fKSIsInNvbHV0aW9uIjoiIyBJbXBvcnQgdGhlIGBwYW5kYXNgIGxpYnJhcnkgYXMgYHBkYFxuaW1wb3J0IHBhbmRhcyBhcyBwZFxuXG4jIExvYWQgaW4gdGhlIGRhdGEgd2l0aCBgcmVhZF9jc3YoKWBcbmRpZ2l0cyA9IHBkLnJlYWRfY3N2KFwiaHR0cDovL2FyY2hpdmUuaWNzLnVjaS5lZHUvbWwvbWFjaGluZS1sZWFybmluZy1kYXRhYmFzZXMvb3B0ZGlnaXRzL29wdGRpZ2l0cy50cmFcIiwgaGVhZGVyPU5vbmUpXG5cbiMgUHJpbnQgb3V0IGBkaWdpdHNgXG5wcmludChkaWdpdHMpIiwic2N0IjoiaW1wb3J0X21zZz1cIkRpZCB5b3UgYWRkIHNvbWUgY29kZSB0byBpbXBvcnQgYHBhbmRhc2AgYXMgYHBkYD9cIlxuaW5jb3JyZWN0X2ltcG9ydF9tc2c9XCJEb24ndCBmb3JnZXQgdG8gaW1wb3J0IHRoZSAncGFuZGFzJyBsaWJyYXJ5IGFzIGBwZGAhXCJcbmNzdl9tc2c9XCJEaWQgeW91IHVzZSB0aGUgYHJlYWRfY3N2KClgIG1ldGhvZCBmcm9tIHBhbmRhcyB0byBsb2FkIGluIHRoZSBkYXRhP1wiXG5jc3ZfaW5jb3JyZWN0X21zZz1cIlVzZSBgcmVhZF9jc3YoKWAgZnJvbSB0aGUgcGFuZGFzIGxpYnJhcnkgdG8gbG9hZCBpbiB0aGUgZGF0YSBcIlxucHJlZGVmX21zZz1cIkRpZCB5b3UgY2FsbCB0aGUgYHByaW50KClgIGZ1bmN0aW9uP1wiXG4jIFRlc3QgaW1wb3J0IGBwYW5kYXNgXG50ZXN0X2ltcG9ydChcInBhbmRhc1wiLCBzYW1lX2FzID0gVHJ1ZSwgbm90X2ltcG9ydGVkX21zZyA9IGltcG9ydF9tc2csIGluY29ycmVjdF9hc19tc2cgPSBpbmNvcnJlY3RfaW1wb3J0X21zZylcbiMgVGVzdCBgcmVhZF9jc3YoKWBcbnRlc3RfZnVuY3Rpb24oXCJwYW5kYXMucmVhZF9jc3ZcIiwgbm90X2NhbGxlZF9tc2cgPSBjc3ZfbXNnLCBpbmNvcnJlY3RfbXNnID0gY3N2X2luY29ycmVjdF9tc2cpXG4jIFRlc3QgYHByaW50KClgIGZ1bmN0aW9uXG50ZXN0X2Z1bmN0aW9uKFxuICAgIFwicHJpbnRcIixcbiAgICBub3RfY2FsbGVkX21zZz1wcmVkZWZfbXNnLFxuICAgIGluY29ycmVjdF9tc2c9cHJlZGVmX21zZyxcbiAgICBkb19ldmFsPUZhbHNlXG4pXG5zdWNjZXNzX21zZyhcIkF3ZXNvbWUgam9iIVwiKSJ9
+</div>
+
+<p>Note that if you download the data like this, the data is already split up in a training and a test set, indicated by the extensions <code>.tra</code> and <code>.tes</code>. You&rsquo;ll need to load in both files to elaborate your project. With the command above, you only load in the training set.</p>
+
+<p><b>Tip:</b> if you want to know more about importing data with the Python data manipulation library Pandas, consider taking DataCamp&rsquo;s <a href="https://www.datacamp.com/courses/importing-data-in-python-part-1">Importing Data in Python course</a>.</p>
+</div>
+
+<div class="section level3" id="explore-your-data">
+<h3>Explore Your Data</h3>
+
+<p>When first starting out with a data set, it&rsquo;s always a good idea to go through the data description and see what you can already learn. When it comes to <code>scikit-learn</code>, you don&rsquo;t immediately have this information readily available, but in the case where you import data from another source, there&#39;s usually a data description present, which will already be a sufficient amount of information to gather some insights into your data.</p>
+
+<p>However, these insights are not merely deep enough for the analysis that you are going to perform. You really need to have a good working knowledge about the data set.</p>
+
+<p>Performing an exploratory data analysis (EDA) on a data set like the one that this tutorial now has might seem difficult.</p>
+
+<p>Where do you start exploring these handwritten digits?</p>
+
+<div class="section level4" id="gathering-basic-information-on-your-data">
+<h4>Gathering Basic Information on Your Data</h4>
+
+<p>Let&rsquo;s say that you haven&rsquo;t checked any data description folder (or maybe you want to double-check the information that has been given to you).</p>
+
+<p>Then you should start with gathering the basic information.</p>
+
+<p>When you printed out the <code>digits</code> data after having loaded it with the help of the <code>scikit-learn</code> <code>datasets</code> module, you will have noticed that there is already a lot of information available. You already have knowledge of things such as the target values and the description of your data. You can access the <code>digits</code> data through the attribute <code>data</code>. Similarly, you can also access the target values or labels through the <code>target</code> attribute and the description through the <code>DESCR</code> attribute.</p>
+
+<p>To see which keys you have available to already get to know your data, you can just run <code>digits.keys()</code>.</p>
+
+<p>Try this all out in the following DataCamp Light blocks:</p>
+
+<div data-datacamp-exercise="" data-encoded="true" data-height="300">eyJsYW5ndWFnZSI6InB5dGhvbiIsInByZV9leGVyY2lzZV9jb2RlIjoiZnJvbSBza2xlYXJuIGltcG9ydCBkYXRhc2V0c1xuZGlnaXRzID0gZGF0YXNldHMubG9hZF9kaWdpdHMoKSIsInNhbXBsZSI6IiMgR2V0IHRoZSBrZXlzIG9mIHRoZSBgZGlnaXRzYCBkYXRhXG5wcmludChkaWdpdHMuX19fX19fKVxuXG4jIFByaW50IG91dCB0aGUgZGF0YVxucHJpbnQoZGlnaXRzLl9fX18pXG5cbiMgUHJpbnQgb3V0IHRoZSB0YXJnZXQgdmFsdWVzXG5wcmludChkaWdpdHMuX19fX19fKVxuXG4jIFByaW50IG91dCB0aGUgZGVzY3JpcHRpb24gb2YgdGhlIGBkaWdpdHNgIGRhdGFcbnByaW50KGRpZ2l0cy5ERVNDUikiLCJzb2x1dGlvbiI6IiMgR2V0IHRoZSBrZXlzIG9mIHRoZSBgZGlnaXRzYCBkYXRhXG5wcmludChkaWdpdHMua2V5cygpKVxuXG4jIFByaW50IG91dCB0aGUgZGF0YVxucHJpbnQoZGlnaXRzLmRhdGEpXG5cbiMgUHJpbnQgb3V0IHRoZSB0YXJnZXQgdmFsdWVzXG5wcmludChkaWdpdHMudGFyZ2V0KVxuXG4jIFByaW50IG91dCB0aGUgZGVzY3JpcHRpb24gb2YgdGhlIGBkaWdpdHNgIGRhdGFcbnByaW50KGRpZ2l0cy5ERVNDUikiLCJzY3QiOiIjIFRlc3QgYHByaW50YCBcbnRlc3RfZnVuY3Rpb24oXG4gICAgXCJwcmludFwiLFxuICAgIDEsXG4gICAgbm90X2NhbGxlZF9tc2c9XCJEaWQgeW91IHByaW50IG91dCB0aGUga2V5cyBvZiBgZGlnaXRzYD9cIixcbiAgICBpbmNvcnJlY3RfbXNnPVwiRG9uJ3QgZm9yZ2V0IHRvIHByaW50IG91dCB0aGUga2V5cyBvZiBgZGlnaXRzYCFcIixcbiAgICBkb19ldmFsPUZhbHNlXG4pXG4jIFRlc3QgYHByaW50YFxudGVzdF9mdW5jdGlvbihcbiAgICBcInByaW50XCIsXG4gICAgMixcbiAgICBub3RfY2FsbGVkX21zZz1cIkRpZCB5b3UgcHJpbnQgb3V0IHRoZSBkYXRhP1wiLFxuICAgIGluY29ycmVjdF9tc2c9XCJEb24ndCBmb3JnZXQgdG8gcHJpbnQgb3V0IHRoZSBkYXRhIVwiLFxuICAgIGRvX2V2YWw9RmFsc2VcbilcbiMgVGVzdCBgcHJpbnRgXG50ZXN0X2Z1bmN0aW9uKFxuICAgIFwicHJpbnRcIixcbiAgICAzLFxuICAgIG5vdF9jYWxsZWRfbXNnPVwiRGlkIHlvdSBwcmludCBvdXQgdGhlIHRhcmdldCB2YWx1ZXMgb2YgdGhlIGRhdGE/XCIsXG4gICAgaW5jb3JyZWN0X21zZz1cIkRvbid0IGZvcmdldCB0byBwcmludCBvdXQgdGhlIHRhcmdldCB2YWx1ZXMgb2YgdGhlIGRhdGEhXCIsXG4gICAgZG9fZXZhbD1GYWxzZVxuKVxuIyBUZXN0IGBwcmludGAgXG50ZXN0X2Z1bmN0aW9uKFxuICAgIFwicHJpbnRcIixcbiAgICA0LFxuICAgIG5vdF9jYWxsZWRfbXNnPVwiRGlkIHlvdSBwcmludCBvdXQgdGhlIGRlc2NyaXB0aW9uIG9mIGBkaWdpdHNgP1wiLFxuICAgIGluY29ycmVjdF9tc2c9XCJEb24ndCBmb3JnZXQgdG8gcHJpbnQgb3V0IHRoZSBkZXNjcmlwdGlvbiBvZiBgZGlnaXRzYCFcIixcbiAgICBkb19ldmFsPUZhbHNlXG4pXG5zdWNjZXNzX21zZyhcIkF3ZXNvbWUhXCIpIn0=</div>
+
+<p>The next thing that you can (double)check is the type of your data.</p>
+
+<p>If you used <code>read_csv()</code> to import the data, you would have had a data frame that contains just the data. There wouldn&rsquo;t be any description component, but you would be able to resort to, for example, <code>head()</code> or <code>tail()</code> to inspect your data. In these cases, it&rsquo;s always wise to read up on the data description folder!</p>
+
+<p>However, this tutorial assumes that you make use of the library&#39;s data and the type of the <code>digits</code> variable is not that straightforward if you&rsquo;re not familiar with the library. Look at the print out in the first code chunk. You&rsquo;ll see that <code>digits</code> actually contains <code>numpy</code> arrays!</p>
+
+<p>This is already quite some important information. But how do you access these arays?</p>
+
+<p>It&rsquo;s very easy, actually: you use attributes to access the relevant arrays.</p>
+
+<p>Remember that you have already seen which attributes are available when you printed <code>digits.keys()</code>. For instance, you have the <code>data</code> attribute to isolate the data, <code>target</code> to see the target values and the <code>DESCR</code> for the description, &hellip;</p>
+
+<p>But what then?</p>
+
+<p>The first thing that you should know of an array is its shape. That is, the number of dimensions and items that is contained within an array. The array&rsquo;s shape is a tuple of integers that specify the sizes of each dimension. In other words, if you have a 3d array like this <code>y = np.zeros((2, 3, 4))</code>, the shape of your array will be <code>(2,3,4)</code>.</p>
+
+<p>Now let&rsquo;s try to see what the shape is of these three arrays that you have distinguished (the <code>data</code>, <code>target</code> and <code>DESCR</code> arrays).</p>
+
+<p>Use first the <code>data</code> attribute to isolate the numpy array from the <code>digits</code> data and then use the <code>shape</code> attribute to find out more. You can do the same for the <code>target</code> and <code>DESCR</code>. There&rsquo;s also the <code>images</code> attribute, which is basically the data in images. You&rsquo;re also going to test this out.</p>
+
+<p>Check up on this statement by using the <code>shape</code> attribute on the array:</p>
+
+<div data-datacamp-exercise="" data-encoded="true" data-height="300">eyJsYW5ndWFnZSI6InB5dGhvbiIsInByZV9leGVyY2lzZV9jb2RlIjoiZnJvbSBza2xlYXJuIGltcG9ydCBkYXRhc2V0c1xuaW1wb3J0IG51bXB5IGFzIG5wXG5kaWdpdHMgPSBkYXRhc2V0cy5sb2FkX2RpZ2l0cygpIiwic2FtcGxlIjoiIyBJc29sYXRlIHRoZSBgZGlnaXRzYCBkYXRhXG5kaWdpdHNfZGF0YSA9IGRpZ2l0cy5kYXRhXG5cbiMgSW5zcGVjdCB0aGUgc2hhcGVcbnByaW50KGRpZ2l0c19kYXRhLnNoYXBlKVxuXG4jIElzb2xhdGUgdGhlIHRhcmdldCB2YWx1ZXMgd2l0aCBgdGFyZ2V0YFxuZGlnaXRzX3RhcmdldCA9IGRpZ2l0cy5fX19fX19cblxuIyBJbnNwZWN0IHRoZSBzaGFwZVxucHJpbnQoZGlnaXRzX3RhcmdldC5fX19fXylcblxuIyBQcmludCB0aGUgbnVtYmVyIG9mIHVuaXF1ZSBsYWJlbHNcbm51bWJlcl9kaWdpdHMgPSBsZW4obnAudW5pcXVlKGRpZ2l0cy50YXJnZXQpKVxuXG4jIElzb2xhdGUgdGhlIGBpbWFnZXNgXG5kaWdpdHNfaW1hZ2VzID0gZGlnaXRzLmltYWdlc1xuXG4jIEluc3BlY3QgdGhlIHNoYXBlXG5wcmludChkaWdpdHNfaW1hZ2VzLnNoYXBlKSIsInNvbHV0aW9uIjoiIyBJc29sYXRlIHRoZSBgZGlnaXRzYCBkYXRhXG5kaWdpdHNfZGF0YSA9IGRpZ2l0cy5kYXRhXG5cbiMgSW5zcGVjdCB0aGUgc2hhcGVcbnByaW50KGRpZ2l0c19kYXRhLnNoYXBlKVxuXG4jIElzb2xhdGUgdGhlIHRhcmdldCB2YWx1ZXMgd2l0aCBgdGFyZ2V0YFxuZGlnaXRzX3RhcmdldCA9IGRpZ2l0cy50YXJnZXRcblxuIyBJbnNwZWN0IHRoZSBzaGFwZVxucHJpbnQoZGlnaXRzX3RhcmdldC5zaGFwZSlcblxuIyBQcmludCB0aGUgbnVtYmVyIG9mIHVuaXF1ZSBsYWJlbHNcbm51bWJlcl9kaWdpdHMgPSBsZW4obnAudW5pcXVlKGRpZ2l0cy50YXJnZXQpKVxuXG4jIElzb2xhdGUgdGhlIGBpbWFnZXNgXG5kaWdpdHNfaW1hZ2VzID0gZGlnaXRzLmltYWdlc1xuXG4jIEluc3BlY3QgdGhlIHNoYXBlXG5wcmludChkaWdpdHNfaW1hZ2VzLnNoYXBlKSIsInNjdCI6Im1zZ19kYXRhPVwiRGlkIHlvdSBhZGQgYHNoYXBlYCB0byBnZXQgdGhlIG51bWJlciBvZiBkaW1lbnNpb25zIGFuZCBpdGVtcyBvZiB0aGUgYGRpZ2l0c19kYXRhYCBhcnJheT9cIlxubXNnX3RhcmdldD1cIkRpZCB5b3UgYWRkIGBzaGFwZWAgdG8gZ2V0IHRoZSBudW1iZXIgb2YgZGltZW5zaW9ucyBhbmQgaXRlbXMgb2YgdGhlIGBkaWdpdHNfdGFyZ2V0YCBhcnJheT9cIlxubXNnX2ltYWdlPVwiRGlkIHlvdSBhZGQgYHNoYXBlYCB0byBnZXQgdGhlIG51bWJlciBvZiBkaW1lbnNpb25zIGFuZCBpdGVtcyBvZiB0aGUgYGRpZ2l0c19pbWFnZXNgIGFycmF5P1wiXG4jIFRlc3Qgb2JqZWN0IGBkaWdpdHNfZGF0YWBcbnRlc3Rfb2JqZWN0KFwiZGlnaXRzX2RhdGFcIiwgdW5kZWZpbmVkX21zZz1cIkRpZCB5b3UgZGVmaW5lIHRoZSBgZGlnaXRzX2RhdGFgIG9iamVjdD9cIiwgaW5jb3JyZWN0X21zZz1cIkRpZCB5b3UgdXNlIHRoZSBgZGF0YWAgYXR0cmlidXRlIHRvIGlzb2xhdGUgdGhlIGRhdGEgb2YgYGRpZ2l0c2A/XCIpXG4jIFRlc3Qgb2JqZWN0IGBkaWdpdHNfdGFyZ2V0YFxudGVzdF9vYmplY3QoXCJkaWdpdHNfdGFyZ2V0XCIsIHVuZGVmaW5lZF9tc2c9XCJEaWQgeW91IGRlZmluZSB0aGUgYGRpZ2l0c190YXJnZXRgIG9iamVjdD9cIiwgaW5jb3JyZWN0X21zZz1cIkRpZCB5b3UgdXNlIHRoZSBgdGFyZ2V0YCBhdHRyaWJ1dGUgdG8gaXNvbGF0ZSB0aGUgdGFyZ2V0IHZhbHVlcyBvZiB0aGUgYGRpZ2l0c2AgZGF0YT9cIilcbiMgVGVzdCBgc2hhcGVgIG9mIGBkaWdpdHNfZGF0YWBcbiN0ZXN0IGZ1bmN0aW9uIHByaW50XG50ZXN0X2Z1bmN0aW9uKFxuICAgIFwicHJpbnRcIixcbiAgICAxLFxuICAgIG5vdF9jYWxsZWRfbXNnPVwiRGlkIHlvdSBwcmludCBvdXQgdGhlIHNoYXBlIG9mIHRoZWRhdGE/XCIsXG4gICAgaW5jb3JyZWN0X21zZz1cIkRvbid0IGZvcmdldCB0byBwcmludCBvdXQgdGhlIHNoYXBlIG9mIHRoZSBkYXRhIVwiLFxuICAgIGRvX2V2YWw9RmFsc2VcbilcbnRlc3Rfb2JqZWN0X2FjY2Vzc2VkKFwiZGlnaXRzX2RhdGEuc2hhcGVcIiwgbm90X2FjY2Vzc2VkX21zZz1tc2dfZGF0YSlcbiMgVGVzdCBgcHJpbnRgXG50ZXN0X2Z1bmN0aW9uKFxuICAgIFwicHJpbnRcIixcbiAgICAyLFxuICAgIG5vdF9jYWxsZWRfbXNnPVwiRGlkIHlvdSBwcmludCBvdXQgdGhlIHNoYXBlIG9mIHRoZSB0YXJnZXQgdmFsdWVzIG9mIHRoZSBkYXRhP1wiLFxuICAgIGluY29ycmVjdF9tc2c9XCJEb24ndCBmb3JnZXQgdG8gcHJpbnQgb3V0IHRoZSBzaGFwZSBvZiB0aGUgdGFyZ2V0IHZhbHVlcyBvZiB0aGUgZGF0YSFcIixcbiAgICBkb19ldmFsPUZhbHNlXG4pXG4jIFRlc3QgYWNjZXNzIGBzaGFwZWAgb2YgYGRpZ2l0c190YXJnZXRgXG50ZXN0X29iamVjdF9hY2Nlc3NlZChcImRpZ2l0c190YXJnZXQuc2hhcGVcIiwgbm90X2FjY2Vzc2VkX21zZz1tc2dfdGFyZ2V0KVxuIyBUZXN0IG9iamVjdCBgbnVtYmVyX2RpZ2l0c2BcbnRlc3Rfb2JqZWN0KFwibnVtYmVyX2RpZ2l0c1wiLCB1bmRlZmluZWRfbXNnPVwiRGlkIHlvdSBkZWZpbmUgdGhlIGBudW1iZXJfZGlnaXRzYCBvYmplY3Q/XCIsIGluY29ycmVjdF9tc2c9XCJEaWQgeW91IHVzZSBgbnAudW5pcXVlKClgIHRvIGdpdmUgYmFjayB0aGUgdW5pcXVlIHRhcmdldCB2YWx1ZXM/IERvbid0IGZvcmdldCB0byBnaXZlIGJhY2sgdGhlIGxlbmd0aCBvZiB0aGlzIGFycmF5IHdpdGggYGxlbigpYCFcIilcbiMgVGVzdCBvYmplY3QgYGRpZ2l0c19pbWFnZXNgXG50ZXN0X29iamVjdChcImRpZ2l0c19pbWFnZXNcIiwgdW5kZWZpbmVkX21zZz1cIkRpZCB5b3UgZGVmaW5lIHRoZSBgZGlnaXRzX2ltYWdlc2Agb2JqZWN0P1wiLCBpbmNvcnJlY3RfbXNnPVwiRGlkIHlvdSB1c2UgdGhlIGBpbWFnZXNgIGF0dHJpYnV0ZSB0byBpc29sYXRlIHRoZSBpbWFnZXMgb2YgdGhlIGBkaWdpdHNgIGRhdGE/XCIpXG4jIFRlc3QgYHNoYXBlYCBvZiBgZGlnaXRzX2ltYWdlc2BcbnRlc3Rfb2JqZWN0X2FjY2Vzc2VkKFwiZGlnaXRzX2ltYWdlcy5zaGFwZVwiLCBub3RfYWNjZXNzZWRfbXNnPW1zZ19pbWFnZSlcbiMgVGVzdCBgcHJpbnRgIFxudGVzdF9mdW5jdGlvbihcbiAgICBcInByaW50XCIsXG4gICAgMyxcbiAgICBub3RfY2FsbGVkX21zZz1cIkRpZCB5b3UgcHJpbnQgb3V0IHRoZSBzaGFwZSBvZiB0aGUgaW1hZ2VzIG9mIGBkaWdpdHNgP1wiLFxuICAgIGluY29ycmVjdF9tc2c9XCJEb24ndCBmb3JnZXQgdG8gcHJpbnQgb3V0IHRoZSBzaGFwZSBvZiB0aGUgaW1hZ2VzIG9mIGBkaWdpdHNgIVwiLFxuICAgIGRvX2V2YWw9RmFsc2VcbilcbnN1Y2Nlc3NfbXNnKFwiV2VsbCBkb25lIVwiKSJ9</div>
+
+<p>To recap: by inspecting <code>digits.data</code>, you see that there are 1797 samples and that there are 64 features. Because you have 1797 samples, you also have 1797 target values.</p>
+
+<p>But all those target values contain 10 unique values, namely, from 0 to 9. In other words, all 1797 target values are made up of numbers that lie between 0 and 9. This means that the digits that your model will need to recognize are numbers from 0 to 9.</p>
+
+<p>Lastly, you see that the <code>images</code> data contains three dimensions: there are 1797 instances that are 8 by 8 pixels big. You can visually check that the <code>images</code> and the <code>data</code> are related by reshaping the <code>images</code> array to two dimensions: <code>digits.images.reshape((1797, 64))</code>.</p>
+
+<p>But if you want to be completely sure, better to check with <code>print(np.all(digits.images.reshape((1797,64)) == digits.data))</code>. With the <code>numpy</code> method <code>all()</code>, you test whether all array elements along a given axis evaluate to <code>True</code>. In this case, you evaluate if it&rsquo;s true that the reshaped <code>images</code> array equals <code>digits.data</code>. You&rsquo;ll see that the result will be <code>True</code> in this case.</p>
+</div>
+
+<div class="section level4" id="visualize-your-data-images-with-matplotlib">
+<h4>Visualize Your Data Images With <code>matplotlib</code></h4>
+
+<p>Then, you can take your exploration up a notch by visualizing the images that you&rsquo;ll be working with. You can use one of Python&rsquo;s data visualization libraries, such as <code><a href="http://matplotlib.org/">matplotlib</a></code>, for this purpose:</p>
+
+<pre>
+<code># Import matplotlib
+import matplotlib.pyplot as plt
+
+# Figure size (width, height) in inches
+fig = plt.figure(figsize=(6, 6))
+
+# Adjust the subplots 
+fig.subplots_adjust(left=0, right=1, bottom=0, top=1, hspace=0.05, wspace=0.05)
+
+# For each of the 64 images
+for i in range(64):
+    # Initialize the subplots: add a subplot in the grid of 8 by 8, at the i+1-th position
+    ax = fig.add_subplot(8, 8, i + 1, xticks=[], yticks=[])
+    # Display an image at the i-th position
+    ax.imshow(digits.images[i], cmap=plt.cm.binary, interpolation='nearest')
+    # label the image with the target value
+    ax.text(0, 7, str(digits.target[i]))
+
+# Show the plot
+plt.show()</code></pre>
+
+<p>The code chunk seems quite lengthy at first sight and this might be overwhelming. But, what happens in the code chunk above is actually pretty easy once you break it down into parts:</p>
+
+<ul>
+	<li>You import <code>matplotlib.pyplot</code>.</li>
+	<li>Next, you set up a figure with a figure size of <code>6</code> inches wide and <code>6</code> inches long. This is your blank canvas where all the subplots with the images will appear.</li>
+	<li>Then you go to the level of the subplots to adjust some parameters: you set the left side of the suplots of the figure to <code>0</code>, the right side of the suplots of the figure to <code>1</code>, the bottom to <code>0</code> and the top to <code>1</code>. The height of the blank space between the suplots is set at <code>0.005</code> and the width is set at <code>0.05</code>. These are merely layout adjustments.</li>
+	<li>After that, you start filling up the figure that you have made with the help of a for loop.</li>
+	<li>You initialize the suplots one by one, adding one at each position in the grid that is <code>8</code> by <code>8</code> images big.</li>
+	<li>You display each time one of the images at each position in the grid. As a color map, you take binary colors, which in this case will result in black, gray values and white colors. The interpolation method that you use is <code>&#39;nearest&#39;</code>, which means that your data is interpolated in such a way that it isn&rsquo;t smooth. You can see the effect of the different interpolation methods <a href="http://matplotlib.org/examples/images_contours_and_fields/interpolation_methods.html">here</a>.</li>
+	<li>The cherry on the pie is the addition of text to your subplots. The target labels are printed at coordinates (0,7) of each subplot, which in practice means that they will appear in the bottom-left of each of the subplots.</li>
+	<li>Don&rsquo;t forget to show the plot with <code>plt.show()</code>!</li>
+</ul>
+
+<p>In the end, you&rsquo;ll get to see the following:</p>
+
+<p><img alt="Python machine learning visualization of images" src="http://community.datacamp.com.s3.amazonaws.com/community/production/ckeditor_assets/pictures/266/content_plot1.png" /></p>
+
+<p>On a more simple note, you can also visualize the target labels with an image, just like this:</p>
+
+<pre>
+<code># Import matplotlib
+import matplotlib.pyplot as plt 
+
+# Join the images and target labels in a list
+images_and_labels = list(zip(digits.images, digits.target))
+
+# for every element in the list
+for index, (image, label) in enumerate(images_and_labels[:8]):
+    # initialize a subplot of 2X4 at the i+1-th position
+    plt.subplot(2, 4, index + 1)
+    # Don't plot any axes
+    plt.axis('off')
+    # Display images in all subplots 
+    plt.imshow(image, cmap=plt.cm.gray_r,interpolation='nearest')
+    # Add a title to each subplot
+    plt.title('Training: ' + str(label))
+
+# Show the plot
+plt.show()</code></pre>
+
+<p>Which will render the following visualization:</p>
+
+<p><img alt="Python scikit-learn visualization of images" src="http://community.datacamp.com.s3.amazonaws.com/community/production/ckeditor_assets/pictures/267/content_plot2.png" /></p>
+
+<p>Note that in this case, after you have imported <code>matplotlib.pyplot</code>, you zip the two <code>numpy</code> arrays together and save it into a variable called <code>images_and_labels</code>. You&rsquo;ll see now that this list contains suples of each time an instance of <code>digits.images</code> and a corresponding <code>digits.target</code> value.</p>
+
+<p>Then, you say that for the first eight elements of <code>images_and_labels</code> -note that the index starts at 0!-, you initialize subplots in a grid of 2 by 4 at each position. You turn of the plotting of the axes and you display images in all the subplots with a color map <code>plt.cm.gray_r</code> (which returns all grey colors) and the interpolation method used is <code>nearest</code>. You give a title to each subplot, and you show it.</p>
+
+<p>Not too hard, huh?</p>
+
+<p>And now you know a very good idea of the data that you&rsquo;ll be working with!</p>
+</div>
+
+<div class="section level4" id="visualizing-your-data-principal-component-analysis-pca">
+<h4>Visualizing Your Data: Principal Component Analysis (PCA)</h4>
+
+<p>But is there no other way to visualize the data?</p>
+
+<p>As the <code>digits</code> data set contains 64 features, this might prove to be a challenging task. You can imagine that it&rsquo;s very hard to understand the structure and keep the overview of the <code>digits</code> data. In such cases, it is said that you&rsquo;re working with a high dimensional data set.</p>
+
+<p>High dimensionality of data is a direct result of trying to describe the objects via a collection of features. Other examples of high dimensional data are, for example, financial data, climate data, neuroimaging, &hellip;</p>
+
+<p>But, as you might have gathered already, this is not always easy. In some cases, high dimensionality can be problematic, as your algorithms will need to take into account too many features. In such cases, you speak of the curse of dimensionality. Because having a lot of dimensions can also mean that your data points are far away from virtually every other point, which makes the distances between the data points uninformative.</p>
+
+<p>Dont&rsquo; worry, though, because the curse of dimensionality is not simply a matter of counting the number of features. There are also cases in which the effective dimensionality might be much smaller than the number of the features, such as in data sets where some features are irrelevant.</p>
+
+<p>In addition, you can also understand that data with only two or three dimensions is easier to grasp and can also be visualized easily.</p>
+
+<p>That all explains why you&rsquo;re going to visualize the data with the help of one of the Dimensionality Reduction techniques, namely Principal Component Analysis (PCA). The idea in PCA is to find a linear combination of the two variables that contains most of the information. This new variable or &ldquo;principal component&rdquo; can replace the two original variables.</p>
+
+<p>In short, it&rsquo;s a linear transformation method that yields the directions (principal components) that maximize the variance of the data. Remember that the variance indicates how far a set of data points lie apart. If you want to know more, go to <a href="http://www.lauradhamilton.com/introduction-to-principal-component-analysis-pca">this page</a>.</p>
+
+<p>You can easily apply PCA do your data with the help of <code>scikit-learn</code>:</p>
+
+<div data-datacamp-exercise="" data-encoded="true" data-height="300">eyJsYW5ndWFnZSI6InB5dGhvbiIsInByZV9leGVyY2lzZV9jb2RlIjoiZnJvbSBza2xlYXJuIGltcG9ydCBkYXRhc2V0c1xuZGlnaXRzID0gZGF0YXNldHMubG9hZF9kaWdpdHMoKVxuZnJvbSBza2xlYXJuLmRlY29tcG9zaXRpb24gaW1wb3J0IFJhbmRvbWl6ZWRQQ0FcbmZyb20gc2tsZWFybi5kZWNvbXBvc2l0aW9uIGltcG9ydCBQQ0FcbmltcG9ydCBudW1weSBhcyBucCIsInNhbXBsZSI6IiMgQ3JlYXRlIGEgUmFuZG9taXplZCBQQ0EgbW9kZWwgdGhhdCB0YWtlcyB0d28gY29tcG9uZW50c1xucmFuZG9taXplZF9wY2EgPSBSYW5kb21pemVkUENBKG5fY29tcG9uZW50cz0yKVxuXG4jIEZpdCBhbmQgdHJhbnNmb3JtIHRoZSBkYXRhIHRvIHRoZSBtb2RlbFxucmVkdWNlZF9kYXRhX3JwY2EgPSByYW5kb21pemVkX3BjYS5maXRfdHJhbnNmb3JtKGRpZ2l0cy5kYXRhKVxuXG4jIENyZWF0ZSBhIHJlZ3VsYXIgUENBIG1vZGVsIFxucGNhID0gUENBKG5fY29tcG9uZW50cz0yKVxuXG4jIEZpdCBhbmQgdHJhbnNmb3JtIHRoZSBkYXRhIHRvIHRoZSBtb2RlbFxucmVkdWNlZF9kYXRhX3BjYSA9IHBjYS5maXRfdHJhbnNmb3JtKGRpZ2l0cy5kYXRhKVxuXG4jIEluc3BlY3QgdGhlIHNoYXBlXG5yZWR1Y2VkX2RhdGFfcGNhLnNoYXBlXG5cbiMgUHJpbnQgb3V0IHRoZSBkYXRhXG5wcmludChyZWR1Y2VkX2RhdGFfcnBjYSlcbnByaW50KHJlZHVjZWRfZGF0YV9wY2EpIiwic29sdXRpb24iOiIjIENyZWF0ZSBhIFJhbmRvbWl6ZWQgUENBIG1vZGVsIHRoYXQgdGFrZXMgdHdvIGNvbXBvbmVudHNcbnJhbmRvbWl6ZWRfcGNhID0gUmFuZG9taXplZFBDQShuX2NvbXBvbmVudHM9MilcblxuIyBGaXQgYW5kIHRyYW5zZm9ybSB0aGUgZGF0YSB0byB0aGUgbW9kZWxcbnJlZHVjZWRfZGF0YV9ycGNhID0gcmFuZG9taXplZF9wY2EuZml0X3RyYW5zZm9ybShkaWdpdHMuZGF0YSlcblxuIyBDcmVhdGUgYSByZWd1bGFyIFBDQSBtb2RlbCBcbnBjYSA9IFBDQShuX2NvbXBvbmVudHM9MilcblxuIyBGaXQgYW5kIHRyYW5zZm9ybSB0aGUgZGF0YSB0byB0aGUgbW9kZWxcbnJlZHVjZWRfZGF0YV9wY2EgPSBwY2EuZml0X3RyYW5zZm9ybShkaWdpdHMuZGF0YSlcblxuIyBJbnNwZWN0IHRoZSBzaGFwZVxucmVkdWNlZF9kYXRhX3BjYS5zaGFwZVxuXG4jIFByaW50IG91dCB0aGUgZGF0YVxucHJpbnQocmVkdWNlZF9kYXRhX3JwY2EpXG5wcmludChyZWR1Y2VkX2RhdGFfcGNhKSIsInNjdCI6InRlc3Rfb2JqZWN0KFwicmFuZG9taXplZF9wY2FcIiwgZG9fZXZhbD1GYWxzZSlcbnRlc3Rfb2JqZWN0KFwicmVkdWNlZF9kYXRhX3JwY2FcIiwgZG9fZXZhbD1GYWxzZSlcbnRlc3Rfb2JqZWN0KFwicGNhXCIsIGRvX2V2YWw9RmFsc2UpXG50ZXN0X29iamVjdChcInJlZHVjZWRfZGF0YV9wY2FcIiwgZG9fZXZhbD1GYWxzZSlcbnByZWRlZl9tc2c9XCJEaWQgeW91IGluc3BlY3QgdGhlIHNoYXBlIG9mIGByZWR1Y2VkX2RhdGFfcGNhYD9cIlxudGVzdF9vYmplY3RfYWNjZXNzZWQoXCJyZWR1Y2VkX2RhdGFfcGNhLnNoYXBlXCIsIG5vdF9hY2Nlc3NlZF9tc2c9cHJlZGVmX21zZylcbiMgVGVzdCBgcHJpbnRgIFxudGVzdF9mdW5jdGlvbihcbiAgICBcInByaW50XCIsXG4gICAgMSxcbiAgICBub3RfY2FsbGVkX21zZz1cIkRpZCB5b3UgcHJpbnQgb3V0IHRoZSBgcmVkdWNlZF9kYXRhX3JwY2FgIGRhdGE/XCIsXG4gICAgaW5jb3JyZWN0X21zZz1cIkRvbid0IGZvcmdldCB0byBwcmludCBvdXQgdGhlIGByZWR1Y2VkX2RhdGFfcnBjYWAgZGF0YSFcIixcbiAgICBkb19ldmFsPUZhbHNlXG4pXG50ZXN0X2Z1bmN0aW9uKFxuICAgIFwicHJpbnRcIixcbiAgICAyLFxuICAgIG5vdF9jYWxsZWRfbXNnPVwiRGlkIHlvdSBwcmludCBvdXQgdGhlIGByZWR1Y2VkX2RhdGFfcGNhYCBkYXRhP1wiLFxuICAgIGluY29ycmVjdF9tc2c9XCJEb24ndCBmb3JnZXQgdG8gcHJpbnQgb3V0IHRoZSBgcmVkdWNlZF9kYXRhX3BjYWAgZGF0YSFcIixcbiAgICBkb19ldmFsPUZhbHNlXG4pXG5zdWNjZXNzX21zZyhcIkFtYXppbmchXCIpIn0=</div>
+
+<p><strong>Tip</strong>: you have used the <code>RandomizedPCA()</code> here because it performs better when there&rsquo;s a high number of dimensions. Try replacing the randomized PCA model or estimator object with a regular PCA model and see what the difference is.</p>
+
+<p>Note how you explicitly tell the model to only keep two components. This is to make sure that you have two-dimensional data to plot. Also, note that you don&rsquo;t pass the target class with the labels to the PCA transformation because you want to investigate if the PCA reveals the distribution of the different labels and if you can clearly separate the instances from each other.</p>
+
+<p>You can now build a scatterplot to visualize the data:</p>
+
+<pre>
+<code>colors = ['black', 'blue', 'purple', 'yellow', 'white', 'red', 'lime', 'cyan', 'orange', 'gray']
+for i in range(len(colors)):
+    x = reduced_data_rpca[:, 0][digits.target == i]
+    y = reduced_data_rpca[:, 1][digits.target == i]
+    plt.scatter(x, y, c=colors[i])
+plt.legend(digits.target_names, bbox_to_anchor=(1.05, 1), loc=2, borderaxespad=0.)
+plt.xlabel('First Principal Component')
+plt.ylabel('Second Principal Component')
+plt.title("PCA Scatter Plot")
+plt.show()</code></pre>
+
+<p>Which looks like this:</p>
+
+<p><img alt="Scikit-learn tutorial - Principal Component Analysis (PCA)" src="http://community.datacamp.com.s3.amazonaws.com/community/production/ckeditor_assets/pictures/268/content_plot3.png" /></p>
+
+<p>Again you use <code>matplotlib</code> to visualize the data. It&rsquo;s good for a quick visualization of what you&rsquo;re working with, but you might have to consider something a little bit more fancy if you&rsquo;re working on making this part of your data science portfolio.</p>
+
+<p>Also note that the last call to show the plot (<code>plt.show()</code>) is not necessary if you&rsquo;re working in Jupyter Notebook, as you&rsquo;ll want to put the images inline. When in doubt, you can always check out our <a href="https://www.datacamp.com/community/tutorials/tutorial-jupyter-notebook">Definitive Guide to Jupyter Notebook</a>.</p>
+
+<p>What happens in the code chunk above is the following:</p>
+
+<ol style="list-style-type: decimal">
+	<li>You put your colors together in a list. Note that you list ten colors, which is equal to the number of labels that you have. This way, you make sure that your data points can be colored in according to the labels. Then, you set up a range that goes from 0 to 10. Mind you that this range is not inclusive! Remember that this is the same for indices of a list, for example.</li>
+	<li>You set up your <code>x</code> and <code>y</code> coordinates. You take the first or the second column of <code>reduced_data_rpca</code>, and you select only those data points for which the label equals the index that you&rsquo;re considering. That means that in the first run, you&rsquo;ll consider the data points with label <code>0</code>, then label <code>1</code>, &hellip; and so on.</li>
+	<li>You construct the scatter plot. Fill in the <code>x</code> and <code>y</code> coordinates and assign a color to the batch that you&rsquo;re processing. The first run, you&rsquo;ll give the color <code>black</code> to all data points, the next run <code>blue</code>, &hellip; and so on.</li>
+	<li>You add a legend to your scatter plot. Use the <code>target_names</code> key to get the right labels for your data points.</li>
+	<li>Add labels to your <code>x</code> and <code>y</code> axes that are meaningful.</li>
+	<li>Reveal the resulting plot.</li>
+</ol>
+</div>
+</div>
+
+<div class="section level3" id="where-to-go-now">
+<h3>Where To Go Now?</h3>
+
+<p>Now that you have even more information about your data and you have a visualization ready, it does seem a bit like the data points sort of group together, but you also see there is quite some overlap.</p>
+
+<p>This might be interesting to investigate further.</p>
+
+<p>Do you think that, in a case where you knew that there are 10 possible digits labels to assign to the data points, but you have no access to the labels, the observations would group or &ldquo;cluster&rdquo; together by some criterion in such a way that you could infer the lables?</p>
+
+<p>Now this is a research question!</p>
+
+<p>In general, when you have acquired a good understanding of your data, you have to decide on the use cases that would be relevant to your data set. In other words, you think about what your data set might teach you or what you think you can learn from your data.</p>
+
+<p>From there on, you can think about what kind of algorithms you would be able to apply to your data set in order to get the results that you think you can obtain.</p>
+
+<p><b>Tip:</b> the more familiar you are with your data, the easier it will be to assess the use cases for your specific data set. The same also holds for finding the appropriate machine algorithm.</p>
+
+<p>However, when you&rsquo;re first getting started with <code>scikit-learn</code>, you&rsquo;ll see that the amount of algorithms that the library contains is pretty vast and that you might still want additional help when you&rsquo;re doing the assessment for your data set. That&rsquo;s why <a href="http://scikit-learn.org/stable/tutorial/machine_learning_map/">this <code>scikit-learn</code> machine learning map</a> will come in handy.</p>
+
+<p>Note that this map does require you to have some knowledge about the algorithms that are included in the <code>scikit-learn</code> library. This, by the way, also holds some truth for taking this next step in your project: if you have no idea what is possible, it will be very hard to decide on what your use case will be for the data.</p>
+
+<p>As your use case was one for clustering, you can follow the path on the map towards &ldquo;KMeans&rdquo;. You&rsquo;ll see the use case that you have just thought about requires you to have more than 50 samples (&ldquo;check!&rdquo;), to have labeled data (&ldquo;check!&rdquo;), to know the number of categories that you want to predict (&ldquo;check!&rdquo;) and to have less than 10K samples (&ldquo;check!&rdquo;).</p>
+
+<p>But what exactly is the K-Means algorithm?</p>
+
+<p>It is one of the simplest and widely used unsupervised learning algorithms to solve clustering problems. The procedure follows a simple and easy way to classify a given data set through a certain number of clusters that you have set before you run the algorithm. This number of clusters is called <code>k</code> and you select this number at random.</p>
+
+<p>Then, the k-means algorithm will find the nearest cluster center for each data point and assign the data point closest to that cluster.</p>
+
+<p>Once all data points have been assigned to clusters, the cluster centers will be recomputed. In other words, new cluster centers will emerge from the average of the values of the cluster data points. This process is repeated until most data points stick to the same cluster. The cluster membership should stabilize.</p>
+
+<p>You can already see that, because the k-means algorithm works the way it does, the initial set of cluster centers that you give up can have a big effect on the clusters that are eventually found. You can, of course, deal with this effect, as you will see further on.</p>
+
+<p>However, before you can go into making a model for your data, you should definitely take a look into preparing your data for this purpose.</p>
+</div>
+
+<p><a href="http://www.datacamp.com/courses" target="_blank"><img alt="Learn Python for Data Science With DataCamp" src="http://community.datacamp.com.s3.amazonaws.com/community/production/ckeditor_assets/pictures/293/content_blog_banner.png" /></a></p>
+
+<div class="section level3" id="preprocessing-your-data">
+<h3>Preprocessing Your Data</h3>
+
+<p>As you have read in the previous section, before modeling your data, you&rsquo;ll do well by preparing it first. This preparation step is called &ldquo;preprocessing&rdquo;.</p>
+
+<div class="section level4" id="data-normalization">
+<h4>Data Normalization</h4>
+
+<p>The first thing that we&rsquo;re going to do is preprocessing the data. You can standardize the <code>digits</code> data by, for example, making use of the <code>scale()</code> method:</p>
+
+<div data-datacamp-exercise="" data-encoded="true" data-height="300">eyJsYW5ndWFnZSI6InB5dGhvbiIsInByZV9leGVyY2lzZV9jb2RlIjoiZnJvbSBza2xlYXJuIGltcG9ydCBkYXRhc2V0c1xuZGlnaXRzID0gZGF0YXNldHMubG9hZF9kaWdpdHMoKSIsInNhbXBsZSI6IiMgSW1wb3J0XG5mcm9tIHNrbGVhcm4ucHJlcHJvY2Vzc2luZyBpbXBvcnQgc2NhbGVcblxuIyBBcHBseSBgc2NhbGUoKWAgdG8gdGhlIGBkaWdpdHNgIGRhdGFcbmRhdGEgPSBfX19fXyhkaWdpdHMuZGF0YSkiLCJzb2x1dGlvbiI6IiMgSW1wb3J0XG5mcm9tIHNrbGVhcm4ucHJlcHJvY2Vzc2luZyBpbXBvcnQgc2NhbGVcblxuIyBBcHBseSBgc2NhbGUoKWAgdG8gdGhlIGBkaWdpdHNgIGRhdGFcbmRhdGEgPSBzY2FsZShkaWdpdHMuZGF0YSkiLCJzY3QiOiJ0ZXN0X2Z1bmN0aW9uKFxuICAgIFwic2tsZWFybi5wcmVwcm9jZXNzaW5nLnNjYWxlXCIsXG4gICAgbm90X2NhbGxlZF9tc2c9XCJEaWQgeW91IHN0YW5kYXJkaXplIHRoZSBgZGlnaXRzYCBkYXRhP1wiLFxuICAgIGluY29ycmVjdF9tc2c9XCJEb24ndCBmb3JnZXQgdG8gc3RhbmRhcmRpemUgdGhlIGBkaWdpdHNgIGRhdGEgd2l0aCBgc2NhbGUoKWAhXCIsXG4gICAgZG9fZXZhbD1GYWxzZVxuKVxuc3VjY2Vzc19tc2coXCJBd2Vzb21lIVwiKSJ9</div>
+
+<p>By scaling the data, you shift the distribution of each attribute to have a mean of zero and a standard deviation of one (unit variance).</p>
+</div>
+
+<div class="section level4" id="splitting-your-data-into-training-and-test-sets">
+<h4>Splitting Your Data Into Training And Test Sets</h4>
+
+<p>In order to assess your model&rsquo;s performance later, you will also need to divide the data set into two parts: a training set and a test set. The first is used to train the system, while the second is used to evaluate the learned or trained system.</p>
+
+<p>In practice, the division of your data set into a test and a training sets is disjoint: the most common splitting choice is to take 2/3 of your original data set as the training set, while the 1/3 that remains will compose the test set.</p>
+
+<p>You will try to do this also here. You see in the code chunk below that this &lsquo;traditional&rsquo; splitting choice is respected: in the arguments of the <code>train_test_split()</code> method, you clearly see that the <code>test_size</code> is set to <code>0.25</code>.</p>
+
+<p>You&rsquo;ll also note that the argument <code>random_state</code> has the value <code>42</code> assigned to it. With this argument, you can guarantee that your split will always be the same. That is particularly handy if you want reproducible results.</p>
+
+<div data-datacamp-exercise="" data-encoded="true" data-height="300">eyJsYW5ndWFnZSI6InB5dGhvbiIsInByZV9leGVyY2lzZV9jb2RlIjoiZnJvbSBza2xlYXJuIGltcG9ydCBkYXRhc2V0c1xuZGlnaXRzID0gZGF0YXNldHMubG9hZF9kaWdpdHMoKVxuZnJvbSBza2xlYXJuLnByZXByb2Nlc3NpbmcgaW1wb3J0IHNjYWxlXG5kYXRhID0gc2NhbGUoZGlnaXRzLmRhdGEpIiwic2FtcGxlIjoiIyBJbXBvcnQgYHRyYWluX3Rlc3Rfc3BsaXRgXG5mcm9tIHNrbGVhcm4uY3Jvc3NfdmFsaWRhdGlvbiBpbXBvcnQgX19fX19fX19fX19fX19fX1xuXG4jIFNwbGl0IHRoZSBgZGlnaXRzYCBkYXRhIGludG8gdHJhaW5pbmcgYW5kIHRlc3Qgc2V0c1xuWF90cmFpbiwgWF90ZXN0LCB5X3RyYWluLCB5X3Rlc3QsIGltYWdlc190cmFpbiwgaW1hZ2VzX3Rlc3QgPSB0cmFpbl90ZXN0X3NwbGl0KGRhdGEsIGRpZ2l0cy50YXJnZXQsIGRpZ2l0cy5pbWFnZXMsIHRlc3Rfc2l6ZT0wLjI1LCByYW5kb21fc3RhdGU9NDIpIiwic29sdXRpb24iOiIjIEltcG9ydCBgdHJhaW5fdGVzdF9zcGxpdGBcbmZyb20gc2tsZWFybi5jcm9zc192YWxpZGF0aW9uIGltcG9ydCB0cmFpbl90ZXN0X3NwbGl0XG5cbiMgU3BsaXQgdGhlIGBkaWdpdHNgIGRhdGEgaW50byB0cmFpbmluZyBhbmQgdGVzdCBzZXRzXG5YX3RyYWluLCBYX3Rlc3QsIHlfdHJhaW4sIHlfdGVzdCwgaW1hZ2VzX3RyYWluLCBpbWFnZXNfdGVzdCA9IHRyYWluX3Rlc3Rfc3BsaXQoZGF0YSwgZGlnaXRzLnRhcmdldCwgZGlnaXRzLmltYWdlcywgdGVzdF9zaXplPTAuMjUsIHJhbmRvbV9zdGF0ZT00MikiLCJzY3QiOiJpbXBvcnRfbXNnPVwiRGlkIHlvdSBpbXBvcnQgYHRyYWluX3Rlc3Rfc3BsaXRgIGZyb20gYHNrbGVhcm4uY3Jvc3NfdmFsaWRhdGlvbmA/XCJcbnByZWRlZl9tc2c9XCJEb24ndCBmb3JnZXQgdG8gZmlsbCBpbiBgdHJhaW5fdGVzdF9zcGxpdGAhXCJcbnRlc3RfaW1wb3J0KFwic2tsZWFybi5jcm9zc192YWxpZGF0aW9uLnRyYWluX3Rlc3Rfc3BsaXRcIiwgc2FtZV9hcyA9IFRydWUsIG5vdF9pbXBvcnRlZF9tc2cgPSBpbXBvcnRfbXNnLCBpbmNvcnJlY3RfYXNfbXNnID0gcHJlZGVmX21zZylcbnRlc3Rfb2JqZWN0KFwiWF90cmFpblwiLCBkb19ldmFsPUZhbHNlLCAgdW5kZWZpbmVkX21zZz1cIkRpZCB5b3UgbGVhdmUgb3V0IGBYX3RyYWluYCBvciBhbnkgb2YgdGhlIG90aGVyIHZhcmlhYmxlcz9cIilcbnRlc3Rfb2JqZWN0KFwiWF90ZXN0XCIsIGRvX2V2YWw9RmFsc2UsIHVuZGVmaW5lZF9tc2c9XCJEaWQgeW91IGRlZmluZSBgWF90ZXN0YD9cIilcbnRlc3Rfb2JqZWN0KFwieV90cmFpblwiLCBkb19ldmFsPUZhbHNlLCB1bmRlZmluZWRfbXNnPVwiRGlkIHlvdSBkZWZpbmUgYHlfdHJhaW5gP1wiKVxudGVzdF9vYmplY3QoXCJ5X3Rlc3RcIiwgZG9fZXZhbD1GYWxzZSwgdW5kZWZpbmVkX21zZz1cIkRpZCB5b3UgZGVmaW5lIGB5X3Rlc3RgP1wiKVxudGVzdF9vYmplY3QoXCJpbWFnZXNfdHJhaW5cIiwgZG9fZXZhbD1GYWxzZSwgdW5kZWZpbmVkX21zZz1cIkRpZCB5b3UgZGVmaW5lIGBpbWFnZXNfdHJhaW5gP1wiKVxudGVzdF9vYmplY3QoXCJpbWFnZXNfdGVzdFwiLCBkb19ldmFsPUZhbHNlLCB1bmRlZmluZWRfbXNnPVwiRGlkIHlvdSBkZWZpbmUgYGltYWdlc190ZXN0YD9cIilcbnN1Y2Nlc3NfbXNnKFwiR3JlYXQgam9iIVwiKSJ9</div>
+
+<p>After you have split up your data set into train and test sets, you can quickly inspect the numbers before you go and model the data:</p>
+
+<div data-datacamp-exercise="" data-encoded="true" data-height="300">eyJsYW5ndWFnZSI6InB5dGhvbiIsInByZV9leGVyY2lzZV9jb2RlIjoiZnJvbSBza2xlYXJuIGltcG9ydCBkYXRhc2V0c1xuZnJvbSBza2xlYXJuLmNyb3NzX3ZhbGlkYXRpb24gaW1wb3J0IHRyYWluX3Rlc3Rfc3BsaXRcbmZyb20gc2tsZWFybi5wcmVwcm9jZXNzaW5nIGltcG9ydCBzY2FsZVxuaW1wb3J0IG51bXB5IGFzIG5wXG5kaWdpdHMgPSBkYXRhc2V0cy5sb2FkX2RpZ2l0cygpXG5kYXRhID0gc2NhbGUoZGlnaXRzLmRhdGEpXG5YX3RyYWluLCBYX3Rlc3QsIHlfdHJhaW4sIHlfdGVzdCwgaW1hZ2VzX3RyYWluLCBpbWFnZXNfdGVzdCA9IHRyYWluX3Rlc3Rfc3BsaXQoZGF0YSwgZGlnaXRzLnRhcmdldCwgZGlnaXRzLmltYWdlcywgdGVzdF9zaXplPTAuMjUsIHJhbmRvbV9zdGF0ZT00MikiLCJzYW1wbGUiOiIjIE51bWJlciBvZiB0cmFpbmluZyBmZWF0dXJlc1xubl9zYW1wbGVzLCBuX2ZlYXR1cmVzID0gWF90cmFpbi5zaGFwZVxuXG4jIFByaW50IG91dCBgbl9zYW1wbGVzYFxucHJpbnQoX19fX19fX19fKVxuXG4jIFByaW50IG91dCBgbl9mZWF0dXJlc2BcbnByaW50KF9fX19fX19fX18pXG5cbiMgTnVtYmVyIG9mIFRyYWluaW5nIGxhYmVsc1xubl9kaWdpdHMgPSBsZW4obnAudW5pcXVlKHlfdHJhaW4pKVxuXG4jIEluc3BlY3QgYHlfdHJhaW5gXG5wcmludChsZW4oX19fX19fXykpIiwic29sdXRpb24iOiIjIE51bWJlciBvZiB0cmFpbmluZyBmZWF0dXJlc1xubl9zYW1wbGVzLCBuX2ZlYXR1cmVzID0gWF90cmFpbi5zaGFwZVxuXG4jIFByaW50IG91dCBgbl9zYW1wbGVzYFxucHJpbnQobl9zYW1wbGVzKVxuXG4jIFByaW50IG91dCBgbl9mZWF0dXJlc2BcbnByaW50KG5fZmVhdHVyZXMpXG5cbiMgTnVtYmVyIG9mIFRyYWluaW5nIGxhYmVsc1xubl9kaWdpdHMgPSBsZW4obnAudW5pcXVlKHlfdHJhaW4pKVxuXG4jIEluc3BlY3QgYHlfdHJhaW5gXG5wcmludChsZW4oeV90cmFpbikpIiwic2N0IjoidGVzdF9vYmplY3QoXCJuX3NhbXBsZXNcIiwgdW5kZWZpbmVkX21zZz1cImRpZCB5b3UgbGVhdmUgb3V0IGBuX3NhbXBsZXNgIG9yIGBuX2ZlYXR1cmVzYD9cIilcbnRlc3Rfb2JqZWN0KFwibl9mZWF0dXJlc1wiKVxudGVzdF9mdW5jdGlvbihcbiAgICBcInByaW50XCIsXG4gICAgMSxcbiAgICBub3RfY2FsbGVkX21zZz1cIkRpZCB5b3UgcHJpbnQgb3V0IHRoZSBudW1iZXIgb2Ygc2FtcGxlcyBvZiB0aGUgYGRpZ2l0c2AgdHJhaW5pbmcgZGF0YT9cIixcbiAgICBpbmNvcnJlY3RfbXNnPVwiRG9uJ3QgZm9yZ2V0IHRvIHByaW50IG91dCB0aGUgbnVtYmVyIG9mIHNhbXBsZXMhXCIsXG4gICAgZG9fZXZhbD1GYWxzZVxuKVxudGVzdF9mdW5jdGlvbihcbiAgICBcInByaW50XCIsXG4gICAgMixcbiAgICBub3RfY2FsbGVkX21zZz1cIkRpZCB5b3UgcHJpbnQgb3V0IHRoZSBudW1iZXIgb2YgZmVhdHVyZXMgb2YgdGhlIGBkaWdpdHNgIHRyYWluaW5nIGRhdGE/XCIsXG4gICAgaW5jb3JyZWN0X21zZz1cIkRvbid0IGZvcmdldCB0byBwcmludCBvdXQgdGhlIG51bWJlciBvZiBmZWF0dXJlcyFcIixcbiAgICBkb19ldmFsPUZhbHNlXG4pXG50ZXN0X29iamVjdChcIm5fZGlnaXRzXCIsIGluY29ycmVjdF9tc2c9XCJkaWQgeW91IGRlZmluZSBgbl9kaWdpdHNgIGNvcnJlY3RseT9cIilcbnRlc3RfZnVuY3Rpb24oXG4gICAgXCJwcmludFwiLFxuICAgIDMsXG4gICAgbm90X2NhbGxlZF9tc2c9XCJEaWQgeW91IHByaW50IG91dCB0aGUgbnVtYmVyIG9mIHRyYWluaW5nIGxhYmVscyBmb3IgdGhlIGBkaWdpdHNgIGRhdGE/XCIsXG4gICAgaW5jb3JyZWN0X21zZz1cIkRvbid0IGZvcmdldCB0byBwcmludCBvdXQgdGhlIG51bWJlciBvZiB0cmFpbmluZyBsYWJlbHMgd2l0aCBgbGVuKHlfdHJhaW4pYCFcIixcbiAgICBkb19ldmFsPUZhbHNlXG4pXG5zdWNjZXNzX21zZyhcIldlbGwgZG9uZSFcIikifQ==</div>
+
+<p>You&rsquo;ll see that the training set <code>X_train</code> now contains 1347 samples, which is exactly 2/3d of the samples that the original data set contained, and 64 features, which hasn&rsquo;t changed. The <code>y_train</code> training set also contains 2/3d of the labels of the original data set. This means that the test sets <code>X_train</code> and <code>y_train</code> contain 450 samples.</p>
+</div>
+</div>
+
+<div class="section level3" id="clustering-the-digits-data">
+<h3>Clustering The <code>digits</code> Data</h3>
+
+<p>After all these preparation steps, you have made sure that all your known (training) data is stored. No actual model or learning was performed up until this moment.</p>
+
+<p>Now, it&rsquo;s finally time to find those clusters of your training set. Use <code>KMeans()</code> from the <code>cluster</code> module to set up your model. You&rsquo;ll see that there are three arguments that are passed to this method: <code>init</code>, <code>n_clusters</code> and the <code>random_state</code>.</p>
+
+<p>You might still remember this last argument from before when you split the data into training and test sets. This argument basically guaranteed that you got reproducible results.</p>
+
+<div data-datacamp-exercise="" data-encoded="true" data-height="300">eyJsYW5ndWFnZSI6InB5dGhvbiIsInByZV9leGVyY2lzZV9jb2RlIjoiZnJvbSBza2xlYXJuIGltcG9ydCBkYXRhc2V0c1xuZnJvbSBza2xlYXJuLmNyb3NzX3ZhbGlkYXRpb24gaW1wb3J0IHRyYWluX3Rlc3Rfc3BsaXRcbmZyb20gc2tsZWFybi5wcmVwcm9jZXNzaW5nIGltcG9ydCBzY2FsZVxuaW1wb3J0IG51bXB5IGFzIG5wXG5kaWdpdHMgPSBkYXRhc2V0cy5sb2FkX2RpZ2l0cygpXG5kYXRhID0gc2NhbGUoZGlnaXRzLmRhdGEpXG5YX3RyYWluLCBYX3Rlc3QsIHlfdHJhaW4sIHlfdGVzdCwgaW1hZ2VzX3RyYWluLCBpbWFnZXNfdGVzdCA9IHRyYWluX3Rlc3Rfc3BsaXQoZGF0YSwgZGlnaXRzLnRhcmdldCwgZGlnaXRzLmltYWdlcywgdGVzdF9zaXplPTAuMjUsIHJhbmRvbV9zdGF0ZT00MikiLCJzYW1wbGUiOiIjIEltcG9ydCB0aGUgYGNsdXN0ZXJgIG1vZHVsZVxuZnJvbSBza2xlYXJuIGltcG9ydCBfX19fX19fX1xuXG4jIENyZWF0ZSB0aGUgS01lYW5zIG1vZGVsXG5jbGYgPSBjbHVzdGVyLktNZWFucyhpbml0PSdrLW1lYW5zKysnLCBuX2NsdXN0ZXJzPTEwLCByYW5kb21fc3RhdGU9NDIpXG5cbiMgRml0IHRoZSB0cmFpbmluZyBkYXRhIGBYX3RyYWluYHRvIHRoZSBtb2RlbFxuY2xmLmZpdChfX19fX19fXykiLCJzb2x1dGlvbiI6IiMgSW1wb3J0IHRoZSBgY2x1c3RlcmAgbW9kdWxlXG5mcm9tIHNrbGVhcm4gaW1wb3J0IGNsdXN0ZXJcblxuIyBDcmVhdGUgdGhlIEtNZWFucyBtb2RlbFxuY2xmID0gY2x1c3Rlci5LTWVhbnMoaW5pdD0nay1tZWFucysrJywgbl9jbHVzdGVycz0xMCwgcmFuZG9tX3N0YXRlPTQyKVxuXG4jIEZpdCB0aGUgdHJhaW5pbmcgZGF0YSB0byB0aGUgbW9kZWxcbmNsZi5maXQoWF90cmFpbikiLCJzY3QiOiJpbXBvcnRfbXNnPVwiRGlkIHlvdSBpbXBvcnQgYGNsdXN0ZXJgIGZyb20gYHNrbGVhcm5gP1wiXG5wcmVkZWZfbXNnPVwiRG9uJ3QgZm9yZ2V0IHRvIGltcG9ydCBgY2x1c3RlciBmcm9tIGBza2xlYXJuYCFcIlxudGVzdF9pbXBvcnQoXCJza2xlYXJuLmNsdXN0ZXJcIiwgc2FtZV9hcyA9IFRydWUsIG5vdF9pbXBvcnRlZF9tc2cgPSBpbXBvcnRfbXNnLCBpbmNvcnJlY3RfYXNfbXNnID0gcHJlZGVmX21zZylcbnRlc3Rfb2JqZWN0KFwiY2xmXCIsIGRvX2V2YWw9RmFsc2UsIGluY29ycmVjdF9tc2c9XCJkaWQgY3JlYXRlIHRoZSBLTWVhbnMgbW9kZWwgY29ycmVjdGx5P1wiKVxudGVzdF9mdW5jdGlvbihcImNsZi5maXRcIiwgZG9fZXZhbD1GYWxzZSlcbnN1Y2Nlc3NfbXNnKFwiV29vaG9vIVwiKSJ9</div>
+
+<p>The <code>init</code> indicates the method for initialization and even though it defaults to <code>&lsquo;k-means++&rsquo;</code>, you see it explicitly coming back in the code. That means that you can leave it out if you want. Try it out in the DataCamp Light chunk above!</p>
+
+<p>Next, you also see that the <code>n_clusters</code> argument is set to <code>10</code>. This number not only indicates the number of clusters or groups you want your data to form, but also the number of centroids to generate. Remember that a cluster centroid is the middle of a cluster.</p>
+
+<p>Do you also still remember how the previous section described this as one of the possible disadvantages of the K-Means algorithm?</p>
+
+<p>That is, that the initial set of cluster centers that you give up can have a big effect on the clusters that are eventually found?</p>
+
+<p>Usually, you try to deal with this effect by trying several initial sets in multiple runs and by selecting the set of clusters with the minimum sum of the squared errors (SSE). In other words, you want to minimize the distance of each point in the cluster to the mean or centroid of that cluster.</p>
+
+<p>By adding the <code>n-init</code> argument to <code>KMeans()</code>, you can determine how many different centroid configurations the algorithm will try.</p>
+
+<p><strong>Note</strong> again that you don&rsquo;t want to insert the test labels when you fit the model to your data: these will be used to see if your model is good at predicting the actual classes of your instances!</p>
+
+<p>You can also visualize the images that make up the cluster centers as follows:</p>
+
+<pre>
+<code># Import matplotlib
+import matplotlib.pyplot as plt
+
+# Figure size in inches
+fig = plt.figure(figsize=(8, 3))
+
+# Add title
+fig.suptitle('Cluster Center Images', fontsize=14, fontweight='bold')
+
+# For all labels (0-9)
+for i in range(10):
+    # Initialize subplots in a grid of 2X5, at i+1th position
+    ax = fig.add_subplot(2, 5, 1 + i)
+    # Display images
+    ax.imshow(clf.cluster_centers_[i].reshape((8, 8)), cmap=plt.cm.binary)
+    # Don't show the axes
+    plt.axis('off')
+
+# Show the plot
+plt.show()</code></pre>
+
+<p>&nbsp;</p>
+
+<p><img alt="KMeans cluster visualization with scikit-learn" src="http://community.datacamp.com.s3.amazonaws.com/community/production/ckeditor_assets/pictures/270/content_plot4.png" /></p>
+
+<p>If you want to see another example that visualizes the <digits> data clusters and their centers, go <a href="http://scikit-learn.org/stable/auto_examples/cluster/plot_kmeans_digits.html">here</a>.</digits></p>
+
+<p>The next step is to predict the labels of the test set:</p>
+
+<div data-datacamp-exercise="" data-encoded="true" data-height="300">eyJsYW5ndWFnZSI6InB5dGhvbiIsInByZV9leGVyY2lzZV9jb2RlIjoiZnJvbSBza2xlYXJuIGltcG9ydCBkYXRhc2V0c1xuZnJvbSBza2xlYXJuLmNyb3NzX3ZhbGlkYXRpb24gaW1wb3J0IHRyYWluX3Rlc3Rfc3BsaXRcbmZyb20gc2tsZWFybi5wcmVwcm9jZXNzaW5nIGltcG9ydCBzY2FsZVxuZnJvbSBza2xlYXJuIGltcG9ydCBjbHVzdGVyXG5kaWdpdHMgPSBkYXRhc2V0cy5sb2FkX2RpZ2l0cygpXG5kYXRhID0gc2NhbGUoZGlnaXRzLmRhdGEpXG5YX3RyYWluLCBYX3Rlc3QsIHlfdHJhaW4sIHlfdGVzdCwgaW1hZ2VzX3RyYWluLCBpbWFnZXNfdGVzdCA9IHRyYWluX3Rlc3Rfc3BsaXQoZGF0YSwgZGlnaXRzLnRhcmdldCwgZGlnaXRzLmltYWdlcywgdGVzdF9zaXplPTAuMjUsIHJhbmRvbV9zdGF0ZT00MilcbmNsZiA9IGNsdXN0ZXIuS01lYW5zKGluaXQ9J2stbWVhbnMrKycsIG5fY2x1c3RlcnM9MTAsIHJhbmRvbV9zdGF0ZT00MilcbmNsZi5maXQoWF90cmFpbikiLCJzYW1wbGUiOiIjIFByZWRpY3QgdGhlIGxhYmVscyBmb3IgYFhfdGVzdGBcbnlfcHJlZD1jbGYucHJlZGljdChYX3Rlc3QpXG5cbiMgUHJpbnQgb3V0IHRoZSBmaXJzdCAxMDAgaW5zdGFuY2VzIG9mIGB5X3ByZWRgXG5wcmludCh5X3ByZWRbOjEwMF0pXG5cbiMgUHJpbnQgb3V0IHRoZSBmaXJzdCAxMDAgaW5zdGFuY2VzIG9mIGB5X3Rlc3RgXG5wcmludCh5X3Rlc3RbOjEwMF0pXG5cbiMgU3R1ZHkgdGhlIHNoYXBlIG9mIHRoZSBjbHVzdGVyIGNlbnRlcnNcbmNsZi5jbHVzdGVyX2NlbnRlcnNfLl9fX19fIiwic29sdXRpb24iOiIjIFByZWRpY3QgdGhlIGxhYmVscyBmb3IgYFhfdGVzdGBcbnlfcHJlZD1jbGYucHJlZGljdChYX3Rlc3QpXG5cbiMgUHJpbnQgb3V0IHRoZSBmaXJzdCAxMDAgaW5zdGFuY2VzIG9mIGB5X3ByZWRgXG5wcmludCh5X3ByZWRbOjEwMF0pXG5cbiMgUHJpbnQgb3V0IHRoZSBmaXJzdCAxMDAgaW5zdGFuY2VzIG9mIGB5X3Rlc3RgXG5wcmludCh5X3Rlc3RbOjEwMF0pXG5cbiMgU3R1ZHkgdGhlIHNoYXBlIG9mIHRoZSBjbHVzdGVyIGNlbnRlcnNcbmNsZi5jbHVzdGVyX2NlbnRlcnNfLnNoYXBlIiwic2N0IjoidGVzdF9vYmplY3QoXCJ5X3ByZWRcIilcbnRlc3RfZnVuY3Rpb24oXG4gICAgXCJwcmludFwiLFxuICAgIDEsXG4gICAgbm90X2NhbGxlZF9tc2c9XCJEaWQgeW91IHByaW50IG91dCB0aGUgZmlyc3QgMTAwIGluc3RhbmNlcyBvZiBgeV9wcmVkYD9cIixcbiAgICBpbmNvcnJlY3RfbXNnPVwiRG9uJ3QgZm9yZ2V0IHRvIHByaW50IG91dCB0aGUgZmlyc3QgMTAwIGluc3RhbmNlcyBvZiBgeV9wcmVkYCFcIixcbiAgICBkb19ldmFsPUZhbHNlXG4pXG50ZXN0X2Z1bmN0aW9uKFxuICAgIFwicHJpbnRcIixcbiAgICAyLFxuICAgIG5vdF9jYWxsZWRfbXNnPVwiRGlkIHlvdSBwcmludCBvdXQgdGhlIGZpcnN0IDEwMCBpbnN0YW5jZXMgb2YgYHlfdGVzdGA/XCIsXG4gICAgaW5jb3JyZWN0X21zZz1cIkRvbid0IGZvcmdldCB0byBwcmludCBvdXQgdGhlIGZpcnN0IDEwMCBpbnN0YW5jZXMgb2YgYHlfdGVzdGAhXCIsXG4gICAgZG9fZXZhbD1GYWxzZVxuKVxubXNnX2RhdGE9XCJEaWQgeW91IGZpbGwgaW4gYHNoYXBlYCB0byBwcmludCBvdXQgdGhlIHNoYXBlIG9mIHRoZSBjbHVzdGVyIGNlbnRlcnM/XCJcbnRlc3Rfb2JqZWN0X2FjY2Vzc2VkKFwiY2xmLmNsdXN0ZXJfY2VudGVyc18uc2hhcGVcIiwgbm90X2FjY2Vzc2VkX21zZz1tc2dfZGF0YSlcbnN1Y2Nlc3NfbXNnPVwiQXdlc29tZSFcIiJ9</div>
+
+<p>In the code chunk above, you predict the values for the test set, which contains 450 samples. You store the result in <code>y_pred</code>. You also print out the first 100 instances of <code>y_pred</code> and <code>y_test</code> and you immediately see some results.</p>
+
+<p>In addition, you can study the shape of the cluster centers: you immediately see that there are 10 clusters with each 64 features.</p>
+
+<p>But this doesn&rsquo;t tell you much because we set the number of clusters to 10 and you already knew that there were 64 features.</p>
+
+<p>Maybe a visualization would be more helpful.</p>
+
+<p>Let&rsquo;s visualize the predicted labels:</p>
+
+<pre>
+<code># Import `Isomap()`
+from sklearn.manifold import Isomap
+
+# Create an isomap and fit the `digits` data to it
+X_iso = Isomap(n_neighbors=10).fit_transform(X_train)
+
+# Compute cluster centers and predict cluster index for each sample
+clusters = clf.fit_predict(X_train)
+
+# Create a plot with subplots in a grid of 1X2
+fig, ax = plt.subplots(1, 2, figsize=(8, 4))
+
+# Adjust layout
+fig.suptitle('Predicted Versus Training Labels', fontsize=14, fontweight='bold')
+fig.subplots_adjust(top=0.85)
+
+# Add scatterplots to the subplots 
+ax[0].scatter(X_iso[:, 0], X_iso[:, 1], c=clusters)
+ax[0].set_title('Predicted Training Labels')
+ax[1].scatter(X_iso[:, 0], X_iso[:, 1], c=y_train)
+ax[1].set_title('Actual Training Labels')
+
+# Show the plots
+plt.show()</code></pre>
+
+<p>You use <code>Isomap()</code> as a way to reduce the dimensions of your high-dimensional data set <code>digits</code>. The difference with the PCA method is that the Isomap is a non-linear reduction method.</p>
+
+<p><img alt="Isomap visualization" src="http://community.datacamp.com.s3.amazonaws.com/community/production/ckeditor_assets/pictures/271/content_plot5.png" /></p>
+
+<p><strong>Tip</strong>: run the code from above again, but use the PCA reduction method instead of the Isomap to study the effect of reduction methods yourself.</p>
+
+<p>You will find the solution here:</p>
+
+<pre>
+<code># Import `PCA()`
+from sklearn.decomposition import PCA
+
+# Model and fit the `digits` data to the PCA model
+X_pca = PCA(n_components=2).fit_transform(X_train)
+
+# Compute cluster centers and predict cluster index for each sample
+clusters = clf.fit_predict(X_train)
+
+# Create a plot with subplots in a grid of 1X2
+fig, ax = plt.subplots(1, 2, figsize=(8, 4))
+
+# Adjust layout
+fig.suptitle('Predicted Versus Training Labels', fontsize=14, fontweight='bold')
+fig.subplots_adjust(top=0.85)
+
+# Add scatterplots to the subplots 
+ax[0].scatter(X_pca[:, 0], X_pca[:, 1], c=clusters)
+ax[0].set_title('Predicted Training Labels')
+ax[1].scatter(X_pca[:, 0], X_pca[:, 1], c=y_train)
+ax[1].set_title('Actual Training Labels')
+
+# Show the plots
+plt.show()</code></pre>
+
+<p><img alt="PCA visualization with matplotlib" src="http://community.datacamp.com.s3.amazonaws.com/community/production/ckeditor_assets/pictures/272/content_plot6.png" /></p>
+
+<p>At first sight, the visualization doesn&rsquo;t seem to indicate that the model works well.</p>
+
+<p>But this needs some further investigation.</p>
+</div>
+
+<div class="section level3" id="evaluation-of-your-clustering-model">
+<h3>Evaluation of Your Clustering Model</h3>
+
+<p>And this need for further investigation brings you to the next essential step, which is the evaluation of your model&rsquo;s performance. In other words, you want to analyze the degree of correctness of the model&rsquo;s predictions.</p>
+
+<p>Let&rsquo;s print out a confusion matrix:</p>
+
+<div data-datacamp-exercise="" data-encoded="true" data-height="300">eyJsYW5ndWFnZSI6InB5dGhvbiIsInByZV9leGVyY2lzZV9jb2RlIjoiZnJvbSBza2xlYXJuIGltcG9ydCBkYXRhc2V0c1xuZnJvbSBza2xlYXJuLmNyb3NzX3ZhbGlkYXRpb24gaW1wb3J0IHRyYWluX3Rlc3Rfc3BsaXRcbmZyb20gc2tsZWFybi5wcmVwcm9jZXNzaW5nIGltcG9ydCBzY2FsZVxuZnJvbSBza2xlYXJuIGltcG9ydCBjbHVzdGVyXG5kaWdpdHMgPSBkYXRhc2V0cy5sb2FkX2RpZ2l0cygpXG5kYXRhID0gc2NhbGUoZGlnaXRzLmRhdGEpXG5YX3RyYWluLCBYX3Rlc3QsIHlfdHJhaW4sIHlfdGVzdCwgaW1hZ2VzX3RyYWluLCBpbWFnZXNfdGVzdCA9IHRyYWluX3Rlc3Rfc3BsaXQoZGF0YSwgZGlnaXRzLnRhcmdldCwgZGlnaXRzLmltYWdlcywgdGVzdF9zaXplPTAuMjUsIHJhbmRvbV9zdGF0ZT00MilcbmNsZiA9IGNsdXN0ZXIuS01lYW5zKGluaXQ9J2stbWVhbnMrKycsIG5fY2x1c3RlcnM9MTAsIHJhbmRvbV9zdGF0ZT00MilcbmNsZi5maXQoWF90cmFpbilcbnlfcHJlZD1jbGYucHJlZGljdChYX3Rlc3QpIiwic2FtcGxlIjoiIyBJbXBvcnQgYG1ldHJpY3NgIGZyb20gYHNrbGVhcm5gXG5mcm9tIHNrbGVhcm4gaW1wb3J0IF9fX19fX19cblxuIyBQcmludCBvdXQgdGhlIGNvbmZ1c2lvbiBtYXRyaXggd2l0aCBgY29uZnVzaW9uX21hdHJpeCgpYFxucHJpbnQobWV0cmljcy5jb25mdXNpb25fbWF0cml4KHlfdGVzdCwgeV9wcmVkKSkiLCJzb2x1dGlvbiI6IiMgSW1wb3J0IGBtZXRyaWNzYCBmcm9tIGBza2xlYXJuYFxuZnJvbSBza2xlYXJuIGltcG9ydCBtZXRyaWNzXG5cbiMgUHJpbnQgb3V0IHRoZSBjb25mdXNpb24gbWF0cml4IHdpdGggYGNvbmZ1c2lvbl9tYXRyaXgoKWBcbnByaW50KG1ldHJpY3MuY29uZnVzaW9uX21hdHJpeCh5X3Rlc3QsIHlfcHJlZCkpIiwic2N0IjoidGVzdF9pbXBvcnQoXCJza2xlYXJuLm1ldHJpY3NcIiwgc2FtZV9hcyA9IFRydWUsIG5vdF9pbXBvcnRlZF9tc2cgPSBcIkRpZCB5b3UgaW1wb3J0IGBtZXRyaWNzYCBmcm9tIGBza2xlYXJuYD9cIiwgaW5jb3JyZWN0X2FzX21zZyA9IFwiRG9uJ3QgZm9yZ2V0IHRvIGltcG9ydCBgbWV0cmljc2AgZnJvbSBgc2tsZWFybmAhXCIpXG50ZXN0X2Z1bmN0aW9uKFxuICAgIFwicHJpbnRcIixcbiAgICBub3RfY2FsbGVkX21zZz1cIkRpZCB5b3UgcHJpbnQgb3V0IHRoZSBjb25mdXNpb24gbWF0cml4P1wiLFxuICAgIGluY29ycmVjdF9tc2c9XCJEb24ndCBmb3JnZXQgdG8gcHJpbnQgb3V0IHRoZSBjb25mdXNpb24gbWF0cml4IVwiLFxuICAgIGRvX2V2YWw9RmFsc2VcbilcbnN1Y2Nlc3NfbXNnPVwiV2VsbCBkb25lISBOb3csIHdoYXQgZG8gdGhlIHJlc3VsdHMgdGVsbCB5b3U/XCIifQ==</div>
+
+<p>At first sight, the results seem to confirm our first thoughts that you gathered from the visualizations. Only the digit <code>5</code> was classified correctly in 41 cases. Also, the digit <code>8</code> was classified correctly in 11 instances. But this is not really a success.</p>
+
+<p>You might need to know a bit more about the results than just the confusion matrix.</p>
+
+<p>Let&rsquo;s try to figure out something more about the quality of the clusters by applying different cluster quality metrics. That way, you can judge the goodness of fit of the cluster labels to the correct labels.</p>
+
+<div data-datacamp-exercise="" data-encoded="true" data-height="300">eyJsYW5ndWFnZSI6InB5dGhvbiIsInByZV9leGVyY2lzZV9jb2RlIjoiZnJvbSBza2xlYXJuIGltcG9ydCBkYXRhc2V0c1xuZnJvbSBza2xlYXJuLmNyb3NzX3ZhbGlkYXRpb24gaW1wb3J0IHRyYWluX3Rlc3Rfc3BsaXRcbmZyb20gc2tsZWFybi5wcmVwcm9jZXNzaW5nIGltcG9ydCBzY2FsZVxuZnJvbSBza2xlYXJuIGltcG9ydCBjbHVzdGVyXG5mcm9tIHNrbGVhcm4ubWV0cmljcyBpbXBvcnQgaG9tb2dlbmVpdHlfc2NvcmUsIGNvbXBsZXRlbmVzc19zY29yZSwgdl9tZWFzdXJlX3Njb3JlLCBhZGp1c3RlZF9yYW5kX3Njb3JlLCBhZGp1c3RlZF9tdXR1YWxfaW5mb19zY29yZSwgc2lsaG91ZXR0ZV9zY29yZVxuZGlnaXRzID0gZGF0YXNldHMubG9hZF9kaWdpdHMoKVxuZGF0YSA9IHNjYWxlKGRpZ2l0cy5kYXRhKVxuWF90cmFpbiwgWF90ZXN0LCB5X3RyYWluLCB5X3Rlc3QsIGltYWdlc190cmFpbiwgaW1hZ2VzX3Rlc3QgPSB0cmFpbl90ZXN0X3NwbGl0KGRhdGEsIGRpZ2l0cy50YXJnZXQsIGRpZ2l0cy5pbWFnZXMsIHRlc3Rfc2l6ZT0wLjI1LCByYW5kb21fc3RhdGU9NDIpXG5jbGYgPSBjbHVzdGVyLktNZWFucyhpbml0PSdrLW1lYW5zKysnLCBuX2NsdXN0ZXJzPTEwLCByYW5kb21fc3RhdGU9NDIpXG5jbGYuZml0KFhfdHJhaW4pXG55X3ByZWQ9Y2xmLnByZWRpY3QoWF90ZXN0KSIsInNhbXBsZSI6ImZyb20gc2tsZWFybi5tZXRyaWNzIGltcG9ydCBob21vZ2VuZWl0eV9zY29yZSwgY29tcGxldGVuZXNzX3Njb3JlLCB2X21lYXN1cmVfc2NvcmUsIGFkanVzdGVkX3JhbmRfc2NvcmUsIGFkanVzdGVkX211dHVhbF9pbmZvX3Njb3JlLCBzaWxob3VldHRlX3Njb3JlXG5wcmludCgnJSA5cycgJSAnaW5lcnRpYSAgICBob21vICAgY29tcGwgIHYtbWVhcyAgICAgQVJJIEFNSSAgc2lsaG91ZXR0ZScpXG5wcmludCgnJWkgICAlLjNmICAgJS4zZiAgICUuM2YgICAlLjNmICAgJS4zZiAgICAlLjNmJ1xuICAgICAgICAgICUoY2xmLmluZXJ0aWFfLFxuICAgICAgaG9tb2dlbmVpdHlfc2NvcmUoeV90ZXN0LCB5X3ByZWQpLFxuICAgICAgY29tcGxldGVuZXNzX3Njb3JlKHlfdGVzdCwgeV9wcmVkKSxcbiAgICAgIHZfbWVhc3VyZV9zY29yZSh5X3Rlc3QsIHlfcHJlZCksXG4gICAgICBhZGp1c3RlZF9yYW5kX3Njb3JlKHlfdGVzdCwgeV9wcmVkKSxcbiAgICAgIGFkanVzdGVkX211dHVhbF9pbmZvX3Njb3JlKHlfdGVzdCwgeV9wcmVkKSxcbiAgICAgIHNpbGhvdWV0dGVfc2NvcmUoWF90ZXN0LCB5X3ByZWQsIG1ldHJpYz0nZXVjbGlkZWFuJykpKSJ9</div>
+
+<p>You&rsquo;ll see that there are quite some metrics to consider:</p>
+
+<ul>
+	<li>The homogeneity score tells you to what extent all of the clusters contain only data points which are members of a single class.</li>
+	<li>The completeness score measures the extent to which all of the data points that are members of a given class are also elements of the same cluster.</li>
+	<li>The V-measure score is the harmonic mean between homogeneity and completeness.</li>
+	<li>The adjusted Rand score measures the similarity between two clusterings and considers all pairs of samples and counting pairs that are assigned in the same or different clusters in the predicted and true clusterings.</li>
+	<li>The Adjusted Mutual Info (AMI) score is used to compare clusters. It measures the similarity between the data points that are in the clusterings, accounting for chance groupings and takes a maximum value of 1 when clusterings are equivalent.</li>
+	<li>The silhouette score measures how similar an object is to its own cluster compared to other clusters. The silhouette scores ranges from -1 to 1, where a higher value indicates that the object is better matched to its own cluster and worse mached to neighboring clusters. If many points have a high value, the clusteirng configuration is good.</li>
+</ul>
+
+<p>You clearly see that these scores aren&rsquo;t fantastic: for example, you see that the value for the silhouette score is close to 0, which indicates that the sample is on or very close to the decision boundary between two neighboring clusters. This could indicate that the samples could have been assigned to the wrong cluster.</p>
+
+<p>Also the ARI measure seems to indicate that not all data points in a given cluster are similar and the completeness score tells you that there are definitely data points that weren&rsquo;t put in the right cluster.</p>
+
+<p>Clearly, you should consider another estimator to predict the labels for the <code>digits</code> data.</p>
+</div>
+
+<div class="section level3" id="trying-out-another-model-support-vector-machines-svm">
+<h3>Trying Out Another Model: Support Vector Machines</h3>
+
+<p>When you recapped all of the information that you gathered out of the data exploration, you saw that you could build a model to predict which group a digit belongs to without you knowing the labels. And indeed, you just used the training data and not the target values to build your KMeans model.</p>
+
+<p>Let&rsquo;s assume that you depart from the case where you use both the <code>digits</code> training data and the corresponding target values to build your model.</p>
+
+<p>If you follow the algorithm map, you&rsquo;ll see that the first model that you meet is the linear SVC. Let&rsquo;s apply this now to the <code>digits</code> data:</p>
+
+<div data-datacamp-exercise="" data-encoded="true" data-height="300">eyJsYW5ndWFnZSI6InB5dGhvbiIsInByZV9leGVyY2lzZV9jb2RlIjoiZnJvbSBza2xlYXJuIGltcG9ydCBkYXRhc2V0c1xuZnJvbSBza2xlYXJuLnByZXByb2Nlc3NpbmcgaW1wb3J0IHNjYWxlXG5mcm9tIHNrbGVhcm4gaW1wb3J0IGNsdXN0ZXJcbmRpZ2l0cyA9IGRhdGFzZXRzLmxvYWRfZGlnaXRzKClcbmRhdGEgPSBzY2FsZShkaWdpdHMuZGF0YSkiLCJzYW1wbGUiOiIjIEltcG9ydCBgdHJhaW5fdGVzdF9zcGxpdGBcbmZyb20gc2tsZWFybi5jcm9zc192YWxpZGF0aW9uIGltcG9ydCB0cmFpbl90ZXN0X3NwbGl0XG5cbiMgU3BsaXQgdGhlIGRhdGEgaW50byB0cmFpbmluZyBhbmQgdGVzdCBzZXRzIFxuWF90cmFpbiwgWF90ZXN0LCB5X3RyYWluLCB5X3Rlc3QsIGltYWdlc190cmFpbiwgaW1hZ2VzX3Rlc3QgPSB0cmFpbl90ZXN0X3NwbGl0KGRpZ2l0cy5kYXRhLCBkaWdpdHMudGFyZ2V0LCBkaWdpdHMuaW1hZ2VzLCB0ZXN0X3NpemU9MC4yNSwgcmFuZG9tX3N0YXRlPTQyKVxuXG4jIEltcG9ydCB0aGUgYHN2bWAgbW9kZWxcbmZyb20gc2tsZWFybiBpbXBvcnQgc3ZtXG5cbiMgQ3JlYXRlIHRoZSBTVkMgbW9kZWwgXG5zdmNfbW9kZWwgPSBzdm0uU1ZDKGdhbW1hPTAuMDAxLCBDPTEwMC4sIGtlcm5lbD0nbGluZWFyJylcblxuIyBGaXQgdGhlIGRhdGEgdG8gdGhlIFNWQyBtb2RlbFxuc3ZjX21vZGVsLmZpdChYX3RyYWluLCB5X3RyYWluKSIsInNvbHV0aW9uIjoiIyBJbXBvcnQgYHRyYWluX3Rlc3Rfc3BsaXRgXG5mcm9tIHNrbGVhcm4uY3Jvc3NfdmFsaWRhdGlvbiBpbXBvcnQgdHJhaW5fdGVzdF9zcGxpdFxuXG4jIFNwbGl0IHRoZSBkYXRhIGludG8gdHJhaW5pbmcgYW5kIHRlc3Qgc2V0cyBcblhfdHJhaW4sIFhfdGVzdCwgeV90cmFpbiwgeV90ZXN0LCBpbWFnZXNfdHJhaW4sIGltYWdlc190ZXN0ID0gdHJhaW5fdGVzdF9zcGxpdChkaWdpdHMuZGF0YSwgZGlnaXRzLnRhcmdldCwgZGlnaXRzLmltYWdlcywgdGVzdF9zaXplPTAuMjUsIHJhbmRvbV9zdGF0ZT00MilcblxuIyBJbXBvcnQgdGhlIGBzdm1gIG1vZGVsXG5mcm9tIHNrbGVhcm4gaW1wb3J0IHN2bVxuXG4jIENyZWF0ZSB0aGUgU1ZDIG1vZGVsIFxuc3ZjX21vZGVsID0gc3ZtLlNWQyhnYW1tYT0wLjAwMSwgQz0xMDAuLCBrZXJuZWw9J2xpbmVhcicpXG5cbiMgRml0IHRoZSBkYXRhIHRvIHRoZSBTVkMgbW9kZWxcbnN2Y19tb2RlbC5maXQoWF90cmFpbiwgeV90cmFpbikiLCJzY3QiOiJ0ZXN0X2ltcG9ydChcInNrbGVhcm4uY3Jvc3NfdmFsaWRhdGlvbi50cmFpbl90ZXN0X3NwbGl0XCIsIHNhbWVfYXMgPSBUcnVlLCBub3RfaW1wb3J0ZWRfbXNnID0gXCJEaWQgeW91IGltcG9ydCBgdHJhaW5fdGVzdF9zcGxpdGAgZnJvbSBgc2tsZWFybi5jcm9zc192YWxpZGF0aW9uYD9cIiwgaW5jb3JyZWN0X2FzX21zZyA9IFwiRG9uJ3QgZm9yZ2V0IHRvIGltcG9ydCBgdHJhaW5fdGVzdF9zcGxpdGAgZnJvbSBgc2tsZWFybi5jcm9zc192YWxpZGF0aW9uYCFcIilcbnRlc3Rfb2JqZWN0KFwiWF90cmFpblwiLCBkb19ldmFsPUZhbHNlLCB1bmRlZmluZWRfbXNnPVwiZGlkIHlvdSBkZWZpbmUgYFhfdHJhaW5gP1wiKVxudGVzdF9vYmplY3QoXCJYX3Rlc3RcIiwgZG9fZXZhbD1GYWxzZSwgdW5kZWZpbmVkX21zZz1cImRpZCB5b3UgZGVmaW5lIGBYX3Rlc3RgP1wiKVxudGVzdF9vYmplY3QoXCJ5X3RyYWluXCIsIGRvX2V2YWw9RmFsc2UsIHVuZGVmaW5lZF9tc2c9XCJkaWQgeW91IGRlZmluZSBgeV90cmFpbmA/XCIpXG50ZXN0X29iamVjdChcInlfdGVzdFwiLCBkb19ldmFsPUZhbHNlLCB1bmRlZmluZWRfbXNnPVwiZGlkIHlvdSBkZWZpbmUgYHlfdGVzdGA/XCIpXG50ZXN0X29iamVjdChcImltYWdlc190cmFpblwiLCBkb19ldmFsPUZhbHNlLCB1bmRlZmluZWRfbXNnPVwiZGlkIHlvdSBkZWZpbmUgYGltYWdlc190cmFpbmA/XCIpXG50ZXN0X29iamVjdChcImltYWdlc190ZXN0XCIsIGRvX2V2YWw9RmFsc2UsIHVuZGVmaW5lZF9tc2c9XCJkaWQgeW91IGRlZmluZSBgaW1hZ2VzX3Rlc3RgP1wiKVxudGVzdF9pbXBvcnQoXCJza2xlYXJuLnN2bVwiLCBzYW1lX2FzID0gVHJ1ZSwgbm90X2ltcG9ydGVkX21zZyA9IFwiRGlkIHlvdSBpbXBvcnQgYHN2bWAgZnJvbSBgc2tsZWFybmA/XCIsIGluY29ycmVjdF9hc19tc2cgPSBcIkRvbid0IGZvcmdldCB0byBpbXBvcnQgYHN2bWAgZnJvbSBgc2tsZWFybmAhXCIpXG50ZXN0X29iamVjdChcInN2Y19tb2RlbFwiLCBkb19ldmFsPUZhbHNlKVxudGVzdF9mdW5jdGlvbihcInN2Y19tb2RlbC5maXRcIiwgZG9fZXZhbD1GYWxzZSlcbnN1Y2Nlc3NfbXNnPVwiR3JlYXQgam9iIVwiIn0=</div>
+
+<p>You see here that you make use of <code>X_train</code> and <code>y_train</code> to fit the data to the SVC model. This is clearly different from clustering. Note also that in this example, you set the value of <code>gamma</code> manually. It is possible to automatically find good values for the parameters by using tools such as grid search and cross validation.</p>
+
+<p>Even though this is not the focus of this tutorial, you will see how you could have gone about this if you would have made use of grid search to adjust your parameters. You would have done something like the following:</p>
+
+<div data-datacamp-exercise="" data-encoded="true" data-height="300">eyJsYW5ndWFnZSI6InB5dGhvbiIsInByZV9leGVyY2lzZV9jb2RlIjoiZnJvbSBza2xlYXJuIGltcG9ydCBzdm1cbmZyb20gc2tsZWFybiBpbXBvcnQgZGF0YXNldHNcbmZyb20gc2tsZWFybi5jcm9zc192YWxpZGF0aW9uIGltcG9ydCB0cmFpbl90ZXN0X3NwbGl0XG5kaWdpdHMgPSBkYXRhc2V0cy5sb2FkX2RpZ2l0cygpIiwic2FtcGxlIjoiIyBTcGxpdCB0aGUgYGRpZ2l0c2AgZGF0YSBpbnRvIHR3byBlcXVhbCBzZXRzXG5YX3RyYWluLCBYX3Rlc3QsIHlfdHJhaW4sIHlfdGVzdCA9IHRyYWluX3Rlc3Rfc3BsaXQoZGlnaXRzLmRhdGEsIGRpZ2l0cy50YXJnZXQsIHRlc3Rfc2l6ZT0wLjUsIHJhbmRvbV9zdGF0ZT0wKVxuXG4jIEltcG9ydCBHcmlkU2VhcmNoQ1ZcbmZyb20gc2tsZWFybi5ncmlkX3NlYXJjaCBpbXBvcnQgR3JpZFNlYXJjaENWXG5cbiMgU2V0IHRoZSBwYXJhbWV0ZXIgY2FuZGlkYXRlc1xucGFyYW1ldGVyX2NhbmRpZGF0ZXMgPSBbXG4gIHsnQyc6IFsxLCAxMCwgMTAwLCAxMDAwXSwgJ2tlcm5lbCc6IFsnbGluZWFyJ119LFxuICB7J0MnOiBbMSwgMTAsIDEwMCwgMTAwMF0sICdnYW1tYSc6IFswLjAwMSwgMC4wMDAxXSwgJ2tlcm5lbCc6IFsncmJmJ119LFxuXVxuXG4jIENyZWF0ZSBhIGNsYXNzaWZpZXIgd2l0aCB0aGUgcGFyYW1ldGVyIGNhbmRpZGF0ZXNcbmNsZiA9IEdyaWRTZWFyY2hDVihlc3RpbWF0b3I9c3ZtLlNWQygpLCBwYXJhbV9ncmlkPXBhcmFtZXRlcl9jYW5kaWRhdGVzLCBuX2pvYnM9LTEpXG5cbiMgVHJhaW4gdGhlIGNsYXNzaWZpZXIgb24gdHJhaW5pbmcgZGF0YVxuY2xmLmZpdChYX3RyYWluLCB5X3RyYWluKVxuXG4jIFByaW50IG91dCB0aGUgcmVzdWx0cyBcbnByaW50KCdCZXN0IHNjb3JlIGZvciB0cmFpbmluZyBkYXRhOicsIGNsZi5iZXN0X3Njb3JlXylcbnByaW50KCdCZXN0IGBDYDonLGNsZi5iZXN0X2VzdGltYXRvcl8uQylcbnByaW50KCdCZXN0IGtlcm5lbDonLGNsZi5iZXN0X2VzdGltYXRvcl8ua2VybmVsKVxucHJpbnQoJ0Jlc3QgYGdhbW1hYDonLGNsZi5iZXN0X2VzdGltYXRvcl8uZ2FtbWEpIn0=</div>
+
+<p>Next, you use the classifier with the classifier and parameter candidates that you have just created to apply it to the second part of your data set. Next, you also train a new classifier using the best parameters found by the grid search. You score the result to see if the best parameters that were found in the grid search are actually working.</p>
+
+<div data-datacamp-exercise="" data-encoded="true" data-height="300">eyJsYW5ndWFnZSI6InB5dGhvbiIsInByZV9leGVyY2lzZV9jb2RlIjoiZnJvbSBza2xlYXJuIGltcG9ydCBzdm1cbmZyb20gc2tsZWFybiBpbXBvcnQgZGF0YXNldHNcbmZyb20gc2tsZWFybi5jcm9zc192YWxpZGF0aW9uIGltcG9ydCB0cmFpbl90ZXN0X3NwbGl0XG5kaWdpdHMgPSBkYXRhc2V0cy5sb2FkX2RpZ2l0cygpXG5YX3RyYWluLCBYX3Rlc3QsIHlfdHJhaW4sIHlfdGVzdCA9IHRyYWluX3Rlc3Rfc3BsaXQoZGlnaXRzLmRhdGEsIGRpZ2l0cy50YXJnZXQsIHRlc3Rfc2l6ZT0wLjUsIHJhbmRvbV9zdGF0ZT0wKVxuZnJvbSBza2xlYXJuLmdyaWRfc2VhcmNoIGltcG9ydCBHcmlkU2VhcmNoQ1ZcbnBhcmFtZXRlcl9jYW5kaWRhdGVzID0gW1xuICB7J0MnOiBbMSwgMTAsIDEwMCwgMTAwMF0sICdrZXJuZWwnOiBbJ2xpbmVhciddfSxcbiAgeydDJzogWzEsIDEwLCAxMDAsIDEwMDBdLCAnZ2FtbWEnOiBbMC4wMDEsIDAuMDAwMV0sICdrZXJuZWwnOiBbJ3JiZiddfSxcbl1cbmNsZiA9IEdyaWRTZWFyY2hDVihlc3RpbWF0b3I9c3ZtLlNWQygpLCBwYXJhbV9ncmlkPXBhcmFtZXRlcl9jYW5kaWRhdGVzLCBuX2pvYnM9LTEpXG5jbGYuZml0KFhfdHJhaW4sIHlfdHJhaW4pIiwic2FtcGxlIjoiIyBBcHBseSB0aGUgY2xhc3NpZmllciB0byB0aGUgdGVzdCBkYXRhLCBhbmQgdmlldyB0aGUgYWNjdXJhY3kgc2NvcmVcbmNsZi5zY29yZShYX3Rlc3QsIHlfdGVzdCkgIFxuXG4jIFRyYWluIGFuZCBzY29yZSBhIG5ldyBjbGFzc2lmaWVyIHdpdGggdGhlIGdyaWQgc2VhcmNoIHBhcmFtZXRlcnNcbnN2bS5TVkMoQz0xMCwga2VybmVsPSdyYmYnLCBnYW1tYT0wLjAwMSkuZml0KFhfdHJhaW4sIHlfdHJhaW4pLnNjb3JlKFhfdGVzdCwgeV90ZXN0KSJ9</div>
+
+<p>The parameters indeed work well!</p>
+
+<p>Now what does this new knowledge tell you about the SVC classifier that you had modeled before you had done the grid search?</p>
+
+<p>Let&rsquo;s back up to the model that you had made before.</p>
+
+<p>You see that in the SVM classifier, the penalty parameter <code>C</code> of the error term is specified at <code>100.</code>. Lastly, you see that the kernel has been explicitly specified as a <code>linear</code> one. The <code>kernel</code>argument specifies the kernel type that you&rsquo;re going to use in the algorithm and by default, this is <code>rbf</code>. In other cases, you can specify others such as <code>linear</code>, <code>poly</code>, &hellip;</p>
+
+<p>But what is a kernel exactly?</p>
+
+<p>A kernel is a similarity function, which is used to compute similarity between the training data points. When you provide a kernel to an algorithm, together with the training data and the labels, you will get a classifier, as is the case here. You will have trained a model that assigns new unseen objects into a particular category. For the SVM, you will typicall try to linearly divide your data points.</p>
+
+<p>However, the grid search tells you that an <code>rbf</code> kernel would&rsquo;ve worked better. The penalty parameter and the gamma were specified correctly.</p>
+
+<p><b>Tip: </b>try out the classifier with an <code>rbf</code> kernel.</p>
+
+<p>For now, let&rsquo;s just say you just continue with a linear kernel and predict the values for the test set:</p>
+
+<div data-datacamp-exercise="" data-encoded="true" data-height="300">eyJsYW5ndWFnZSI6InB5dGhvbiIsInByZV9leGVyY2lzZV9jb2RlIjoiZnJvbSBza2xlYXJuIGltcG9ydCBkYXRhc2V0c1xuZnJvbSBza2xlYXJuLnByZXByb2Nlc3NpbmcgaW1wb3J0IHNjYWxlXG5mcm9tIHNrbGVhcm4gaW1wb3J0IGNsdXN0ZXJcbmRpZ2l0cyA9IGRhdGFzZXRzLmxvYWRfZGlnaXRzKClcbmRhdGEgPSBzY2FsZShkaWdpdHMuZGF0YSlcbmZyb20gc2tsZWFybi5jcm9zc192YWxpZGF0aW9uIGltcG9ydCB0cmFpbl90ZXN0X3NwbGl0XG5YX3RyYWluLCBYX3Rlc3QsIHlfdHJhaW4sIHlfdGVzdCwgaW1hZ2VzX3RyYWluLCBpbWFnZXNfdGVzdCA9IHRyYWluX3Rlc3Rfc3BsaXQoZGlnaXRzLmRhdGEsIGRpZ2l0cy50YXJnZXQsIGRpZ2l0cy5pbWFnZXMsIHRlc3Rfc2l6ZT0wLjI1LCByYW5kb21fc3RhdGU9NDIpXG5mcm9tIHNrbGVhcm4gaW1wb3J0IHN2bVxuc3ZjX21vZGVsID0gc3ZtLlNWQyhnYW1tYT0wLjAwMSwgQz0xMDAuLCBrZXJuZWw9J2xpbmVhcicpXG5zdmNfbW9kZWwuZml0KFhfdHJhaW4sIHlfdHJhaW4pIiwic2FtcGxlIjoiIyBQcmVkaWN0IHRoZSBsYWJlbCBvZiBgWF90ZXN0YFxucHJpbnQoc3ZjX21vZGVsLnByZWRpY3QoX19fX19fKSlcblxuIyBQcmludCBgeV90ZXN0YCB0byBjaGVjayB0aGUgcmVzdWx0c1xucHJpbnQoX19fX19fKSIsInNvbHV0aW9uIjoiIyBQcmVkaWN0IHRoZSBsYWJlbCBvZiBgWF90ZXN0YFxucHJpbnQoc3ZjX21vZGVsLnByZWRpY3QoWF90ZXN0KSlcblxuIyBQcmludCBgeV90ZXN0YCB0byBjaGVjayB0aGUgcmVzdWx0c1xucHJpbnQoeV90ZXN0KSIsInNjdCI6InRlc3RfZnVuY3Rpb24oXG4gICAgXCJwcmludFwiLFxuICAgIDEsXG4gICAgbm90X2NhbGxlZF9tc2c9XCJEaWQgeW91IHByaW50IG91dCB0aGUgcHJlZGljdGVkIGxhYmVscyBvZiBgWF90ZXN0YD9cIixcbiAgICBpbmNvcnJlY3RfbXNnPVwiRG9uJ3QgZm9yZ2V0IHRvIHByaW50IG91dCB0aGUgcHJlZGljdGVkIGxhYmVscyBvZiBgWF90ZXN0YCFcIixcbiAgICBkb19ldmFsPUZhbHNlXG4pXG50ZXN0X2Z1bmN0aW9uKFxuICAgIFwicHJpbnRcIixcbiAgICAyLFxuICAgIG5vdF9jYWxsZWRfbXNnPVwiRGlkIHlvdSBwcmludCBvdXQgdGhlIHRydWUgbGFiZWxzIG9mIGB5X3Rlc3RgP1wiLFxuICAgIGluY29ycmVjdF9tc2c9XCJEb24ndCBmb3JnZXQgdG8gcmV2ZWFsaW5nIHRoZSB0cnVlIGxhYmVscyBieSBwcmludGluZyBvdXQgYHlfdGVzdGAhXCIsXG4gICAgZG9fZXZhbD1GYWxzZVxuKVxuc3VjY2Vzc19tc2coXCJXZWxsIGRvbmUhXCIpIn0=</div>
+
+<p>You can also visualize the images and their predicted labels:</p>
+
+<pre>
+<code># Import matplotlib
+import matplotlib.pyplot as plt
+
+# Assign the predicted values to `predicted`
+predicted = svc_model.predict(X_test)
+
+# Zip together the `images_test` and `predicted` values in `images_and_predictions`
+images_and_predictions = list(zip(images_test, predicted))
+
+# For the first 4 elements in `images_and_predictions`
+for index, (image, prediction) in enumerate(images_and_predictions[:4]):
+    # Initialize subplots in a grid of 1 by 4 at positions i+1
+    plt.subplot(1, 4, index + 1)
+    # Don't show axes
+    plt.axis('off')
+    # Display images in all subplots in the grid
+    plt.imshow(image, cmap=plt.cm.gray_r, interpolation='nearest')
+    # Add a title to the plot
+    plt.title('Predicted: ' + str(prediction))
+
+# Show the plot
+plt.show()</code></pre>
+
+<p>This plot is very similar to the plot that you made when you were exploring the data:</p>
+
+<p><img alt="Images and Predicted labels visualized with matplotlib" src="http://community.datacamp.com.s3.amazonaws.com/community/production/ckeditor_assets/pictures/273/content_plot7.png" /></p>
+
+<p>Only this time, you zip together the images and the predicted values and you only take the first 4 elements of <code>images_and_predictions</code>.</p>
+
+<p>But now the biggest question: how does this model perform?</p>
+
+<div data-datacamp-exercise="" data-encoded="true" data-height="300">eyJsYW5ndWFnZSI6InB5dGhvbiIsInByZV9leGVyY2lzZV9jb2RlIjoiZnJvbSBza2xlYXJuIGltcG9ydCBkYXRhc2V0c1xuZnJvbSBza2xlYXJuLnByZXByb2Nlc3NpbmcgaW1wb3J0IHNjYWxlXG5mcm9tIHNrbGVhcm4gaW1wb3J0IGNsdXN0ZXJcbmRpZ2l0cyA9IGRhdGFzZXRzLmxvYWRfZGlnaXRzKClcbmRhdGEgPSBzY2FsZShkaWdpdHMuZGF0YSlcbmZyb20gc2tsZWFybi5jcm9zc192YWxpZGF0aW9uIGltcG9ydCB0cmFpbl90ZXN0X3NwbGl0XG5YX3RyYWluLCBYX3Rlc3QsIHlfdHJhaW4sIHlfdGVzdCwgaW1hZ2VzX3RyYWluLCBpbWFnZXNfdGVzdCA9IHRyYWluX3Rlc3Rfc3BsaXQoZGlnaXRzLmRhdGEsIGRpZ2l0cy50YXJnZXQsIGRpZ2l0cy5pbWFnZXMsIHRlc3Rfc2l6ZT0wLjI1LCByYW5kb21fc3RhdGU9NDIpXG5mcm9tIHNrbGVhcm4gaW1wb3J0IHN2bVxuc3ZjX21vZGVsID0gc3ZtLlNWQyhnYW1tYT0wLjAwMSwgQz0xMDAuLCBrZXJuZWw9J2xpbmVhcicpXG5zdmNfbW9kZWwuZml0KFhfdHJhaW4sIHlfdHJhaW4pXG5wcmVkaWN0ZWQgPSBzdmNfbW9kZWwucHJlZGljdChYX3Rlc3QpIiwic2FtcGxlIjoiIyBJbXBvcnQgYG1ldHJpY3NgXG5mcm9tIHNrbGVhcm4gaW1wb3J0IG1ldHJpY3NcblxuIyBQcmludCB0aGUgY2xhc3NpZmljYXRpb24gcmVwb3J0IG9mIGB5X3Rlc3RgIGFuZCBgcHJlZGljdGVkYFxucHJpbnQobWV0cmljcy5jbGFzc2lmaWNhdGlvbl9yZXBvcnQoX19fX19fLCBfX19fX19fX18pKVxuXG4jIFByaW50IHRoZSBjb25mdXNpb24gbWF0cml4IG9mIGB5X3Rlc3RgIGFuZCBgcHJlZGljdGVkYFxucHJpbnQobWV0cmljcy5jb25mdXNpb25fbWF0cml4KF9fX19fXywgX19fX19fX19fKSkiLCJzb2x1dGlvbiI6IiMgSW1wb3J0IGBtZXRyaWNzYFxuZnJvbSBza2xlYXJuIGltcG9ydCBtZXRyaWNzXG5cbiMgUHJpbnQgdGhlIGNsYXNzaWZpY2F0aW9uIHJlcG9ydCBvZiBgeV90ZXN0YCBhbmQgYHByZWRpY3RlZGBcbnByaW50KG1ldHJpY3MuY2xhc3NpZmljYXRpb25fcmVwb3J0KHlfdGVzdCwgcHJlZGljdGVkKSlcblxuIyBQcmludCB0aGUgY29uZnVzaW9uIG1hdHJpeFxucHJpbnQobWV0cmljcy5jb25mdXNpb25fbWF0cml4KHlfdGVzdCwgcHJlZGljdGVkKSkiLCJzY3QiOiJ0ZXN0X2ltcG9ydChcInNrbGVhcm4ubWV0cmljc1wiLCBzYW1lX2FzID0gVHJ1ZSwgbm90X2ltcG9ydGVkX21zZyA9IFwiRGlkIHlvdSBpbXBvcnQgYG1ldHJpY3NgIGZyb20gYHNrbGVhcm5gP1wiLCBpbmNvcnJlY3RfYXNfbXNnID0gXCJEb24ndCBmb3JnZXQgdG8gaW1wb3J0IGBtZXRyaWNzYCBmcm9tIGBza2xlYXJuYCFcIilcbm5vdF9jYWxsZWRfbXNnPVwiRGlkIHlvdSBmaWxsIGluIGB5X3Rlc3RgIGFuZCBgcHJlZGljdGVkYD9cIlxuaW5jb3JyZWN0X21zZz1cIkRvbid0IGZvcmdldCB0byBmaWxsIGluIGB5X3Rlc3RgIGFzIHRoZSBmaXJzdCBhcmd1bWVudCwgYHByZWRpY3RlZGAgYXMgdGhlIHNlY29uZCBhcmd1bWVudCFcIlxudGVzdF9mdW5jdGlvbihcInByaW50XCIsIDEsIGRvX2V2YWw9RmFsc2UsIG5vdF9jYWxsZWRfbXNnID0gbm90X2NhbGxlZF9tc2csIGluY29ycmVjdF9tc2cgPSBpbmNvcnJlY3RfbXNnKVxudGVzdF9mdW5jdGlvbihcInByaW50XCIsIDIsIGRvX2V2YWw9RmFsc2UsIG5vdF9jYWxsZWRfbXNnID0gbm90X2NhbGxlZF9tc2csIGluY29ycmVjdF9tc2cgPSBpbmNvcnJlY3RfbXNnKVxuc3VjY2Vzc19tc2c9XCJXZWxsIGRvbmUhIE5vdywgY2hlY2sgdGhlIHJlc3VsdHMgb2YgdGhlIGNvbmZ1c2lvbiBtYXRyaXguIERvZXMgdGhpcyBtb2RlbCBwZXJmb3JtIGJldHRlcj9cIiJ9</div>
+
+<p>You clearly see that this model performs a whole lot better than the clustering model that you used earlier.</p>
+
+<p>You can also see it when you visualize the predicted and the actual labels with the help of <code>Isomap()</code>:</p>
+
+<pre>
+<code># Import `Isomap()`
+from sklearn.manifold import Isomap
+
+# Create an isomap and fit the `digits` data to it
+X_iso = Isomap(n_neighbors=10).fit_transform(X_train)
+
+# Compute cluster centers and predict cluster index for each sample
+predicted = svc_model.predict(X_train)
+
+# Create a plot with subplots in a grid of 1X2
+fig, ax = plt.subplots(1, 2, figsize=(8, 4))
+
+# Adjust the layout
+fig.subplots_adjust(top=0.85)
+
+# Add scatterplots to the subplots 
+ax[0].scatter(X_iso[:, 0], X_iso[:, 1], c=predicted)
+ax[0].set_title('Predicted labels')
+ax[1].scatter(X_iso[:, 0], X_iso[:, 1], c=y_train)
+ax[1].set_title('Actual Labels')
+
+
+# Add title
+fig.suptitle('Predicted versus actual labels', fontsize=14, fontweight='bold')
+
+# Show the plot
+plt.show()</code></pre>
+
+<p>This will give you the following scatterplots:</p>
+
+<p><img alt="Isomap scatterplot visualization" src="http://community.datacamp.com.s3.amazonaws.com/community/production/ckeditor_assets/pictures/274/content_plot8.png" /></p>
+
+<p>You&rsquo;ll see that this visualization confirms your classification report, which is very good news. :)</p>
+</div>
+
+<div class="section level3" id="whats-next">
+<h3>What&#39;s Next?</h3>
+
+<div class="section level4" id="digit-recognition-in-natural-images">
+<h4>Digit Recognition in Natural Images</h4>
+
+<p>Congratulations, you have reached the end of this scikit-learn tutorial, which was meant to introduce you to Python machine learning! Now it&#39;s your turn.</p>
+
+<p>Start your own digit recognition project with different data. One dataset that you can already use is the MNIST data, which you can download <a href="http://yann.lecun.com/exdb/mnist/">here</a>.</p>
+
+<p>The steps that you will need to take are very similar to the ones that you have gone through with this tutorial, but if you still feel that you can use some help, you should check out <a href="http://johnloeber.com/docs/kmeans.html">this page</a>, which works with the MNIST data and applies the KMeans algorithm.</p>
+
+<p>Working with the digits dataset was the first step in classifying characters with <code>scikit-learn</code>. If you&rsquo;re done with this, you might consider trying out an even more challenging problem, namely, classifying alphanumeric characters in natural images.</p>
+
+<p>A well-known dataset that you can use for this problem is the Chars74K dataset, which contains more than 74,000 images of digits from 0 to 9 and the both lowercase and higher case letters of the English alphabet. You can download the dataset <a href="http://www.ee.surrey.ac.uk/CVSSP/demos/chars74k/">here</a>.</p>
+</div>
+
+<div class="section level4" id="data-visualization-and-pandas">
+<h4>Data Visualization and <code>pandas</code></h4>
+
+<p>Whether you&#39;re going to start with the projects that have been mentioned above or not, this is definitely not the end of your journey of data science with Python. If you choose not to widen your view just yet, consider deepening your data visualization and data manipulation knowledge.</p>
+
+<p>Don&#39;t miss out on our <a href="https://www.datacamp.com/courses/interactive-data-visualization-with-bokeh">Interactive Data Visualization with Bokeh course</a> to make sure you can impress your peers with a stunning data science portfolio or our <a href="https://www.datacamp.com/courses/pandas-foundations">pandas Foundation course</a>, to learn more about working with data frames in Python.</p>
+</div>
+</div>
+</div>
+<script>
