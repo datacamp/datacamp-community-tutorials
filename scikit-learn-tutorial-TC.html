@@ -1,0 +1,615 @@
+<!DOCTYPE html>
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+
+<head>
+
+<meta charset="utf-8">
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<meta name="generator" content="pandoc" />
+
+
+
+
+<title>Scikit-Learn 教學：Python 與機器學習</title>
+
+<script src="scikit-learn-tutorial-TC_files/jquery-1.11.3/jquery.min.js"></script>
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<link href="scikit-learn-tutorial-TC_files/bootstrap-3.3.5/css/bootstrap.min.css" rel="stylesheet" />
+<script src="scikit-learn-tutorial-TC_files/bootstrap-3.3.5/js/bootstrap.min.js"></script>
+<script src="scikit-learn-tutorial-TC_files/bootstrap-3.3.5/shim/html5shiv.min.js"></script>
+<script src="scikit-learn-tutorial-TC_files/bootstrap-3.3.5/shim/respond.min.js"></script>
+<script src="scikit-learn-tutorial-TC_files/navigation-1.1/tabsets.js"></script>
+<link href="scikit-learn-tutorial-TC_files/highlightjs-1.1/default.css" rel="stylesheet" />
+<script src="scikit-learn-tutorial-TC_files/highlightjs-1.1/highlight.js"></script>
+
+<style type="text/css">code{white-space: pre;}</style>
+<style type="text/css">
+  pre:not([class]) {
+    background-color: white;
+  }
+</style>
+<script type="text/javascript">
+if (window.hljs && document.readyState && document.readyState === "complete") {
+   window.setTimeout(function() {
+      hljs.initHighlighting();
+   }, 0);
+}
+</script>
+
+
+
+<style type="text/css">
+h1 {
+  font-size: 34px;
+}
+h1.title {
+  font-size: 38px;
+}
+h2 {
+  font-size: 30px;
+}
+h3 {
+  font-size: 24px;
+}
+h4 {
+  font-size: 18px;
+}
+h5 {
+  font-size: 16px;
+}
+h6 {
+  font-size: 12px;
+}
+.table th:not([align]) {
+  text-align: left;
+}
+</style>
+
+
+</head>
+
+<body>
+
+<style type = "text/css">
+.main-container {
+  max-width: 940px;
+  margin-left: auto;
+  margin-right: auto;
+}
+code {
+  color: inherit;
+  background-color: rgba(0, 0, 0, 0.04);
+}
+img {
+  max-width:100%;
+  height: auto;
+}
+.tabbed-pane {
+  padding-top: 12px;
+}
+button.code-folding-btn:focus {
+  outline: none;
+}
+</style>
+
+
+
+<div class="container-fluid main-container">
+
+<!-- tabsets -->
+<script>
+$(document).ready(function () {
+  window.buildTabsets("TOC");
+});
+</script>
+
+<!-- code folding -->
+
+
+
+
+
+
+<div class="fluid-row" id="header">
+
+
+
+<h1 class="title toc-ignore">Scikit-Learn 教學：Python 與機器學習</h1>
+
+</div>
+
+
+<script src="https://cdn.datacamp.com/datacamp-light-latest.min.js"></script>
+<div id="-python-" class="section level2">
+<h2>使用 Python 實作機器學習</h2>
+<p>機器學習是一門設計如何讓演算法能夠學習的電腦科學，讓機器能夠透過觀察已知的資料學習預測未知的資料。典型的應用包含概念學習（Concept learning）、函數學習（Function learning）、預測模型（Predictive modeling）、分群（Clustering）與找尋預測特徵（Finding predictive patterns）。終極目標是讓電腦能夠自行提升學習能力，預測未知資料的準確性能夠隨著已知資料的增加而提高，節省使用者人工調整校正的精力。</p>
+<p>機器學習跟知識發掘（Knowledge Discovery）、資料採礦（Data Mining）、人工智慧（Artificial Intelligence, AI）以及統計（Statistics）有著密不可分的關係，應用範圍從學術研究到商業應用，從機器人科學家到垃圾郵件篩選與推薦系統，都可見其蹤影。</p>
+<p>要成為一個優秀的資料科學家，機器學習是不可或缺的技能，這份教學會從零開始介紹如何使用 Python 來實作機器學習，並且示範如何使用一些非監督式與監督式的機器學習演算法。如果您對於使用 R 語言來實作機器學習更有興趣，可以參閱 <a href="https://www.datacamp.com/community/tutorials/machine-learning-in-r">Machine Learning with R for Beginners tutorial</a>。</p>
+<div class="section level3">
+<h3>讀入資料</h3>
+<p>跟任何的資料科學專案相同，我們在教學的一開始就是將資料讀入 Python 的開發環境。如果您是一位機器學習的初學者，我們推薦三個很棒的資料來源，分別是<a href="http://archive.ics.uci.edu/ml/datasets">加州大學 Irvine 分校的機器學習資料集</a>、<a href="www.kaggle.com">Kaggle 網站</a>與 <a href="http://www.kdnuggets.com/datasets/index.html">KD Nuggets 整理的資料集資源</a>。</p>
+<p>好，讓我們來暖身一下，利用 Python 的機器學習套件 scikit-learn 將一個叫作 <code>digits</code> 的資料讀入。</p>
+<p><strong>冷知識：</strong>scikit-learn 源於於 SciPy，事實上 <a href="https://scikits.appspot.com/scikits">scikit 有很多個</a>，我們使用的 scikit-learn 套件是專門用來實作機器學習以及資料採礦的，這也是為什麼使用 learn 來命名:)</p>
+<p>我們首先由 <code>sklearn</code> 套件載入 <code>datasets</code> 模組，然後使用 <code>datasets</code> 模組的 <code>load_digits()</code> 方法來輸入資料，試著依照註解的提示完成程式後點選 <strong>Run</strong> 觀察結果，如果沒有頭緒，可以點選 <strong>Solution</strong> 將程式完成後再點選 <strong>Run</strong> 觀察結果：</p>
+<div data-datacamp-exercise="" data-height="300" data-encoded="true">
+eyJsYW5ndWFnZSI6InB5dGhvbiIsInNhbXBsZSI6IiMgSW1wb3J0IGBkYXRhc2V0c2AgZnJvbSBgc2tsZWFybmBcbmZyb20gc2tsZWFybiBpbXBvcnQgX19fX19fX19cblxuIyBMb2FkIGluIHRoZSBgZGlnaXRzYCBkYXRhXG5kaWdpdHMgPSBkYXRhc2V0cy5sb2FkX2RpZ2l0cygpXG5cbiMgUHJpbnQgdGhlIGBkaWdpdHNgIGRhdGEgXG5wcmludChfX19fX18pIiwic29sdXRpb24iOiIjIEltcG9ydCBgZGF0YXNldHNgIGZyb20gYHNrbGVhcm5gXG5mcm9tIHNrbGVhcm4gaW1wb3J0IGRhdGFzZXRzXG5cbiMgTG9hZCBpbiB0aGUgYGRpZ2l0c2AgZGF0YVxuZGlnaXRzID0gZGF0YXNldHMubG9hZF9kaWdpdHMoKVxuXG4jIFByaW50IHRoZSBgZGlnaXRzYCBkYXRhIFxucHJpbnQoZGlnaXRzKSIsInNjdCI6ImltcG9ydF9tc2c9XCJEaWQgeW91IGltcG9ydCBgZGF0YXNldHNgIGZyb20gYHNrbGVhcm5gP1wiXG5pbmNvcnJlY3RfaW1wb3J0X21zZz1cIkRvbid0IGZvcmdldCB0byBpbXBvcnQgdGhlIGBkYXRhc2V0c2AgbW9kdWxlIGZyb20gYHNrbGVhcm5gIVwiXG5ub3RfY2FsbGVkX21zZz1cIkRpZCB5b3UgdXNlIGBkYXRhc2V0cy5sb2FkX2RpZ2l0cygpYCB0byBsb2FkIGluIHRoZSBgZGlnaXRzYCBkYXRhP1wiXG5pbmNvcnJlY3RfbXNnPVwiVXNlIGBkYXRhc2V0cy5sb2FkX2RpZ2l0cygpYCB0byBsb2FkIGluIHRoZSBgZGlnaXRzYCBkYXRhIVwiXG5wcmVkZWZfbXNnPVwiRGlkIHlvdSBjYWxsIHRoZSBgcHJpbnQoKWAgZnVuY3Rpb24/XCJcbnRlc3RfaW1wb3J0KFwic2tsZWFybi5kYXRhc2V0c1wiLCBzYW1lX2FzID0gVHJ1ZSwgbm90X2ltcG9ydGVkX21zZyA9IGltcG9ydF9tc2csIGluY29ycmVjdF9hc19tc2cgPSBpbmNvcnJlY3RfaW1wb3J0X21zZylcbnRlc3RfZnVuY3Rpb24oXCJza2xlYXJuLmRhdGFzZXRzLmxvYWRfZGlnaXRzXCIsIG5vdF9jYWxsZWRfbXNnID0gbm90X2NhbGxlZF9tc2csIGluY29ycmVjdF9tc2cgPSBpbmNvcnJlY3RfbXNnKVxuIyBUZXN0IGBwcmludCgpYCBmdW5jdGlvblxudGVzdF9mdW5jdGlvbihcbiAgICBcInByaW50XCIsXG4gICAgbm90X2NhbGxlZF9tc2c9cHJlZGVmX21zZyxcbiAgICBpbmNvcnJlY3RfbXNnPXByZWRlZl9tc2csXG4gICAgZG9fZXZhbD1GYWxzZVxuKVxuc3VjY2Vzc19tc2c9XCJQZXJmZWN0ISBZb3UncmUgcmVhZHkgdG8gZ28hXCIifQ==
+</div>
+<p><code>datasets</code> 模組還有其他讀取資料的方法，您也可以用它來產生虛擬資料。我們現在所使用的資料集 <code>digits</code> 也可以從加州大學 Irvine 分校的機器學習資料集載入，您可以在<a href="http://archive.ics.uci.edu/ml/machine-learning-databases/optdigits/">這個連結</a>找到。假如您想要從加州大學 Irvine 分校的機器學習資料集載入 <code>digits</code>，讀入資料的程式寫法會變得像這樣，試著依照註解的提示完成程式後點選 <strong>Run</strong> 觀察結果，如果沒有頭緒，可以點選 <strong>Solution</strong> 將程式完成後再點選 <strong>Run</strong> 觀察結果：</p>
+<div data-datacamp-exercise="" data-height="300" data-encoded="true">
+eyJsYW5ndWFnZSI6InB5dGhvbiIsInNhbXBsZSI6IiMgSW1wb3J0IHRoZSBgcGFuZGFzYCBsaWJyYXJ5IGFzIGBwZGBcbmltcG9ydCBfX19fX18gYXMgX19cblxuIyBMb2FkIGluIHRoZSBkYXRhIHdpdGggYHJlYWRfY3N2KClgXG5kaWdpdHMgPSBwZC5yZWFkX2NzdihcImh0dHA6Ly9hcmNoaXZlLmljcy51Y2kuZWR1L21sL21hY2hpbmUtbGVhcm5pbmctZGF0YWJhc2VzL29wdGRpZ2l0cy9vcHRkaWdpdHMudHJhXCIsIGhlYWRlcj1Ob25lKVxuXG4jIFByaW50IG91dCBgZGlnaXRzYFxucHJpbnQoX19fX19fKSIsInNvbHV0aW9uIjoiIyBJbXBvcnQgdGhlIGBwYW5kYXNgIGxpYnJhcnkgYXMgYHBkYFxuaW1wb3J0IHBhbmRhcyBhcyBwZFxuXG4jIExvYWQgaW4gdGhlIGRhdGEgd2l0aCBgcmVhZF9jc3YoKWBcbmRpZ2l0cyA9IHBkLnJlYWRfY3N2KFwiaHR0cDovL2FyY2hpdmUuaWNzLnVjaS5lZHUvbWwvbWFjaGluZS1sZWFybmluZy1kYXRhYmFzZXMvb3B0ZGlnaXRzL29wdGRpZ2l0cy50cmFcIiwgaGVhZGVyPU5vbmUpXG5cbiMgUHJpbnQgb3V0IGBkaWdpdHNgXG5wcmludChkaWdpdHMpIiwic2N0IjoiaW1wb3J0X21zZz1cIkRpZCB5b3UgYWRkIHNvbWUgY29kZSB0byBpbXBvcnQgYHBhbmRhc2AgYXMgYHBkYD9cIlxuaW5jb3JyZWN0X2ltcG9ydF9tc2c9XCJEb24ndCBmb3JnZXQgdG8gaW1wb3J0IHRoZSAncGFuZGFzJyBsaWJyYXJ5IGFzIGBwZGAhXCJcbmNzdl9tc2c9XCJEaWQgeW91IHVzZSB0aGUgYHJlYWRfY3N2KClgIG1ldGhvZCBmcm9tIHBhbmRhcyB0byBsb2FkIGluIHRoZSBkYXRhP1wiXG5jc3ZfaW5jb3JyZWN0X21zZz1cIlVzZSBgcmVhZF9jc3YoKWAgZnJvbSB0aGUgcGFuZGFzIGxpYnJhcnkgdG8gbG9hZCBpbiB0aGUgZGF0YSBcIlxucHJlZGVmX21zZz1cIkRpZCB5b3UgY2FsbCB0aGUgYHByaW50KClgIGZ1bmN0aW9uP1wiXG4jIFRlc3QgaW1wb3J0IGBwYW5kYXNgXG50ZXN0X2ltcG9ydChcInBhbmRhc1wiLCBzYW1lX2FzID0gVHJ1ZSwgbm90X2ltcG9ydGVkX21zZyA9IGltcG9ydF9tc2csIGluY29ycmVjdF9hc19tc2cgPSBpbmNvcnJlY3RfaW1wb3J0X21zZylcbiMgVGVzdCBgcmVhZF9jc3YoKWBcbnRlc3RfZnVuY3Rpb24oXCJwYW5kYXMucmVhZF9jc3ZcIiwgbm90X2NhbGxlZF9tc2cgPSBjc3ZfbXNnLCBpbmNvcnJlY3RfbXNnID0gY3N2X2luY29ycmVjdF9tc2cpXG4jIFRlc3QgYHByaW50KClgIGZ1bmN0aW9uXG50ZXN0X2Z1bmN0aW9uKFxuICAgIFwicHJpbnRcIixcbiAgICBub3RfY2FsbGVkX21zZz1wcmVkZWZfbXNnLFxuICAgIGluY29ycmVjdF9tc2c9cHJlZGVmX21zZyxcbiAgICBkb19ldmFsPUZhbHNlXG4pXG5zdWNjZXNzX21zZyhcIkF3ZXNvbWUgam9iIVwiKSJ9
+</div>
+<p>值得注意的是，從檔名的 <code>.tra</code> 與 <code>.tes</code> 可以得知，加州大學 Irvine 分校的機器學習資料集已經切分好訓練與測試資料，而上面這段程式中我們只讀入了訓練資料，如果要實作機器學習則還需要再讀入測試資料，</p>
+<p><strong>秘訣：</strong>想學習更多使用 Python 的 Pandas 套件來讀入與整理資料的技巧，可以參閱 <a href="https://www.datacamp.com/courses/importing-data-in-python-part-1">Importing Data in Python course</a>。</p>
+</div>
+<div class="section level3">
+<h3>探索資料</h3>
+<p>仔細閱讀資料的文件或描述是很好的習慣，加州大學 Irvine 分校的機器學習資料集針對每個資料都有提供文件，閱讀文件可以提高我們對資料的瞭解程度。然而光是初步認識還是略嫌不足，接著我們要進行的是探索性分析（Exploratory data analysis），我們又該從何開始探索這些手寫數字圖片資料呢？</p>
+<div class="section level4">
+<h4>搜集基本資訊</h4>
+<p>假如我們直接透過 scikit-learn 讀入 <code>digits</code> 資料，那麼不同於加州大學 Irvine 分校的機器學習資料集在網頁中提供描述或文件，我們必須另外透過使用 <code>digits</code> 的屬性與方法來搜集基本資訊。</p>
+<p>我們將透過 <code>digits</code> 的 <code>keys()</code> 方法來得知有哪些基本資訊可以搜集；透過 <code>data</code> 屬性觀察預測變數；透過 <code>target</code> 屬性觀察目標變數；透過 <code>DESCR</code> 屬性閱讀資料的描述文件。試著依照註解的提示完成程式後點選 <strong>Run</strong> 觀察結果，如果沒有頭緒，可以點選 <strong>Solution</strong> 將程式完成後再點選 <strong>Run</strong> 觀察結果：</p>
+<div data-datacamp-exercise="" data-height="300" data-encoded="true">
+eyJsYW5ndWFnZSI6InB5dGhvbiIsInByZV9leGVyY2lzZV9jb2RlIjoiZnJvbSBza2xlYXJuIGltcG9ydCBkYXRhc2V0c1xuZGlnaXRzID0gZGF0YXNldHMubG9hZF9kaWdpdHMoKSIsInNhbXBsZSI6IiMgR2V0IHRoZSBrZXlzIG9mIHRoZSBgZGlnaXRzYCBkYXRhXG5wcmludChkaWdpdHMuX19fX19fKVxuXG4jIFByaW50IG91dCB0aGUgZGF0YVxucHJpbnQoZGlnaXRzLl9fX18pXG5cbiMgUHJpbnQgb3V0IHRoZSB0YXJnZXQgdmFsdWVzXG5wcmludChkaWdpdHMuX19fX19fKVxuXG4jIFByaW50IG91dCB0aGUgZGVzY3JpcHRpb24gb2YgdGhlIGBkaWdpdHNgIGRhdGFcbnByaW50KGRpZ2l0cy5ERVNDUikiLCJzb2x1dGlvbiI6IiMgR2V0IHRoZSBrZXlzIG9mIHRoZSBgZGlnaXRzYCBkYXRhXG5wcmludChkaWdpdHMua2V5cygpKVxuXG4jIFByaW50IG91dCB0aGUgZGF0YVxucHJpbnQoZGlnaXRzLmRhdGEpXG5cbiMgUHJpbnQgb3V0IHRoZSB0YXJnZXQgdmFsdWVzXG5wcmludChkaWdpdHMudGFyZ2V0KVxuXG4jIFByaW50IG91dCB0aGUgZGVzY3JpcHRpb24gb2YgdGhlIGBkaWdpdHNgIGRhdGFcbnByaW50KGRpZ2l0cy5ERVNDUikiLCJzY3QiOiIjIFRlc3QgYHByaW50YCBcbnRlc3RfZnVuY3Rpb24oXG4gICAgXCJwcmludFwiLFxuICAgIDEsXG4gICAgbm90X2NhbGxlZF9tc2c9XCJEaWQgeW91IHByaW50IG91dCB0aGUga2V5cyBvZiBgZGlnaXRzYD9cIixcbiAgICBpbmNvcnJlY3RfbXNnPVwiRG9uJ3QgZm9yZ2V0IHRvIHByaW50IG91dCB0aGUga2V5cyBvZiBgZGlnaXRzYCFcIixcbiAgICBkb19ldmFsPUZhbHNlXG4pXG4jIFRlc3QgYHByaW50YFxudGVzdF9mdW5jdGlvbihcbiAgICBcInByaW50XCIsXG4gICAgMixcbiAgICBub3RfY2FsbGVkX21zZz1cIkRpZCB5b3UgcHJpbnQgb3V0IHRoZSBkYXRhP1wiLFxuICAgIGluY29ycmVjdF9tc2c9XCJEb24ndCBmb3JnZXQgdG8gcHJpbnQgb3V0IHRoZSBkYXRhIVwiLFxuICAgIGRvX2V2YWw9RmFsc2VcbilcbiMgVGVzdCBgcHJpbnRgXG50ZXN0X2Z1bmN0aW9uKFxuICAgIFwicHJpbnRcIixcbiAgICAzLFxuICAgIG5vdF9jYWxsZWRfbXNnPVwiRGlkIHlvdSBwcmludCBvdXQgdGhlIHRhcmdldCB2YWx1ZXMgb2YgdGhlIGRhdGE/XCIsXG4gICAgaW5jb3JyZWN0X21zZz1cIkRvbid0IGZvcmdldCB0byBwcmludCBvdXQgdGhlIHRhcmdldCB2YWx1ZXMgb2YgdGhlIGRhdGEhXCIsXG4gICAgZG9fZXZhbD1GYWxzZVxuKVxuIyBUZXN0IGBwcmludGAgXG50ZXN0X2Z1bmN0aW9uKFxuICAgIFwicHJpbnRcIixcbiAgICA0LFxuICAgIG5vdF9jYWxsZWRfbXNnPVwiRGlkIHlvdSBwcmludCBvdXQgdGhlIGRlc2NyaXB0aW9uIG9mIGBkaWdpdHNgP1wiLFxuICAgIGluY29ycmVjdF9tc2c9XCJEb24ndCBmb3JnZXQgdG8gcHJpbnQgb3V0IHRoZSBkZXNjcmlwdGlvbiBvZiBgZGlnaXRzYCFcIixcbiAgICBkb19ldmFsPUZhbHNlXG4pXG5zdWNjZXNzX21zZyhcIkF3ZXNvbWUhXCIpIn0=
+</div>
+<p>接著我們回憶一下在第一個練習中印出的 <code>digits</code>，裡頭出現很多的 <code>numpy</code> 陣列，了解陣列最重要的特性是形狀（shape）。假如我們有一個 3d 陣列：<code>y = np.zeros((2, 3, 4))</code>，這個陣列的形狀就是 <code>(2,3,4)</code>，由整數組成的 tuple 資料結構。</p>
+<p>我們延續前一個練習來觀察 <code>data</code>、<code>target</code>、<code>DESCR</code> 與 <code>images</code> 的形狀，利用 <code>digits</code> 的 <code>data</code> 屬性將這個陣列獨立指派給 <code>digits_data</code> 並檢視其 <code>shape</code> 屬性，並且對另外三個屬性也依樣畫葫蘆進行相同的操作，試著依照註解的提示完成程式後點選 <strong>Run</strong> 觀察結果，如果沒有頭緒，可以點選 <strong>Solution</strong> 將程式完成後再點選 <strong>Run</strong> 觀察結果：</p>
+<div data-datacamp-exercise="" data-height="300" data-encoded="true">
+eyJsYW5ndWFnZSI6InB5dGhvbiIsInByZV9leGVyY2lzZV9jb2RlIjoiZnJvbSBza2xlYXJuIGltcG9ydCBkYXRhc2V0c1xuaW1wb3J0IG51bXB5IGFzIG5wXG5kaWdpdHMgPSBkYXRhc2V0cy5sb2FkX2RpZ2l0cygpIiwic2FtcGxlIjoiIyBJc29sYXRlIHRoZSBgZGlnaXRzYCBkYXRhXG5kaWdpdHNfZGF0YSA9IGRpZ2l0cy5kYXRhXG5cbiMgSW5zcGVjdCB0aGUgc2hhcGVcbnByaW50KGRpZ2l0c19kYXRhLnNoYXBlKVxuXG4jIElzb2xhdGUgdGhlIHRhcmdldCB2YWx1ZXMgd2l0aCBgdGFyZ2V0YFxuZGlnaXRzX3RhcmdldCA9IGRpZ2l0cy5fX19fX19cblxuIyBJbnNwZWN0IHRoZSBzaGFwZVxucHJpbnQoZGlnaXRzX3RhcmdldC5fX19fXylcblxuIyBQcmludCB0aGUgbnVtYmVyIG9mIHVuaXF1ZSBsYWJlbHNcbm51bWJlcl9kaWdpdHMgPSBsZW4obnAudW5pcXVlKGRpZ2l0cy50YXJnZXQpKVxuXG4jIElzb2xhdGUgdGhlIGBpbWFnZXNgXG5kaWdpdHNfaW1hZ2VzID0gZGlnaXRzLmltYWdlc1xuXG4jIEluc3BlY3QgdGhlIHNoYXBlXG5wcmludChkaWdpdHNfaW1hZ2VzLnNoYXBlKSIsInNvbHV0aW9uIjoiIyBJc29sYXRlIHRoZSBgZGlnaXRzYCBkYXRhXG5kaWdpdHNfZGF0YSA9IGRpZ2l0cy5kYXRhXG5cbiMgSW5zcGVjdCB0aGUgc2hhcGVcbnByaW50KGRpZ2l0c19kYXRhLnNoYXBlKVxuXG4jIElzb2xhdGUgdGhlIHRhcmdldCB2YWx1ZXMgd2l0aCBgdGFyZ2V0YFxuZGlnaXRzX3RhcmdldCA9IGRpZ2l0cy50YXJnZXRcblxuIyBJbnNwZWN0IHRoZSBzaGFwZVxucHJpbnQoZGlnaXRzX3RhcmdldC5zaGFwZSlcblxuIyBQcmludCB0aGUgbnVtYmVyIG9mIHVuaXF1ZSBsYWJlbHNcbm51bWJlcl9kaWdpdHMgPSBsZW4obnAudW5pcXVlKGRpZ2l0cy50YXJnZXQpKVxuXG4jIElzb2xhdGUgdGhlIGBpbWFnZXNgXG5kaWdpdHNfaW1hZ2VzID0gZGlnaXRzLmltYWdlc1xuXG4jIEluc3BlY3QgdGhlIHNoYXBlXG5wcmludChkaWdpdHNfaW1hZ2VzLnNoYXBlKSIsInNjdCI6Im1zZ19kYXRhPVwiRGlkIHlvdSBhZGQgYHNoYXBlYCB0byBnZXQgdGhlIG51bWJlciBvZiBkaW1lbnNpb25zIGFuZCBpdGVtcyBvZiB0aGUgYGRpZ2l0c19kYXRhYCBhcnJheT9cIlxubXNnX3RhcmdldD1cIkRpZCB5b3UgYWRkIGBzaGFwZWAgdG8gZ2V0IHRoZSBudW1iZXIgb2YgZGltZW5zaW9ucyBhbmQgaXRlbXMgb2YgdGhlIGBkaWdpdHNfdGFyZ2V0YCBhcnJheT9cIlxubXNnX2ltYWdlPVwiRGlkIHlvdSBhZGQgYHNoYXBlYCB0byBnZXQgdGhlIG51bWJlciBvZiBkaW1lbnNpb25zIGFuZCBpdGVtcyBvZiB0aGUgYGRpZ2l0c19pbWFnZXNgIGFycmF5P1wiXG4jIFRlc3Qgb2JqZWN0IGBkaWdpdHNfZGF0YWBcbnRlc3Rfb2JqZWN0KFwiZGlnaXRzX2RhdGFcIiwgdW5kZWZpbmVkX21zZz1cIkRpZCB5b3UgZGVmaW5lIHRoZSBgZGlnaXRzX2RhdGFgIG9iamVjdD9cIiwgaW5jb3JyZWN0X21zZz1cIkRpZCB5b3UgdXNlIHRoZSBgZGF0YWAgYXR0cmlidXRlIHRvIGlzb2xhdGUgdGhlIGRhdGEgb2YgYGRpZ2l0c2A/XCIpXG4jIFRlc3Qgb2JqZWN0IGBkaWdpdHNfdGFyZ2V0YFxudGVzdF9vYmplY3QoXCJkaWdpdHNfdGFyZ2V0XCIsIHVuZGVmaW5lZF9tc2c9XCJEaWQgeW91IGRlZmluZSB0aGUgYGRpZ2l0c190YXJnZXRgIG9iamVjdD9cIiwgaW5jb3JyZWN0X21zZz1cIkRpZCB5b3UgdXNlIHRoZSBgdGFyZ2V0YCBhdHRyaWJ1dGUgdG8gaXNvbGF0ZSB0aGUgdGFyZ2V0IHZhbHVlcyBvZiB0aGUgYGRpZ2l0c2AgZGF0YT9cIilcbiMgVGVzdCBgc2hhcGVgIG9mIGBkaWdpdHNfZGF0YWBcbiN0ZXN0IGZ1bmN0aW9uIHByaW50XG50ZXN0X2Z1bmN0aW9uKFxuICAgIFwicHJpbnRcIixcbiAgICAxLFxuICAgIG5vdF9jYWxsZWRfbXNnPVwiRGlkIHlvdSBwcmludCBvdXQgdGhlIHNoYXBlIG9mIHRoZWRhdGE/XCIsXG4gICAgaW5jb3JyZWN0X21zZz1cIkRvbid0IGZvcmdldCB0byBwcmludCBvdXQgdGhlIHNoYXBlIG9mIHRoZSBkYXRhIVwiLFxuICAgIGRvX2V2YWw9RmFsc2VcbilcbnRlc3Rfb2JqZWN0X2FjY2Vzc2VkKFwiZGlnaXRzX2RhdGEuc2hhcGVcIiwgbm90X2FjY2Vzc2VkX21zZz1tc2dfZGF0YSlcbiMgVGVzdCBgcHJpbnRgXG50ZXN0X2Z1bmN0aW9uKFxuICAgIFwicHJpbnRcIixcbiAgICAyLFxuICAgIG5vdF9jYWxsZWRfbXNnPVwiRGlkIHlvdSBwcmludCBvdXQgdGhlIHNoYXBlIG9mIHRoZSB0YXJnZXQgdmFsdWVzIG9mIHRoZSBkYXRhP1wiLFxuICAgIGluY29ycmVjdF9tc2c9XCJEb24ndCBmb3JnZXQgdG8gcHJpbnQgb3V0IHRoZSBzaGFwZSBvZiB0aGUgdGFyZ2V0IHZhbHVlcyBvZiB0aGUgZGF0YSFcIixcbiAgICBkb19ldmFsPUZhbHNlXG4pXG4jIFRlc3QgYWNjZXNzIGBzaGFwZWAgb2YgYGRpZ2l0c190YXJnZXRgXG50ZXN0X29iamVjdF9hY2Nlc3NlZChcImRpZ2l0c190YXJnZXQuc2hhcGVcIiwgbm90X2FjY2Vzc2VkX21zZz1tc2dfdGFyZ2V0KVxuIyBUZXN0IG9iamVjdCBgbnVtYmVyX2RpZ2l0c2BcbnRlc3Rfb2JqZWN0KFwibnVtYmVyX2RpZ2l0c1wiLCB1bmRlZmluZWRfbXNnPVwiRGlkIHlvdSBkZWZpbmUgdGhlIGBudW1iZXJfZGlnaXRzYCBvYmplY3Q/XCIsIGluY29ycmVjdF9tc2c9XCJEaWQgeW91IHVzZSBgbnAudW5pcXVlKClgIHRvIGdpdmUgYmFjayB0aGUgdW5pcXVlIHRhcmdldCB2YWx1ZXM/IERvbid0IGZvcmdldCB0byBnaXZlIGJhY2sgdGhlIGxlbmd0aCBvZiB0aGlzIGFycmF5IHdpdGggYGxlbigpYCFcIilcbiMgVGVzdCBvYmplY3QgYGRpZ2l0c19pbWFnZXNgXG50ZXN0X29iamVjdChcImRpZ2l0c19pbWFnZXNcIiwgdW5kZWZpbmVkX21zZz1cIkRpZCB5b3UgZGVmaW5lIHRoZSBgZGlnaXRzX2ltYWdlc2Agb2JqZWN0P1wiLCBpbmNvcnJlY3RfbXNnPVwiRGlkIHlvdSB1c2UgdGhlIGBpbWFnZXNgIGF0dHJpYnV0ZSB0byBpc29sYXRlIHRoZSBpbWFnZXMgb2YgdGhlIGBkaWdpdHNgIGRhdGE/XCIpXG4jIFRlc3QgYHNoYXBlYCBvZiBgZGlnaXRzX2ltYWdlc2BcbnRlc3Rfb2JqZWN0X2FjY2Vzc2VkKFwiZGlnaXRzX2ltYWdlcy5zaGFwZVwiLCBub3RfYWNjZXNzZWRfbXNnPW1zZ19pbWFnZSlcbiMgVGVzdCBgcHJpbnRgIFxudGVzdF9mdW5jdGlvbihcbiAgICBcInByaW50XCIsXG4gICAgMyxcbiAgICBub3RfY2FsbGVkX21zZz1cIkRpZCB5b3UgcHJpbnQgb3V0IHRoZSBzaGFwZSBvZiB0aGUgaW1hZ2VzIG9mIGBkaWdpdHNgP1wiLFxuICAgIGluY29ycmVjdF9tc2c9XCJEb24ndCBmb3JnZXQgdG8gcHJpbnQgb3V0IHRoZSBzaGFwZSBvZiB0aGUgaW1hZ2VzIG9mIGBkaWdpdHNgIVwiLFxuICAgIGRvX2V2YWw9RmFsc2VcbilcbnN1Y2Nlc3NfbXNnKFwiV2VsbCBkb25lIVwiKSJ9
+</div>
+<p>我們在這小結一下，檢視 <code>digits.data.shape</code> 可以得知資料有 1,797 個觀測值，64 個變數，檢視 <code>digits.target.shape</code> 可以得知資料有 1,797 個目標值（或稱標籤值），而檢視 <code>len(np.unique(digits.target))</code> 可以得知所有的目標值只有 10 個相異值：0 到 9，意即我們的模型是要辨識手寫數字圖片是 0 到 9 中的哪一個數字。</p>
+<p>最後是 <code>digits.images</code> 的三個維度：1,797 個 8 x 8 像素的矩陣，我們可以進一步將 <code>digits.images</code> 轉換（reshape）為兩個維度，並且使用 <code>numpy</code> 的 <code>all()</code> 方法比較陣列內的元素是否與 <code>digits.data</code> 完全相同：<code>print(np.all(digits.images.reshape((1797,64)) == digits.data))</code>，而我們會得到 <code>True</code> 的結果。</p>
+</div>
+<div id="-matplotlib-" class="section level4">
+<h4>使用 <code>matplotlib</code> 視覺化手寫數字圖片</h4>
+<p>接下來我們要使用 Python 的資料視覺化套件 <a href="http://matplotlib.org/">matplotlib</a> 來視覺化這些手寫數字圖片：</p>
+<pre><code># 從 `sklearn` 載入 `datasets`
+from sklearn import datasets
+# 載入 matplotlib
+import matplotlib.pyplot as plt
+
+# 載入 `digits`
+digits = datasets.load_digits()
+
+# 設定圖形的大小（寬, 高）
+fig = plt.figure(figsize=(4, 2))
+
+# 調整子圖形 
+fig.subplots_adjust(left=0, right=1, bottom=0, top=1, hspace=0.05, wspace=0.05)
+
+# 把前 8 個手寫數字顯示在子圖形
+for i in range(8):
+    # 在 2 x 4 網格中第 i + 1 個位置繪製子圖形，並且關掉座標軸刻度
+    ax = fig.add_subplot(2, 4, i + 1, xticks = [], yticks = [])
+    # 顯示圖形，色彩選擇灰階
+    ax.imshow(digits.images[i], cmap = plt.cm.binary)
+    # 在左下角標示目標值
+    ax.text(0, 7, str(digits.target[i]))
+
+# 顯示圖形
+plt.show()</code></pre>
+<p>這段程式看起來有點難懂，讓我們分開來看：</p>
+<ul>
+<li>載入 <code>matplotlib</code> 套件。</li>
+<li>設定一個長 2 吋，寬 4 吋的空白畫布，準備待會將子圖形畫在上面。</li>
+<li>調整子圖形的一些參數。</li>
+<li>使用一個 <code>for</code> 迴圈開始要將空白畫布填滿。</li>
+<li>初始化 8 個子圖形，並依序填入 2 x 4 網格中的每一格。</li>
+<li>最後畫龍點睛的部分是在每個子圖形 (0, 7) 的位置（左下角）顯示目標值。</li>
+<li>別忘了使用 <code>plt.show()</code> 將畫好的圖顯示出來！</li>
+</ul>
+<p>完成後我們可以看到這張視覺化圖形：</p>
+<div class="figure">
+<img src="plots/plot1.png" />
+
+</div>
+<p>或者採取這段較簡潔的程式：</p>
+<pre><code># 從 `sklearn` 載入 `datasets`
+from sklearn import datasets
+# 載入 matplotlib
+import matplotlib.pyplot as plt
+
+# 載入 `digits`
+digits = datasets.load_digits()
+
+# 將觀測值與目標值放入一個 list
+images_and_labels = list(zip(digits.images, digits.target))
+
+# list 中的每個元素
+for i, (image, label) in enumerate(images_and_labels[:8]):
+    # 在 i + 1 的位置初始化子圖形
+    plt.subplot(2, 4, i + 1)
+    # 關掉子圖形座標軸刻度
+    plt.axis(&#39;off&#39;)
+    # 顯示圖形，色彩選擇灰階
+    plt.imshow(image, cmap = plt.cm.binary)
+    # 加入子圖形的標題
+    plt.title(&#39;Training: &#39; + str(label))
+
+# 顯示圖形
+plt.show()</code></pre>
+<p>完成後我們可以看到這張視覺化圖形：</p>
+<div class="figure">
+<img src="plots/plot2.png" />
+
+</div>
+<p>在這個例子中，我們將兩個陣列存入 <code>images_and_labels</code> 這個變數，然後將這個變數中的前 8 個元素（包含 <code>digits.images</code> 與相對應的 <code>digits.target</code>）在一個 2 x 4 的格線上繪製子圖形，並且使用 <code>plt.cm.binary</code> 這個灰階色彩，搭配子圖形標題顯示出來。</p>
+<p>經過這兩個視覺化練習之後，您應該對目前手上處理的 <code>digits</code> 資料有更深的認識！</p>
+</div>
+<div id="principal-component-analysis-pca" class="section level4">
+<h4>視覺化：主成份分析（Principal Component Analysis, PCA）</h4>
+<p><code>digits</code> 資料有 64 個變數，面對這種高維度的資料（實務上還有其他很多像是財務或者氣候資料也都屬於高維度資料），我們需要用一些方法找出特別重要的二到三個變數，或者將許多的變數組合成讓我們更容易理解且視覺化的幾個維度。</p>
+<p>這種方法稱作降維（Dimensionality Reduction），我們接著要使用其中一種方法稱為：主成份分析（Principal Component Analysis, PCA）來協助我們視覺化 <code>digits</code> 資料。主成份分析的精神在於找出變數之間的線性關係組成新的一個主成份，然後使用這個主成份取代原有的變數，屬於一種最大化資料變異性的線性轉換方法，如果您想了解更多，可以參閱這個<a href="http://www.lauradhamilton.com/introduction-to-principal-component-analysis-pca">連結</a>。</p>
+<p>我們可以透過 scikit-learn 輕鬆對 <code>digits</code> 資料實作主成份分析，直接點選 <strong>Run</strong> 觀察結果：</p>
+<div data-datacamp-exercise="" data-height="300" data-encoded="true">
+eyJsYW5ndWFnZSI6InB5dGhvbiIsInByZV9leGVyY2lzZV9jb2RlIjoiZnJvbSBza2xlYXJuIGltcG9ydCBkYXRhc2V0c1xuZGlnaXRzID0gZGF0YXNldHMubG9hZF9kaWdpdHMoKVxuZnJvbSBza2xlYXJuLmRlY29tcG9zaXRpb24gaW1wb3J0IFJhbmRvbWl6ZWRQQ0FcbmZyb20gc2tsZWFybi5kZWNvbXBvc2l0aW9uIGltcG9ydCBQQ0FcbmltcG9ydCBudW1weSBhcyBucCIsInNhbXBsZSI6IiMgQ3JlYXRlIGEgUmFuZG9taXplZCBQQ0EgbW9kZWwgdGhhdCB0YWtlcyB0d28gY29tcG9uZW50c1xucmFuZG9taXplZF9wY2EgPSBSYW5kb21pemVkUENBKG5fY29tcG9uZW50cz0yKVxuXG4jIEZpdCBhbmQgdHJhbnNmb3JtIHRoZSBkYXRhIHRvIHRoZSBtb2RlbFxucmVkdWNlZF9kYXRhX3JwY2EgPSByYW5kb21pemVkX3BjYS5maXRfdHJhbnNmb3JtKGRpZ2l0cy5kYXRhKVxuXG4jIENyZWF0ZSBhIHJlZ3VsYXIgUENBIG1vZGVsIFxucGNhID0gUENBKG5fY29tcG9uZW50cz0yKVxuXG4jIEZpdCBhbmQgdHJhbnNmb3JtIHRoZSBkYXRhIHRvIHRoZSBtb2RlbFxucmVkdWNlZF9kYXRhX3BjYSA9IHBjYS5maXRfdHJhbnNmb3JtKGRpZ2l0cy5kYXRhKVxuXG4jIEluc3BlY3QgdGhlIHNoYXBlXG5wcmludChcIlNoYXBlIG9mIHJlZHVjZWRfZGF0YV9wY2E6XCIsIHJlZHVjZWRfZGF0YV9wY2Euc2hhcGUpXG5wcmludChcIi0tLVwiKVxuXG4jIFByaW50IG91dCB0aGUgZGF0YVxucHJpbnQoXCJSUENBOlwiKVxucHJpbnQocmVkdWNlZF9kYXRhX3JwY2EpXG5wcmludChcIi0tLVwiKVxucHJpbnQoXCJQQ0E6XCIpXG5wcmludChyZWR1Y2VkX2RhdGFfcGNhKSIsInNvbHV0aW9uIjoiIyBDcmVhdGUgYSBSYW5kb21pemVkIFBDQSBtb2RlbCB0aGF0IHRha2VzIHR3byBjb21wb25lbnRzXG5yYW5kb21pemVkX3BjYSA9IFJhbmRvbWl6ZWRQQ0Eobl9jb21wb25lbnRzPTIpXG5cbiMgRml0IGFuZCB0cmFuc2Zvcm0gdGhlIGRhdGEgdG8gdGhlIG1vZGVsXG5yZWR1Y2VkX2RhdGFfcnBjYSA9IHJhbmRvbWl6ZWRfcGNhLmZpdF90cmFuc2Zvcm0oZGlnaXRzLmRhdGEpXG5cbiMgQ3JlYXRlIGEgcmVndWxhciBQQ0EgbW9kZWwgXG5wY2EgPSBQQ0Eobl9jb21wb25lbnRzPTIpXG5cbiMgRml0IGFuZCB0cmFuc2Zvcm0gdGhlIGRhdGEgdG8gdGhlIG1vZGVsXG5yZWR1Y2VkX2RhdGFfcGNhID0gcGNhLmZpdF90cmFuc2Zvcm0oZGlnaXRzLmRhdGEpXG5cbiMgSW5zcGVjdCB0aGUgc2hhcGVcbnByaW50KFwiU2hhcGUgb2YgcmVkdWNlZF9kYXRhX3BjYTpcIiwgcmVkdWNlZF9kYXRhX3BjYS5zaGFwZSlcbnByaW50KFwiLS0tXCIpXG5cbiMgUHJpbnQgb3V0IHRoZSBkYXRhXG5wcmludChcIlJQQ0E6XCIpXG5wcmludChyZWR1Y2VkX2RhdGFfcnBjYSlcbnByaW50KFwiLS0tXCIpXG5wcmludChcIlBDQTpcIilcbnByaW50KHJlZHVjZWRfZGF0YV9wY2EpIiwic2N0IjoidGVzdF9vYmplY3QoXCJyYW5kb21pemVkX3BjYVwiLCBkb19ldmFsPUZhbHNlKVxudGVzdF9vYmplY3QoXCJyZWR1Y2VkX2RhdGFfcnBjYVwiLCBkb19ldmFsPUZhbHNlKVxudGVzdF9vYmplY3QoXCJwY2FcIiwgZG9fZXZhbD1GYWxzZSlcbnRlc3Rfb2JqZWN0KFwicmVkdWNlZF9kYXRhX3BjYVwiLCBkb19ldmFsPUZhbHNlKVxucHJlZGVmX21zZz1cIkRpZCB5b3UgaW5zcGVjdCB0aGUgc2hhcGUgb2YgYHJlZHVjZWRfZGF0YV9wY2FgP1wiXG50ZXN0X29iamVjdF9hY2Nlc3NlZChcInJlZHVjZWRfZGF0YV9wY2Euc2hhcGVcIiwgbm90X2FjY2Vzc2VkX21zZz1wcmVkZWZfbXNnKVxuIyBUZXN0IGBwcmludGAgXG50ZXN0X2Z1bmN0aW9uKFxuICAgIFwicHJpbnRcIixcbiAgICAxLFxuICAgIG5vdF9jYWxsZWRfbXNnPVwiRGlkIHlvdSBwcmludCBvdXQgdGhlIGByZWR1Y2VkX2RhdGFfcnBjYWAgZGF0YT9cIixcbiAgICBpbmNvcnJlY3RfbXNnPVwiRG9uJ3QgZm9yZ2V0IHRvIHByaW50IG91dCB0aGUgYHJlZHVjZWRfZGF0YV9ycGNhYCBkYXRhIVwiLFxuICAgIGRvX2V2YWw9RmFsc2VcbilcbnRlc3RfZnVuY3Rpb24oXG4gICAgXCJwcmludFwiLFxuICAgIDIsXG4gICAgbm90X2NhbGxlZF9tc2c9XCJEaWQgeW91IHByaW50IG91dCB0aGUgYHJlZHVjZWRfZGF0YV9wY2FgIGRhdGE/XCIsXG4gICAgaW5jb3JyZWN0X21zZz1cIkRvbid0IGZvcmdldCB0byBwcmludCBvdXQgdGhlIGByZWR1Y2VkX2RhdGFfcGNhYCBkYXRhIVwiLFxuICAgIGRvX2V2YWw9RmFsc2VcbilcbnN1Y2Nlc3NfbXNnKFwiQW1hemluZyFcIikifQ==
+</div>
+<p><strong>秘訣：</strong>比較 <code>RandomizedPCA()</code> 與 <code>PCA()</code> 產生的結果，觀察兩者的差異。</p>
+<p>我們在程式中指定降維成兩個主成份，確保可以使用散佈圖視覺化，並觀察用兩個主成份是否可以將不同的目標值區隔開：</p>
+<pre><code>from sklearn import datasets
+digits = datasets.load_digits()
+import matplotlib.pyplot as plt
+
+colors = [&#39;black&#39;, &#39;blue&#39;, &#39;purple&#39;, &#39;yellow&#39;, &#39;white&#39;, &#39;red&#39;, &#39;lime&#39;, &#39;cyan&#39;, &#39;orange&#39;, &#39;gray&#39;]
+for i in range(len(colors)):
+    x = reduced_data_rpca[:, 0][digits.target == i]
+    y = reduced_data_rpca[:, 1][digits.target == i]
+    plt.scatter(x, y, c=colors[i])
+plt.legend(digits.target_names, bbox_to_anchor=(1.05, 1), loc=2, borderaxespad=0.)
+plt.xlabel(&#39;First Principal Component&#39;)
+plt.ylabel(&#39;Second Principal Component&#39;)
+plt.title(&quot;PCA Scatter Plot&quot;)
+plt.show()</code></pre>
+<p>完成後我們可以看到這張視覺化圖形：</p>
+<div class="figure">
+<img src="plots/plot3.png" />
+
+</div>
+<p>我們再一次使用了 matplotlib 來繪圖，假如您正在製作自己的資料科學作品集，也許可以考慮更高階且更美觀的繪圖套件。另外如果您使用 Jupyter Notebook 進行開發，不需要執行 <code>plt.show()</code>，如果您對 Jupyter Notebook 有興趣可以參閱 <a href="https://www.datacamp.com/community/tutorials/tutorial-jupyter-notebook">Definitive Guide to Jupyter Notebook</a>。</p>
+<p>讓我們分開來看前一段程式碼：</p>
+<ol style="list-style-type: decimal">
+<li>將不同的顏色儲存在一個 list 中。 由於相異的目標值有 10 個（0 到 9），所以我們指定了 10 種不同的顏色來標示。</li>
+<li>設定 <code>x</code> 軸與 <code>y</code> 軸。 分別選出 <code>reduced_data_rpca</code> 的第一欄與第二欄，根據不同的目標值選出對應的觀測值，意即當迴圈開始的時候，會選出目標值為 <code>0</code> 的觀測值，接著是目標值為 <code>1</code> 的觀測值，依此類推。</li>
+<li>畫出散佈圖。 當迴圈開始的時候，會將目標值為 <code>0</code> 的觀測值用黑色（<code>black</code>）畫出，接著是將目標值為 <code>1</code> 的觀測值用藍色（<code>blue</code>）畫出，依此類推。</li>
+<li>使用 <code>target_names</code> 鍵值在散佈圖旁邊加上圖例。</li>
+<li>加入圖形標題與座標軸標籤。</li>
+<li>顯示圖形。</li>
+</ol>
+</div>
+</div>
+<div class="section level3">
+<h3>下一步呢？</h3>
+<p>在對資料本身有了一定認知後，我們必須思索的是如何應用，以及使用什麼樣的機器學習演算法來建立預測模型。</p>
+<p><strong>秘訣：</strong>對資料的認知程度愈高，愈容易找到應用與合適的機器學習演算法。</p>
+<p>然而對於 scikit-learn 的初學者來說，這個套件的內容有點過於龐大，這時您可以參考<a href="http://scikit-learn.org/stable/tutorial/machine_learning_map/">scikit-learn 機器學習地圖</a>來獲得額外的幫助。</p>
+<p>我們想要對 <code>digits</code> 資料使用非監督式學習演算法，在這個機器學習地圖上我們沿著資料超過 50 個觀測值（<strong>確認！</strong>）、預測類別（<strong>確認！</strong>）、沒有目標值（只要不使用 <code>digits.target</code> 即可，<strong>確認！</strong>）、需要知道有幾個類別要預測（<strong>確認！</strong>）以及需要小於 1 萬個觀測值（<strong>確認！</strong>），我們可以順利應用 K-Means！</p>
+<p>但是 K-Means 演算法究竟是什麼？K-Means 演算法是最簡單且最廣泛被運用來解決分群問題的非監督式學習演算法。演算法首先隨意設定 <code>k</code> 個中心點，然後計算各個觀測值與這 <code>k</code> 個中心點的距離，然後將觀測值分配給距離最近的中心點貼上標籤，形成 <code>k</code> 個群集。接著這 <code>k</code> 個中心點的位置會被重新計算並移動到各個群集目前的中心，然後再重新計算各個觀測值與這 <code>k</code> 個中心點的距離，更新各個觀測值的群集標籤。前述的流程會重複進行，一直到各個觀測值的群集標籤穩定不更動為止。<code>k</code> 值由使用者指定，而一開始這 <code>k</code> 個中心點的位置則是隨機擺放，這些隨機擺放的位置會影響 K-Means 演算法的結果，可以透過設定 <code>n-init</code> 參數來處理這個問題。</p>
+</div>
+<div class="section level3">
+<h3>資料的預處理</h3>
+<p>在開始使用 K-Means 演算法之前，我們應該先學習關於資料的預處理（Preprocessing）。</p>
+<div class="section level4">
+<h4>資料的標準化</h4>
+<p>我們使用 <code>sklearn.preprocessing</code> 模組的 <code>scale()</code> 方法將 <code>digits</code> 資料作標準化，試著依照註解的提示完成程式後點選 <strong>Run</strong> 觀察結果，如果沒有頭緒，可以點選 <strong>Solution</strong> 將程式完成後再點選 <strong>Run</strong> 觀察結果：</p>
+<div data-datacamp-exercise="" data-height="300" data-encoded="true">
+eyJsYW5ndWFnZSI6InB5dGhvbiIsInByZV9leGVyY2lzZV9jb2RlIjoiZnJvbSBza2xlYXJuIGltcG9ydCBkYXRhc2V0c1xuZGlnaXRzID0gZGF0YXNldHMubG9hZF9kaWdpdHMoKSIsInNhbXBsZSI6IiMgSW1wb3J0XG5mcm9tIHNrbGVhcm4ucHJlcHJvY2Vzc2luZyBpbXBvcnQgc2NhbGVcblxuIyBBcHBseSBgc2NhbGUoKWAgdG8gdGhlIGBkaWdpdHNgIGRhdGFcbmRhdGEgPSBfX19fXyhkaWdpdHMuZGF0YSkiLCJzb2x1dGlvbiI6IiMgSW1wb3J0XG5mcm9tIHNrbGVhcm4ucHJlcHJvY2Vzc2luZyBpbXBvcnQgc2NhbGVcblxuIyBBcHBseSBgc2NhbGUoKWAgdG8gdGhlIGBkaWdpdHNgIGRhdGFcbmRhdGEgPSBzY2FsZShkaWdpdHMuZGF0YSkiLCJzY3QiOiJ0ZXN0X2Z1bmN0aW9uKFxuICAgIFwic2tsZWFybi5wcmVwcm9jZXNzaW5nLnNjYWxlXCIsXG4gICAgbm90X2NhbGxlZF9tc2c9XCJEaWQgeW91IHN0YW5kYXJkaXplIHRoZSBgZGlnaXRzYCBkYXRhP1wiLFxuICAgIGluY29ycmVjdF9tc2c9XCJEb24ndCBmb3JnZXQgdG8gc3RhbmRhcmRpemUgdGhlIGBkaWdpdHNgIGRhdGEgd2l0aCBgc2NhbGUoKWAhXCIsXG4gICAgZG9fZXZhbD1GYWxzZVxuKVxuc3VjY2Vzc19tc2coXCJBd2Vzb21lIVwiKSJ9
+</div>
+<p>透過標準化，我們將這 64 個維度的分佈轉換為平均數為 0，標準差為 1 的標準常態分佈。</p>
+</div>
+<div class="section level4">
+<h4>將資料切分為訓練與測試資料</h4>
+<p>為了之後要評估模型的表現，我們也需要將資料切分為訓練與測試資料，訓練資料是用來建立模型，測試資料則用來評估模型。實務中兩個資料不會有交集，常見的切分比例是 2/3 作為訓練資料，1/3 作為測試資料。</p>
+<p>在接下來的程式我們將 <code>train_test_split()</code> 方法中的 <code>test_size</code> 參數設為 <code>0.25</code>，另外一個參數 <code>random_state</code> 設為 <code>42</code> 用來確保每次切分資料的結果都相同，如果您希望產出可複製的結果，這是非常實用的技巧。試著依照註解的提示完成程式後點選 <strong>Run</strong> 觀察結果，如果沒有頭緒，可以點選 <strong>Solution</strong> 將程式完成後再點選 <strong>Run</strong> 觀察結果：</p>
+<div data-datacamp-exercise="" data-height="300" data-encoded="true">
+eyJsYW5ndWFnZSI6InB5dGhvbiIsInByZV9leGVyY2lzZV9jb2RlIjoiZnJvbSBza2xlYXJuIGltcG9ydCBkYXRhc2V0c1xuZGlnaXRzID0gZGF0YXNldHMubG9hZF9kaWdpdHMoKVxuZnJvbSBza2xlYXJuLnByZXByb2Nlc3NpbmcgaW1wb3J0IHNjYWxlXG5kYXRhID0gc2NhbGUoZGlnaXRzLmRhdGEpIiwic2FtcGxlIjoiIyBJbXBvcnQgYHRyYWluX3Rlc3Rfc3BsaXRgXG5mcm9tIHNrbGVhcm4uY3Jvc3NfdmFsaWRhdGlvbiBpbXBvcnQgX19fX19fX19fX19fX19fX1xuXG4jIFNwbGl0IHRoZSBgZGlnaXRzYCBkYXRhIGludG8gdHJhaW5pbmcgYW5kIHRlc3Qgc2V0c1xuWF90cmFpbiwgWF90ZXN0LCB5X3RyYWluLCB5X3Rlc3QsIGltYWdlc190cmFpbiwgaW1hZ2VzX3Rlc3QgPSB0cmFpbl90ZXN0X3NwbGl0KGRhdGEsIGRpZ2l0cy50YXJnZXQsIGRpZ2l0cy5pbWFnZXMsIHRlc3Rfc2l6ZT0wLjI1LCByYW5kb21fc3RhdGU9NDIpIiwic29sdXRpb24iOiIjIEltcG9ydCBgdHJhaW5fdGVzdF9zcGxpdGBcbmZyb20gc2tsZWFybi5jcm9zc192YWxpZGF0aW9uIGltcG9ydCB0cmFpbl90ZXN0X3NwbGl0XG5cbiMgU3BsaXQgdGhlIGBkaWdpdHNgIGRhdGEgaW50byB0cmFpbmluZyBhbmQgdGVzdCBzZXRzXG5YX3RyYWluLCBYX3Rlc3QsIHlfdHJhaW4sIHlfdGVzdCwgaW1hZ2VzX3RyYWluLCBpbWFnZXNfdGVzdCA9IHRyYWluX3Rlc3Rfc3BsaXQoZGF0YSwgZGlnaXRzLnRhcmdldCwgZGlnaXRzLmltYWdlcywgdGVzdF9zaXplPTAuMjUsIHJhbmRvbV9zdGF0ZT00MikiLCJzY3QiOiJpbXBvcnRfbXNnPVwiRGlkIHlvdSBpbXBvcnQgYHRyYWluX3Rlc3Rfc3BsaXRgIGZyb20gYHNrbGVhcm4uY3Jvc3NfdmFsaWRhdGlvbmA/XCJcbnByZWRlZl9tc2c9XCJEb24ndCBmb3JnZXQgdG8gZmlsbCBpbiBgdHJhaW5fdGVzdF9zcGxpdGAhXCJcbnRlc3RfaW1wb3J0KFwic2tsZWFybi5jcm9zc192YWxpZGF0aW9uLnRyYWluX3Rlc3Rfc3BsaXRcIiwgc2FtZV9hcyA9IFRydWUsIG5vdF9pbXBvcnRlZF9tc2cgPSBpbXBvcnRfbXNnLCBpbmNvcnJlY3RfYXNfbXNnID0gcHJlZGVmX21zZylcbnRlc3Rfb2JqZWN0KFwiWF90cmFpblwiLCBkb19ldmFsPUZhbHNlLCAgdW5kZWZpbmVkX21zZz1cIkRpZCB5b3UgbGVhdmUgb3V0IGBYX3RyYWluYCBvciBhbnkgb2YgdGhlIG90aGVyIHZhcmlhYmxlcz9cIilcbnRlc3Rfb2JqZWN0KFwiWF90ZXN0XCIsIGRvX2V2YWw9RmFsc2UsIHVuZGVmaW5lZF9tc2c9XCJEaWQgeW91IGRlZmluZSBgWF90ZXN0YD9cIilcbnRlc3Rfb2JqZWN0KFwieV90cmFpblwiLCBkb19ldmFsPUZhbHNlLCB1bmRlZmluZWRfbXNnPVwiRGlkIHlvdSBkZWZpbmUgYHlfdHJhaW5gP1wiKVxudGVzdF9vYmplY3QoXCJ5X3Rlc3RcIiwgZG9fZXZhbD1GYWxzZSwgdW5kZWZpbmVkX21zZz1cIkRpZCB5b3UgZGVmaW5lIGB5X3Rlc3RgP1wiKVxudGVzdF9vYmplY3QoXCJpbWFnZXNfdHJhaW5cIiwgZG9fZXZhbD1GYWxzZSwgdW5kZWZpbmVkX21zZz1cIkRpZCB5b3UgZGVmaW5lIGBpbWFnZXNfdHJhaW5gP1wiKVxudGVzdF9vYmplY3QoXCJpbWFnZXNfdGVzdFwiLCBkb19ldmFsPUZhbHNlLCB1bmRlZmluZWRfbXNnPVwiRGlkIHlvdSBkZWZpbmUgYGltYWdlc190ZXN0YD9cIilcbnN1Y2Nlc3NfbXNnKFwiR3JlYXQgam9iIVwiKSJ9
+</div>
+<p>切分完訓練與測試資料之後，我們很快地看一下訓練資料的觀測值與目標值資訊，試著依照註解的提示完成程式後點選 <strong>Run</strong> 觀察結果，如果沒有頭緒，可以點選 <strong>Solution</strong> 將程式完成後再點選 <strong>Run</strong> 觀察結果：</p>
+<div data-datacamp-exercise="" data-height="300" data-encoded="true">
+eyJsYW5ndWFnZSI6InB5dGhvbiIsInByZV9leGVyY2lzZV9jb2RlIjoiZnJvbSBza2xlYXJuIGltcG9ydCBkYXRhc2V0c1xuZnJvbSBza2xlYXJuLmNyb3NzX3ZhbGlkYXRpb24gaW1wb3J0IHRyYWluX3Rlc3Rfc3BsaXRcbmZyb20gc2tsZWFybi5wcmVwcm9jZXNzaW5nIGltcG9ydCBzY2FsZVxuaW1wb3J0IG51bXB5IGFzIG5wXG5kaWdpdHMgPSBkYXRhc2V0cy5sb2FkX2RpZ2l0cygpXG5kYXRhID0gc2NhbGUoZGlnaXRzLmRhdGEpXG5YX3RyYWluLCBYX3Rlc3QsIHlfdHJhaW4sIHlfdGVzdCwgaW1hZ2VzX3RyYWluLCBpbWFnZXNfdGVzdCA9IHRyYWluX3Rlc3Rfc3BsaXQoZGF0YSwgZGlnaXRzLnRhcmdldCwgZGlnaXRzLmltYWdlcywgdGVzdF9zaXplPTAuMjUsIHJhbmRvbV9zdGF0ZT00MikiLCJzYW1wbGUiOiIjIE51bWJlciBvZiB0cmFpbmluZyBmZWF0dXJlc1xubl9zYW1wbGVzLCBuX2ZlYXR1cmVzID0gWF90cmFpbi5zaGFwZVxuXG4jIFByaW50IG91dCBgbl9zYW1wbGVzYFxucHJpbnQoX19fX19fX19fKVxuXG4jIFByaW50IG91dCBgbl9mZWF0dXJlc2BcbnByaW50KF9fX19fX19fX18pXG5cbiMgTnVtYmVyIG9mIFRyYWluaW5nIGxhYmVsc1xubl9kaWdpdHMgPSBsZW4obnAudW5pcXVlKHlfdHJhaW4pKVxuXG4jIEluc3BlY3QgYHlfdHJhaW5gXG5wcmludChsZW4oX19fX19fXykpIiwic29sdXRpb24iOiIjIE51bWJlciBvZiB0cmFpbmluZyBmZWF0dXJlc1xubl9zYW1wbGVzLCBuX2ZlYXR1cmVzID0gWF90cmFpbi5zaGFwZVxuXG4jIFByaW50IG91dCBgbl9zYW1wbGVzYFxucHJpbnQobl9zYW1wbGVzKVxuXG4jIFByaW50IG91dCBgbl9mZWF0dXJlc2BcbnByaW50KG5fZmVhdHVyZXMpXG5cbiMgTnVtYmVyIG9mIFRyYWluaW5nIGxhYmVsc1xubl9kaWdpdHMgPSBsZW4obnAudW5pcXVlKHlfdHJhaW4pKVxuXG4jIEluc3BlY3QgYHlfdHJhaW5gXG5wcmludChsZW4oeV90cmFpbikpIiwic2N0IjoidGVzdF9vYmplY3QoXCJuX3NhbXBsZXNcIiwgdW5kZWZpbmVkX21zZz1cImRpZCB5b3UgbGVhdmUgb3V0IGBuX3NhbXBsZXNgIG9yIGBuX2ZlYXR1cmVzYD9cIilcbnRlc3Rfb2JqZWN0KFwibl9mZWF0dXJlc1wiKVxudGVzdF9mdW5jdGlvbihcbiAgICBcInByaW50XCIsXG4gICAgMSxcbiAgICBub3RfY2FsbGVkX21zZz1cIkRpZCB5b3UgcHJpbnQgb3V0IHRoZSBudW1iZXIgb2Ygc2FtcGxlcyBvZiB0aGUgYGRpZ2l0c2AgdHJhaW5pbmcgZGF0YT9cIixcbiAgICBpbmNvcnJlY3RfbXNnPVwiRG9uJ3QgZm9yZ2V0IHRvIHByaW50IG91dCB0aGUgbnVtYmVyIG9mIHNhbXBsZXMhXCIsXG4gICAgZG9fZXZhbD1GYWxzZVxuKVxudGVzdF9mdW5jdGlvbihcbiAgICBcInByaW50XCIsXG4gICAgMixcbiAgICBub3RfY2FsbGVkX21zZz1cIkRpZCB5b3UgcHJpbnQgb3V0IHRoZSBudW1iZXIgb2YgZmVhdHVyZXMgb2YgdGhlIGBkaWdpdHNgIHRyYWluaW5nIGRhdGE/XCIsXG4gICAgaW5jb3JyZWN0X21zZz1cIkRvbid0IGZvcmdldCB0byBwcmludCBvdXQgdGhlIG51bWJlciBvZiBmZWF0dXJlcyFcIixcbiAgICBkb19ldmFsPUZhbHNlXG4pXG50ZXN0X29iamVjdChcIm5fZGlnaXRzXCIsIGluY29ycmVjdF9tc2c9XCJkaWQgeW91IGRlZmluZSBgbl9kaWdpdHNgIGNvcnJlY3RseT9cIilcbnRlc3RfZnVuY3Rpb24oXG4gICAgXCJwcmludFwiLFxuICAgIDMsXG4gICAgbm90X2NhbGxlZF9tc2c9XCJEaWQgeW91IHByaW50IG91dCB0aGUgbnVtYmVyIG9mIHRyYWluaW5nIGxhYmVscyBmb3IgdGhlIGBkaWdpdHNgIGRhdGE/XCIsXG4gICAgaW5jb3JyZWN0X21zZz1cIkRvbid0IGZvcmdldCB0byBwcmludCBvdXQgdGhlIG51bWJlciBvZiB0cmFpbmluZyBsYWJlbHMgd2l0aCBgbGVuKHlfdHJhaW4pYCFcIixcbiAgICBkb19ldmFsPUZhbHNlXG4pXG5zdWNjZXNzX21zZyhcIldlbGwgZG9uZSFcIikifQ==
+</div>
+<p>現在訓練資料 <code>X_train</code> 有 1347 個觀測值，<code>y_train</code> 有 1347 個目標值，恰好是原始資料 <code>digits</code> 的 2/3；而<code>X_test</code> 有 450 個觀測值，<code>y_test</code> 有 450 個目標值，恰好是原始資料 <code>digits</code> 的 1/3。</p>
+</div>
+</div>
+<div id="digits-" class="section level3">
+<h3><code>digits</code> 資料的分群</h3>
+<p>經過標準化與切分之後，我們就可以開始使用 K-Means 演算法，透過 <code>cluster</code> 模組的 <code>KMeans()</code> 方法來建立模型，在這裡要注意三個參數：<code>init</code>、<code>n_clusters</code> 與 <code>random_state</code>。您一定還記得 <code>random_state</code>，這個參數能夠確保我們每次執行這段程式得到的結果相同，試著依照註解的提示完成程式後點選 <strong>Run</strong> 觀察結果，如果沒有頭緒，可以點選 <strong>Solution</strong> 將程式完成後再點選 <strong>Run</strong> 觀察結果：</p>
+<div data-datacamp-exercise="" data-height="300" data-encoded="true">
+eyJsYW5ndWFnZSI6InB5dGhvbiIsInByZV9leGVyY2lzZV9jb2RlIjoiZnJvbSBza2xlYXJuIGltcG9ydCBkYXRhc2V0c1xuZnJvbSBza2xlYXJuLmNyb3NzX3ZhbGlkYXRpb24gaW1wb3J0IHRyYWluX3Rlc3Rfc3BsaXRcbmZyb20gc2tsZWFybi5wcmVwcm9jZXNzaW5nIGltcG9ydCBzY2FsZVxuaW1wb3J0IG51bXB5IGFzIG5wXG5kaWdpdHMgPSBkYXRhc2V0cy5sb2FkX2RpZ2l0cygpXG5kYXRhID0gc2NhbGUoZGlnaXRzLmRhdGEpXG5YX3RyYWluLCBYX3Rlc3QsIHlfdHJhaW4sIHlfdGVzdCwgaW1hZ2VzX3RyYWluLCBpbWFnZXNfdGVzdCA9IHRyYWluX3Rlc3Rfc3BsaXQoZGF0YSwgZGlnaXRzLnRhcmdldCwgZGlnaXRzLmltYWdlcywgdGVzdF9zaXplPTAuMjUsIHJhbmRvbV9zdGF0ZT00MikiLCJzYW1wbGUiOiIjIEltcG9ydCB0aGUgYGNsdXN0ZXJgIG1vZHVsZVxuZnJvbSBza2xlYXJuIGltcG9ydCBfX19fX19fX1xuXG4jIENyZWF0ZSB0aGUgS01lYW5zIG1vZGVsXG5jbGYgPSBjbHVzdGVyLktNZWFucyhpbml0PSdrLW1lYW5zKysnLCBuX2NsdXN0ZXJzPTEwLCByYW5kb21fc3RhdGU9NDIpXG5cbiMgRml0IHRoZSB0cmFpbmluZyBkYXRhIGBYX3RyYWluYHRvIHRoZSBtb2RlbFxuY2xmLmZpdChfX19fX19fXykiLCJzb2x1dGlvbiI6IiMgSW1wb3J0IHRoZSBgY2x1c3RlcmAgbW9kdWxlXG5mcm9tIHNrbGVhcm4gaW1wb3J0IGNsdXN0ZXJcblxuIyBDcmVhdGUgdGhlIEtNZWFucyBtb2RlbFxuY2xmID0gY2x1c3Rlci5LTWVhbnMoaW5pdD0nay1tZWFucysrJywgbl9jbHVzdGVycz0xMCwgcmFuZG9tX3N0YXRlPTQyKVxuXG4jIEZpdCB0aGUgdHJhaW5pbmcgZGF0YSB0byB0aGUgbW9kZWxcbmNsZi5maXQoWF90cmFpbikiLCJzY3QiOiJpbXBvcnRfbXNnPVwiRGlkIHlvdSBpbXBvcnQgYGNsdXN0ZXJgIGZyb20gYHNrbGVhcm5gP1wiXG5wcmVkZWZfbXNnPVwiRG9uJ3QgZm9yZ2V0IHRvIGltcG9ydCBgY2x1c3RlciBmcm9tIGBza2xlYXJuYCFcIlxudGVzdF9pbXBvcnQoXCJza2xlYXJuLmNsdXN0ZXJcIiwgc2FtZV9hcyA9IFRydWUsIG5vdF9pbXBvcnRlZF9tc2cgPSBpbXBvcnRfbXNnLCBpbmNvcnJlY3RfYXNfbXNnID0gcHJlZGVmX21zZylcbnRlc3Rfb2JqZWN0KFwiY2xmXCIsIGRvX2V2YWw9RmFsc2UsIGluY29ycmVjdF9tc2c9XCJkaWQgY3JlYXRlIHRoZSBLTWVhbnMgbW9kZWwgY29ycmVjdGx5P1wiKVxudGVzdF9mdW5jdGlvbihcImNsZi5maXRcIiwgZG9fZXZhbD1GYWxzZSlcbnN1Y2Nlc3NfbXNnKFwiV29vaG9vIVwiKSJ9
+</div>
+<p><code>init</code> 參數指定我們使用的 K-Means 演算法 <code>k-means++</code>，<code>init</code> 參數預設就是使用 K-Means 演算法，所以這個參數其實是可以省略的。</p>
+<p><code>n_clusters</code> 參數被設定為 <code>10</code>，這呼應了我們有 0 到 9 這 10 個相異目標值。假使在未知群集的情況下，通常會嘗試幾個不同的 <code>n_clusters</code> 參數值，分別計算平方誤差和（Sum of the Squared Errors, SSE），然後選擇平方誤差和最小的那個 <code>n_clusters</code> 作為群集數，換句話說就是讓各個群集中的每個觀測值到群集中心點的距離最小化。</p>
+<p><strong>再提醒一下</strong>，不需要將測試資料放入模型中，測試資料是用來評估模型的表現。接著我們可以利用將各個群集的中心圖片視覺化：</p>
+<pre><code># 建立 K-Means 模型
+from sklearn import datasets
+from sklearn.cross_validation import train_test_split
+from sklearn.preprocessing import scale
+import numpy as np
+from sklearn import cluster
+
+digits = datasets.load_digits()
+data = scale(digits.data)
+X_train, X_test, y_train, y_test, images_train, images_test = train_test_split(data, digits.target, digits.images, test_size=0.25, random_state=42)
+clf = cluster.KMeans(init=&#39;k-means++&#39;, n_clusters=10, random_state=42)
+clf.fit(X_train)
+
+# 載入 matplotlib
+import matplotlib.pyplot as plt
+
+# 設定圖形的大小
+fig = plt.figure(figsize=(8, 3))
+
+# 圖形標題
+fig.suptitle(&#39;Cluster Center Images&#39;, fontsize=14, fontweight=&#39;bold&#39;)
+
+# 對所有的目標值（0 - 9）
+for i in range(10):
+    # 在 2x5 的網格上繪製子圖形
+    ax = fig.add_subplot(2, 5, i + 1)
+    # 顯示圖片
+    ax.imshow(clf.cluster_centers_[i].reshape((8, 8)), cmap=plt.cm.binary)
+    # 將座標軸刻度關掉
+    plt.axis(&#39;off&#39;)
+
+# 顯示圖形
+plt.show()</code></pre>
+<div class="figure">
+<img src="plots/plot4.png" />
+
+</div>
+<p>接下來我們要預測測試資料的目標值，試著依照註解的提示完成程式後點選 <strong>Run</strong> 觀察結果，如果沒有頭緒，可以點選 <strong>Solution</strong> 將程式完成後再點選 <strong>Run</strong> 觀察結果：</p>
+<div data-datacamp-exercise="" data-height="300" data-encoded="true">
+eyJsYW5ndWFnZSI6InB5dGhvbiIsInByZV9leGVyY2lzZV9jb2RlIjoiZnJvbSBza2xlYXJuIGltcG9ydCBkYXRhc2V0c1xuZnJvbSBza2xlYXJuLmNyb3NzX3ZhbGlkYXRpb24gaW1wb3J0IHRyYWluX3Rlc3Rfc3BsaXRcbmZyb20gc2tsZWFybi5wcmVwcm9jZXNzaW5nIGltcG9ydCBzY2FsZVxuZnJvbSBza2xlYXJuIGltcG9ydCBjbHVzdGVyXG5kaWdpdHMgPSBkYXRhc2V0cy5sb2FkX2RpZ2l0cygpXG5kYXRhID0gc2NhbGUoZGlnaXRzLmRhdGEpXG5YX3RyYWluLCBYX3Rlc3QsIHlfdHJhaW4sIHlfdGVzdCwgaW1hZ2VzX3RyYWluLCBpbWFnZXNfdGVzdCA9IHRyYWluX3Rlc3Rfc3BsaXQoZGF0YSwgZGlnaXRzLnRhcmdldCwgZGlnaXRzLmltYWdlcywgdGVzdF9zaXplPTAuMjUsIHJhbmRvbV9zdGF0ZT00MilcbmNsZiA9IGNsdXN0ZXIuS01lYW5zKGluaXQ9J2stbWVhbnMrKycsIG5fY2x1c3RlcnM9MTAsIHJhbmRvbV9zdGF0ZT00MilcbmNsZi5maXQoWF90cmFpbikiLCJzYW1wbGUiOiIjIFByZWRpY3QgdGhlIGxhYmVscyBmb3IgYFhfdGVzdGBcbnlfcHJlZD1jbGYucHJlZGljdChYX3Rlc3QpXG5cbiMgUHJpbnQgb3V0IHRoZSBmaXJzdCAxMDAgaW5zdGFuY2VzIG9mIGB5X3ByZWRgXG5wcmludCh5X3ByZWRbOjEwMF0pXG5cbiMgUHJpbnQgb3V0IHRoZSBmaXJzdCAxMDAgaW5zdGFuY2VzIG9mIGB5X3Rlc3RgXG5wcmludCh5X3Rlc3RbOjEwMF0pXG5cbiMgU3R1ZHkgdGhlIHNoYXBlIG9mIHRoZSBjbHVzdGVyIGNlbnRlcnNcbmNsZi5jbHVzdGVyX2NlbnRlcnNfLl9fX19fIiwic29sdXRpb24iOiIjIFByZWRpY3QgdGhlIGxhYmVscyBmb3IgYFhfdGVzdGBcbnlfcHJlZD1jbGYucHJlZGljdChYX3Rlc3QpXG5cbiMgUHJpbnQgb3V0IHRoZSBmaXJzdCAxMDAgaW5zdGFuY2VzIG9mIGB5X3ByZWRgXG5wcmludCh5X3ByZWRbOjEwMF0pXG5cbiMgUHJpbnQgb3V0IHRoZSBmaXJzdCAxMDAgaW5zdGFuY2VzIG9mIGB5X3Rlc3RgXG5wcmludCh5X3Rlc3RbOjEwMF0pXG5cbiMgU3R1ZHkgdGhlIHNoYXBlIG9mIHRoZSBjbHVzdGVyIGNlbnRlcnNcbmNsZi5jbHVzdGVyX2NlbnRlcnNfLnNoYXBlIiwic2N0IjoidGVzdF9vYmplY3QoXCJ5X3ByZWRcIilcbnRlc3RfZnVuY3Rpb24oXG4gICAgXCJwcmludFwiLFxuICAgIDEsXG4gICAgbm90X2NhbGxlZF9tc2c9XCJEaWQgeW91IHByaW50IG91dCB0aGUgZmlyc3QgMTAwIGluc3RhbmNlcyBvZiBgeV9wcmVkYD9cIixcbiAgICBpbmNvcnJlY3RfbXNnPVwiRG9uJ3QgZm9yZ2V0IHRvIHByaW50IG91dCB0aGUgZmlyc3QgMTAwIGluc3RhbmNlcyBvZiBgeV9wcmVkYCFcIixcbiAgICBkb19ldmFsPUZhbHNlXG4pXG50ZXN0X2Z1bmN0aW9uKFxuICAgIFwicHJpbnRcIixcbiAgICAyLFxuICAgIG5vdF9jYWxsZWRfbXNnPVwiRGlkIHlvdSBwcmludCBvdXQgdGhlIGZpcnN0IDEwMCBpbnN0YW5jZXMgb2YgYHlfdGVzdGA/XCIsXG4gICAgaW5jb3JyZWN0X21zZz1cIkRvbid0IGZvcmdldCB0byBwcmludCBvdXQgdGhlIGZpcnN0IDEwMCBpbnN0YW5jZXMgb2YgYHlfdGVzdGAhXCIsXG4gICAgZG9fZXZhbD1GYWxzZVxuKVxubXNnX2RhdGE9XCJEaWQgeW91IGZpbGwgaW4gYHNoYXBlYCB0byBwcmludCBvdXQgdGhlIHNoYXBlIG9mIHRoZSBjbHVzdGVyIGNlbnRlcnM/XCJcbnRlc3Rfb2JqZWN0X2FjY2Vzc2VkKFwiY2xmLmNsdXN0ZXJfY2VudGVyc18uc2hhcGVcIiwgbm90X2FjY2Vzc2VkX21zZz1tc2dfZGF0YSlcbnN1Y2Nlc3NfbXNnPVwiQXdlc29tZSFcIiJ9
+</div>
+<p>在上述的程式中，我們預測 450 筆測試資料的目標值並將結果儲存於 <code>y_pred</code> 之中，接著將 <code>y_pred</code> 與 <code>y_test</code> 的前 100 個元素印出，很快就可以看到一些結果，知道哪幾個觀測值預測正確，哪幾個觀測值預測錯誤。</p>
+<p>接著我們來將預測的目標值視覺化：</p>
+<pre><code># 建立 K-Means 模型
+from sklearn import datasets
+from sklearn.cross_validation import train_test_split
+from sklearn.preprocessing import scale
+import numpy as np
+from sklearn import cluster
+# 載入 `Isomap()`
+from sklearn.manifold import Isomap
+
+digits = datasets.load_digits()
+data = scale(digits.data)
+X_train, X_test, y_train, y_test, images_train, images_test = train_test_split(data, digits.target, digits.images, test_size=0.25, random_state=42)
+clf = cluster.KMeans(init=&#39;k-means++&#39;, n_clusters=10, random_state=42)
+clf.fit(X_train)
+
+# 使用 Isomap 對 `X_train` 資料降維
+X_iso = Isomap(n_neighbors=10).fit_transform(X_train)
+
+# 使用 K-Means 演算法
+clusters = clf.fit_predict(X_train)
+
+# 在 1x2 的網格上繪製子圖形
+fig, ax = plt.subplots(1, 2, figsize=(8, 4))
+
+# 調整圖形的外觀
+fig.suptitle(&#39;Predicted Versus Training Labels&#39;, fontsize=14, fontweight=&#39;bold&#39;)
+fig.subplots_adjust(top=0.85)
+
+# 加入散佈圖 
+ax[0].scatter(X_iso[:, 0], X_iso[:, 1], c=clusters)
+ax[0].set_title(&#39;Predicted Training Labels&#39;)
+ax[1].scatter(X_iso[:, 0], X_iso[:, 1], c=y_train)
+ax[1].set_title(&#39;Actual Training Labels&#39;)
+
+# 顯示圖形
+plt.show()</code></pre>
+<p>這次我們改用 <code>Isomap()</code> 來對 <code>digits</code> 資料進行降維，跟主成份分析不同的地方是 Isomap 屬於非線性的降維方法。</p>
+<div class="figure">
+<img src="plots/plot5.png" />
+
+</div>
+<p><strong>秘訣：</strong>改用主成份分析重新執行上面的程式，並觀察跟 Isomap 有什麼差異:</p>
+<pre><code># 建立 K-Means 模型
+from sklearn import datasets
+from sklearn.cross_validation import train_test_split
+from sklearn.preprocessing import scale
+import numpy as np
+from sklearn import cluster
+# 載入 `PCA()`
+from sklearn.decomposition import PCA
+
+# 使用 PCA 對 `X_train` 資料降維
+X_pca = PCA(n_components=2).fit_transform(X_train)
+
+# 使用 K-Means 演算法
+clusters = clf.fit_predict(X_train)
+
+# 在 1x2 的網格上繪製子圖形
+fig, ax = plt.subplots(1, 2, figsize=(8, 4))
+
+# 調整圖形的外觀
+fig.suptitle(&#39;Predicted Versus Training Labels&#39;, fontsize=14, fontweight=&#39;bold&#39;)
+fig.subplots_adjust(top=0.85)
+
+# 加入散佈圖 
+ax[0].scatter(X_pca[:, 0], X_pca[:, 1], c=clusters)
+ax[0].set_title(&#39;Predicted Training Labels&#39;)
+ax[1].scatter(X_pca[:, 0], X_pca[:, 1], c=y_train)
+ax[1].set_title(&#39;Actual Training Labels&#39;)
+
+# 顯示圖形
+plt.show()</code></pre>
+<div class="figure">
+<img src="plots/plot6.png" />
+
+</div>
+<p>我們發現 K-Means 演算法的效果可能不是很好，但還需要更進一步評估。</p>
+</div>
+<div class="section level3">
+<h3>評估分群模型的表現</h3>
+<p>評估模型的表現是機器學習很重要的課題，我們首先將混淆矩陣（Confusion matrix）印出，試著依照註解的提示完成程式後點選 <strong>Run</strong> 觀察結果，如果沒有頭緒，可以點選 <strong>Solution</strong> 將程式完成後再點選 <strong>Run</strong> 觀察結果：</p>
+<div data-datacamp-exercise="" data-height="300" data-encoded="true">
+eyJsYW5ndWFnZSI6InB5dGhvbiIsInByZV9leGVyY2lzZV9jb2RlIjoiZnJvbSBza2xlYXJuIGltcG9ydCBkYXRhc2V0c1xuZnJvbSBza2xlYXJuLmNyb3NzX3ZhbGlkYXRpb24gaW1wb3J0IHRyYWluX3Rlc3Rfc3BsaXRcbmZyb20gc2tsZWFybi5wcmVwcm9jZXNzaW5nIGltcG9ydCBzY2FsZVxuZnJvbSBza2xlYXJuIGltcG9ydCBjbHVzdGVyXG5kaWdpdHMgPSBkYXRhc2V0cy5sb2FkX2RpZ2l0cygpXG5kYXRhID0gc2NhbGUoZGlnaXRzLmRhdGEpXG5YX3RyYWluLCBYX3Rlc3QsIHlfdHJhaW4sIHlfdGVzdCwgaW1hZ2VzX3RyYWluLCBpbWFnZXNfdGVzdCA9IHRyYWluX3Rlc3Rfc3BsaXQoZGF0YSwgZGlnaXRzLnRhcmdldCwgZGlnaXRzLmltYWdlcywgdGVzdF9zaXplPTAuMjUsIHJhbmRvbV9zdGF0ZT00MilcbmNsZiA9IGNsdXN0ZXIuS01lYW5zKGluaXQ9J2stbWVhbnMrKycsIG5fY2x1c3RlcnM9MTAsIHJhbmRvbV9zdGF0ZT00MilcbmNsZi5maXQoWF90cmFpbilcbnlfcHJlZD1jbGYucHJlZGljdChYX3Rlc3QpIiwic2FtcGxlIjoiIyBJbXBvcnQgYG1ldHJpY3NgIGZyb20gYHNrbGVhcm5gXG5mcm9tIHNrbGVhcm4gaW1wb3J0IF9fX19fX19cblxuIyBQcmludCBvdXQgdGhlIGNvbmZ1c2lvbiBtYXRyaXggd2l0aCBgY29uZnVzaW9uX21hdHJpeCgpYFxucHJpbnQobWV0cmljcy5jb25mdXNpb25fbWF0cml4KHlfdGVzdCwgeV9wcmVkKSkiLCJzb2x1dGlvbiI6IiMgSW1wb3J0IGBtZXRyaWNzYCBmcm9tIGBza2xlYXJuYFxuZnJvbSBza2xlYXJuIGltcG9ydCBtZXRyaWNzXG5cbiMgUHJpbnQgb3V0IHRoZSBjb25mdXNpb24gbWF0cml4IHdpdGggYGNvbmZ1c2lvbl9tYXRyaXgoKWBcbnByaW50KG1ldHJpY3MuY29uZnVzaW9uX21hdHJpeCh5X3Rlc3QsIHlfcHJlZCkpIiwic2N0IjoidGVzdF9pbXBvcnQoXCJza2xlYXJuLm1ldHJpY3NcIiwgc2FtZV9hcyA9IFRydWUsIG5vdF9pbXBvcnRlZF9tc2cgPSBcIkRpZCB5b3UgaW1wb3J0IGBtZXRyaWNzYCBmcm9tIGBza2xlYXJuYD9cIiwgaW5jb3JyZWN0X2FzX21zZyA9IFwiRG9uJ3QgZm9yZ2V0IHRvIGltcG9ydCBgbWV0cmljc2AgZnJvbSBgc2tsZWFybmAhXCIpXG50ZXN0X2Z1bmN0aW9uKFxuICAgIFwicHJpbnRcIixcbiAgICBub3RfY2FsbGVkX21zZz1cIkRpZCB5b3UgcHJpbnQgb3V0IHRoZSBjb25mdXNpb24gbWF0cml4P1wiLFxuICAgIGluY29ycmVjdF9tc2c9XCJEb24ndCBmb3JnZXQgdG8gcHJpbnQgb3V0IHRoZSBjb25mdXNpb24gbWF0cml4IVwiLFxuICAgIGRvX2V2YWw9RmFsc2VcbilcbnN1Y2Nlc3NfbXNnPVwiV2VsbCBkb25lISBOb3csIHdoYXQgZG8gdGhlIHJlc3VsdHMgdGVsbCB5b3U/XCIifQ==
+</div>
+<p>我們可以看到 41 個 <code>5</code> 被正確預測，11 個 <code>8</code> 被正確預測，但混淆矩陣並不是唯一的評估方式，還有非常多的評估指標可以參考，直接點選 <strong>Run</strong> 觀察結果：</p>
+<div data-datacamp-exercise="" data-height="300" data-encoded="true">
+eyJsYW5ndWFnZSI6InB5dGhvbiIsInByZV9leGVyY2lzZV9jb2RlIjoiZnJvbSBza2xlYXJuIGltcG9ydCBkYXRhc2V0c1xuZnJvbSBza2xlYXJuLmNyb3NzX3ZhbGlkYXRpb24gaW1wb3J0IHRyYWluX3Rlc3Rfc3BsaXRcbmZyb20gc2tsZWFybi5wcmVwcm9jZXNzaW5nIGltcG9ydCBzY2FsZVxuZnJvbSBza2xlYXJuIGltcG9ydCBjbHVzdGVyXG5mcm9tIHNrbGVhcm4ubWV0cmljcyBpbXBvcnQgaG9tb2dlbmVpdHlfc2NvcmUsIGNvbXBsZXRlbmVzc19zY29yZSwgdl9tZWFzdXJlX3Njb3JlLCBhZGp1c3RlZF9yYW5kX3Njb3JlLCBhZGp1c3RlZF9tdXR1YWxfaW5mb19zY29yZSwgc2lsaG91ZXR0ZV9zY29yZVxuZGlnaXRzID0gZGF0YXNldHMubG9hZF9kaWdpdHMoKVxuZGF0YSA9IHNjYWxlKGRpZ2l0cy5kYXRhKVxuWF90cmFpbiwgWF90ZXN0LCB5X3RyYWluLCB5X3Rlc3QsIGltYWdlc190cmFpbiwgaW1hZ2VzX3Rlc3QgPSB0cmFpbl90ZXN0X3NwbGl0KGRhdGEsIGRpZ2l0cy50YXJnZXQsIGRpZ2l0cy5pbWFnZXMsIHRlc3Rfc2l6ZT0wLjI1LCByYW5kb21fc3RhdGU9NDIpXG5jbGYgPSBjbHVzdGVyLktNZWFucyhpbml0PSdrLW1lYW5zKysnLCBuX2NsdXN0ZXJzPTEwLCByYW5kb21fc3RhdGU9NDIpXG5jbGYuZml0KFhfdHJhaW4pXG55X3ByZWQ9Y2xmLnByZWRpY3QoWF90ZXN0KSIsInNhbXBsZSI6ImZyb20gc2tsZWFybi5tZXRyaWNzIGltcG9ydCBob21vZ2VuZWl0eV9zY29yZSwgY29tcGxldGVuZXNzX3Njb3JlLCB2X21lYXN1cmVfc2NvcmUsIGFkanVzdGVkX3JhbmRfc2NvcmUsIGFkanVzdGVkX211dHVhbF9pbmZvX3Njb3JlLCBzaWxob3VldHRlX3Njb3JlXG5wcmludCgnJSA5cycgJSAnaW5lcnRpYSAgICBob21vICAgY29tcGwgIHYtbWVhcyAgICAgQVJJIEFNSSAgc2lsaG91ZXR0ZScpXG5wcmludCgnJWkgICAlLjNmICAgJS4zZiAgICUuM2YgICAlLjNmICAgJS4zZiAgICAlLjNmJ1xuICAgICAgICAgICUoY2xmLmluZXJ0aWFfLFxuICAgICAgaG9tb2dlbmVpdHlfc2NvcmUoeV90ZXN0LCB5X3ByZWQpLFxuICAgICAgY29tcGxldGVuZXNzX3Njb3JlKHlfdGVzdCwgeV9wcmVkKSxcbiAgICAgIHZfbWVhc3VyZV9zY29yZSh5X3Rlc3QsIHlfcHJlZCksXG4gICAgICBhZGp1c3RlZF9yYW5kX3Njb3JlKHlfdGVzdCwgeV9wcmVkKSxcbiAgICAgIGFkanVzdGVkX211dHVhbF9pbmZvX3Njb3JlKHlfdGVzdCwgeV9wcmVkKSxcbiAgICAgIHNpbGhvdWV0dGVfc2NvcmUoWF90ZXN0LCB5X3ByZWQsIG1ldHJpYz0nZXVjbGlkZWFuJykpKSJ9
+</div>
+<p>這些指標包含了：</p>
+<ul>
+<li>Homogeneity score</li>
+<li>Completeness score</li>
+<li>V-measure score</li>
+<li>Adjusted rand score</li>
+<li>Adjusted Mutual Info score, AMI score</li>
+<li>Silhouette score</li>
+</ul>
+<p>但這些評估指標都不是太好，像是 silhouette score 接近 0，代表很多的觀測值都接近分群邊界而可能被分到錯誤的群集中；而 ARI 則告訴我們同一群集中的觀測值沒有完全相同；Completeness score 則告訴我們一定有觀測值被分在錯誤的群集。</p>
+<p>這提示我們針對 <code>digits</code> 資料也許應該嘗試另外一種演算法。</p>
+</div>
+<div id="support-vector-machines-svm" class="section level3">
+<h3>嘗試另外一種演算法：支持向量機（Support Vector Machines, SVM）</h3>
+<p>當訓練資料沒有目標值的時候適用前述的分群演算法，當訓練資料具有目標值的時候就能夠適用分類演算法。我們再回顧一下 scikit-learn 機器學習地圖，在分類演算的區域第一個看到的是線性 SVC，讓我們對 <code>digits</code> 資料使用這個演算法試試看，直接點選 <strong>Run</strong> 觀察結果：</p>
+<div data-datacamp-exercise="" data-height="300" data-encoded="true">
+eyJsYW5ndWFnZSI6InB5dGhvbiIsInByZV9leGVyY2lzZV9jb2RlIjoiZnJvbSBza2xlYXJuIGltcG9ydCBkYXRhc2V0c1xuZnJvbSBza2xlYXJuLnByZXByb2Nlc3NpbmcgaW1wb3J0IHNjYWxlXG5mcm9tIHNrbGVhcm4gaW1wb3J0IGNsdXN0ZXJcbmRpZ2l0cyA9IGRhdGFzZXRzLmxvYWRfZGlnaXRzKClcbmRhdGEgPSBzY2FsZShkaWdpdHMuZGF0YSkiLCJzYW1wbGUiOiIjIEltcG9ydCBgdHJhaW5fdGVzdF9zcGxpdGBcbmZyb20gc2tsZWFybi5jcm9zc192YWxpZGF0aW9uIGltcG9ydCB0cmFpbl90ZXN0X3NwbGl0XG5cbiMgU3BsaXQgdGhlIGRhdGEgaW50byB0cmFpbmluZyBhbmQgdGVzdCBzZXRzIFxuWF90cmFpbiwgWF90ZXN0LCB5X3RyYWluLCB5X3Rlc3QsIGltYWdlc190cmFpbiwgaW1hZ2VzX3Rlc3QgPSB0cmFpbl90ZXN0X3NwbGl0KGRpZ2l0cy5kYXRhLCBkaWdpdHMudGFyZ2V0LCBkaWdpdHMuaW1hZ2VzLCB0ZXN0X3NpemU9MC4yNSwgcmFuZG9tX3N0YXRlPTQyKVxuXG4jIEltcG9ydCB0aGUgYHN2bWAgbW9kZWxcbmZyb20gc2tsZWFybiBpbXBvcnQgc3ZtXG5cbiMgQ3JlYXRlIHRoZSBTVkMgbW9kZWwgXG5zdmNfbW9kZWwgPSBzdm0uU1ZDKGdhbW1hPTAuMDAxLCBDPTEwMC4sIGtlcm5lbD0nbGluZWFyJylcblxuIyBGaXQgdGhlIGRhdGEgdG8gdGhlIFNWQyBtb2RlbFxuc3ZjX21vZGVsLmZpdChYX3RyYWluLCB5X3RyYWluKSIsInNvbHV0aW9uIjoiIyBJbXBvcnQgYHRyYWluX3Rlc3Rfc3BsaXRgXG5mcm9tIHNrbGVhcm4uY3Jvc3NfdmFsaWRhdGlvbiBpbXBvcnQgdHJhaW5fdGVzdF9zcGxpdFxuXG4jIFNwbGl0IHRoZSBkYXRhIGludG8gdHJhaW5pbmcgYW5kIHRlc3Qgc2V0cyBcblhfdHJhaW4sIFhfdGVzdCwgeV90cmFpbiwgeV90ZXN0LCBpbWFnZXNfdHJhaW4sIGltYWdlc190ZXN0ID0gdHJhaW5fdGVzdF9zcGxpdChkaWdpdHMuZGF0YSwgZGlnaXRzLnRhcmdldCwgZGlnaXRzLmltYWdlcywgdGVzdF9zaXplPTAuMjUsIHJhbmRvbV9zdGF0ZT00MilcblxuIyBJbXBvcnQgdGhlIGBzdm1gIG1vZGVsXG5mcm9tIHNrbGVhcm4gaW1wb3J0IHN2bVxuXG4jIENyZWF0ZSB0aGUgU1ZDIG1vZGVsIFxuc3ZjX21vZGVsID0gc3ZtLlNWQyhnYW1tYT0wLjAwMSwgQz0xMDAuLCBrZXJuZWw9J2xpbmVhcicpXG5cbiMgRml0IHRoZSBkYXRhIHRvIHRoZSBTVkMgbW9kZWxcbnN2Y19tb2RlbC5maXQoWF90cmFpbiwgeV90cmFpbikiLCJzY3QiOiJ0ZXN0X2ltcG9ydChcInNrbGVhcm4uY3Jvc3NfdmFsaWRhdGlvbi50cmFpbl90ZXN0X3NwbGl0XCIsIHNhbWVfYXMgPSBUcnVlLCBub3RfaW1wb3J0ZWRfbXNnID0gXCJEaWQgeW91IGltcG9ydCBgdHJhaW5fdGVzdF9zcGxpdGAgZnJvbSBgc2tsZWFybi5jcm9zc192YWxpZGF0aW9uYD9cIiwgaW5jb3JyZWN0X2FzX21zZyA9IFwiRG9uJ3QgZm9yZ2V0IHRvIGltcG9ydCBgdHJhaW5fdGVzdF9zcGxpdGAgZnJvbSBgc2tsZWFybi5jcm9zc192YWxpZGF0aW9uYCFcIilcbnRlc3Rfb2JqZWN0KFwiWF90cmFpblwiLCBkb19ldmFsPUZhbHNlLCB1bmRlZmluZWRfbXNnPVwiZGlkIHlvdSBkZWZpbmUgYFhfdHJhaW5gP1wiKVxudGVzdF9vYmplY3QoXCJYX3Rlc3RcIiwgZG9fZXZhbD1GYWxzZSwgdW5kZWZpbmVkX21zZz1cImRpZCB5b3UgZGVmaW5lIGBYX3Rlc3RgP1wiKVxudGVzdF9vYmplY3QoXCJ5X3RyYWluXCIsIGRvX2V2YWw9RmFsc2UsIHVuZGVmaW5lZF9tc2c9XCJkaWQgeW91IGRlZmluZSBgeV90cmFpbmA/XCIpXG50ZXN0X29iamVjdChcInlfdGVzdFwiLCBkb19ldmFsPUZhbHNlLCB1bmRlZmluZWRfbXNnPVwiZGlkIHlvdSBkZWZpbmUgYHlfdGVzdGA/XCIpXG50ZXN0X29iamVjdChcImltYWdlc190cmFpblwiLCBkb19ldmFsPUZhbHNlLCB1bmRlZmluZWRfbXNnPVwiZGlkIHlvdSBkZWZpbmUgYGltYWdlc190cmFpbmA/XCIpXG50ZXN0X29iamVjdChcImltYWdlc190ZXN0XCIsIGRvX2V2YWw9RmFsc2UsIHVuZGVmaW5lZF9tc2c9XCJkaWQgeW91IGRlZmluZSBgaW1hZ2VzX3Rlc3RgP1wiKVxudGVzdF9pbXBvcnQoXCJza2xlYXJuLnN2bVwiLCBzYW1lX2FzID0gVHJ1ZSwgbm90X2ltcG9ydGVkX21zZyA9IFwiRGlkIHlvdSBpbXBvcnQgYHN2bWAgZnJvbSBgc2tsZWFybmA/XCIsIGluY29ycmVjdF9hc19tc2cgPSBcIkRvbid0IGZvcmdldCB0byBpbXBvcnQgYHN2bWAgZnJvbSBgc2tsZWFybmAhXCIpXG50ZXN0X29iamVjdChcInN2Y19tb2RlbFwiLCBkb19ldmFsPUZhbHNlKVxudGVzdF9mdW5jdGlvbihcInN2Y19tb2RlbC5maXRcIiwgZG9fZXZhbD1GYWxzZSlcbnN1Y2Nlc3NfbXNnPVwiR3JlYXQgam9iIVwiIn0=
+</div>
+<p>在這段程式中我們手動設定了 <code>gamma</code> 參數，但其實透過網格搜索（Grid search）或交叉驗證（Cross validation）都可以自動找出合適的參數設定，但這些方法並不是這份教學的重點，所以我們只是很快地展示一下如何使用網格搜索來調整參數而不去深究，直接點選 <strong>Run</strong> 觀察結果：</p>
+<div data-datacamp-exercise="" data-height="300" data-encoded="true">
+eyJsYW5ndWFnZSI6InB5dGhvbiIsInByZV9leGVyY2lzZV9jb2RlIjoiZnJvbSBza2xlYXJuIGltcG9ydCBzdm1cbmZyb20gc2tsZWFybiBpbXBvcnQgZGF0YXNldHNcbmZyb20gc2tsZWFybi5jcm9zc192YWxpZGF0aW9uIGltcG9ydCB0cmFpbl90ZXN0X3NwbGl0XG5kaWdpdHMgPSBkYXRhc2V0cy5sb2FkX2RpZ2l0cygpIiwic2FtcGxlIjoiIyBTcGxpdCB0aGUgYGRpZ2l0c2AgZGF0YSBpbnRvIHR3byBlcXVhbCBzZXRzXG5YX3RyYWluLCBYX3Rlc3QsIHlfdHJhaW4sIHlfdGVzdCA9IHRyYWluX3Rlc3Rfc3BsaXQoZGlnaXRzLmRhdGEsIGRpZ2l0cy50YXJnZXQsIHRlc3Rfc2l6ZT0wLjUsIHJhbmRvbV9zdGF0ZT0wKVxuXG4jIEltcG9ydCBHcmlkU2VhcmNoQ1ZcbmZyb20gc2tsZWFybi5ncmlkX3NlYXJjaCBpbXBvcnQgR3JpZFNlYXJjaENWXG5cbiMgU2V0IHRoZSBwYXJhbWV0ZXIgY2FuZGlkYXRlc1xucGFyYW1ldGVyX2NhbmRpZGF0ZXMgPSBbXG4gIHsnQyc6IFsxLCAxMCwgMTAwLCAxMDAwXSwgJ2tlcm5lbCc6IFsnbGluZWFyJ119LFxuICB7J0MnOiBbMSwgMTAsIDEwMCwgMTAwMF0sICdnYW1tYSc6IFswLjAwMSwgMC4wMDAxXSwgJ2tlcm5lbCc6IFsncmJmJ119LFxuXVxuXG4jIENyZWF0ZSBhIGNsYXNzaWZpZXIgd2l0aCB0aGUgcGFyYW1ldGVyIGNhbmRpZGF0ZXNcbmNsZiA9IEdyaWRTZWFyY2hDVihlc3RpbWF0b3I9c3ZtLlNWQygpLCBwYXJhbV9ncmlkPXBhcmFtZXRlcl9jYW5kaWRhdGVzLCBuX2pvYnM9LTEpXG5cbiMgVHJhaW4gdGhlIGNsYXNzaWZpZXIgb24gdHJhaW5pbmcgZGF0YVxuY2xmLmZpdChYX3RyYWluLCB5X3RyYWluKVxuXG4jIFByaW50IG91dCB0aGUgcmVzdWx0cyBcbnByaW50KCdCZXN0IHNjb3JlIGZvciB0cmFpbmluZyBkYXRhOicsIGNsZi5iZXN0X3Njb3JlXylcbnByaW50KCdCZXN0IGBDYDonLGNsZi5iZXN0X2VzdGltYXRvcl8uQylcbnByaW50KCdCZXN0IGtlcm5lbDonLGNsZi5iZXN0X2VzdGltYXRvcl8ua2VybmVsKVxucHJpbnQoJ0Jlc3QgYGdhbW1hYDonLGNsZi5iZXN0X2VzdGltYXRvcl8uZ2FtbWEpIn0=
+</div>
+<p>接下來，我們會比較手動設定參數與使用網格搜索調整參數的兩個分類器，看看網格搜索找出來的參數是不是真的比較好，直接點選 <strong>Run</strong> 觀察結果：</p>
+<div data-datacamp-exercise="" data-height="300" data-encoded="true">
+eyJsYW5ndWFnZSI6InB5dGhvbiIsInByZV9leGVyY2lzZV9jb2RlIjoiZnJvbSBza2xlYXJuIGltcG9ydCBzdm1cbmZyb20gc2tsZWFybiBpbXBvcnQgZGF0YXNldHNcbmZyb20gc2tsZWFybi5jcm9zc192YWxpZGF0aW9uIGltcG9ydCB0cmFpbl90ZXN0X3NwbGl0XG5kaWdpdHMgPSBkYXRhc2V0cy5sb2FkX2RpZ2l0cygpXG5YX3RyYWluLCBYX3Rlc3QsIHlfdHJhaW4sIHlfdGVzdCA9IHRyYWluX3Rlc3Rfc3BsaXQoZGlnaXRzLmRhdGEsIGRpZ2l0cy50YXJnZXQsIHRlc3Rfc2l6ZT0wLjUsIHJhbmRvbV9zdGF0ZT0wKVxuZnJvbSBza2xlYXJuLmdyaWRfc2VhcmNoIGltcG9ydCBHcmlkU2VhcmNoQ1ZcbnBhcmFtZXRlcl9jYW5kaWRhdGVzID0gW1xuICB7J0MnOiBbMSwgMTAsIDEwMCwgMTAwMF0sICdrZXJuZWwnOiBbJ2xpbmVhciddfSxcbiAgeydDJzogWzEsIDEwLCAxMDAsIDEwMDBdLCAnZ2FtbWEnOiBbMC4wMDEsIDAuMDAwMV0sICdrZXJuZWwnOiBbJ3JiZiddfSxcbl1cbmNsZiA9IEdyaWRTZWFyY2hDVihlc3RpbWF0b3I9c3ZtLlNWQygpLCBwYXJhbV9ncmlkPXBhcmFtZXRlcl9jYW5kaWRhdGVzLCBuX2pvYnM9LTEpXG5jbGYuZml0KFhfdHJhaW4sIHlfdHJhaW4pIiwic2FtcGxlIjoiIyBBcHBseSB0aGUgY2xhc3NpZmllciB0byB0aGUgdGVzdCBkYXRhLCBhbmQgdmlldyB0aGUgYWNjdXJhY3kgc2NvcmVcbmNsZi5zY29yZShYX3Rlc3QsIHlfdGVzdCkgIFxuXG4jIFRyYWluIGFuZCBzY29yZSBhIG5ldyBjbGFzc2lmaWVyIHdpdGggdGhlIGdyaWQgc2VhcmNoIHBhcmFtZXRlcnNcbnN2bS5TVkMoQz0xMCwga2VybmVsPSdyYmYnLCBnYW1tYT0wLjAwMSkuZml0KFhfdHJhaW4sIHlfdHJhaW4pLnNjb3JlKFhfdGVzdCwgeV90ZXN0KSJ9
+</div>
+<p>在這樣的參數設定下準確率高達 99%！</p>
+<p>在使用網格搜索以前，我們將 <code>kernel</code> 參數指定為 <code>linear</code>，在 SVM 演算法 <code>kernel</code> 參數預設為 <code>rbf</code>，而除了前面指定的 <code>linear</code>，尚可以設定為 <code>poly</code>。但是究竟 <code>kernel</code> 是什麼？<code>kernel</code> 是一種計算訓練資料觀測值相似度的函數，SVM 演算法利用這個函數來進行分類，我們先假設這些觀測值線性可分，所以設定 <code>kernel = linear</code>，但是網格搜索的結果則建議我們使用 <code>kernel = rbf</code> 的參數設定。</p>
+<p>我們接著使用 <code>kernel = linear</code> 的分類器來預測測試資料，試著依照註解的提示完成程式後點選 <strong>Run</strong> 觀察結果，如果沒有頭緒，可以點選 <strong>Solution</strong> 將程式完成後再點選 <strong>Run</strong> 觀察結果：</p>
+<div data-datacamp-exercise="" data-height="300" data-encoded="true">
+eyJsYW5ndWFnZSI6InB5dGhvbiIsInByZV9leGVyY2lzZV9jb2RlIjoiZnJvbSBza2xlYXJuIGltcG9ydCBkYXRhc2V0c1xuZnJvbSBza2xlYXJuLnByZXByb2Nlc3NpbmcgaW1wb3J0IHNjYWxlXG5mcm9tIHNrbGVhcm4gaW1wb3J0IGNsdXN0ZXJcbmRpZ2l0cyA9IGRhdGFzZXRzLmxvYWRfZGlnaXRzKClcbmRhdGEgPSBzY2FsZShkaWdpdHMuZGF0YSlcbmZyb20gc2tsZWFybi5jcm9zc192YWxpZGF0aW9uIGltcG9ydCB0cmFpbl90ZXN0X3NwbGl0XG5YX3RyYWluLCBYX3Rlc3QsIHlfdHJhaW4sIHlfdGVzdCwgaW1hZ2VzX3RyYWluLCBpbWFnZXNfdGVzdCA9IHRyYWluX3Rlc3Rfc3BsaXQoZGlnaXRzLmRhdGEsIGRpZ2l0cy50YXJnZXQsIGRpZ2l0cy5pbWFnZXMsIHRlc3Rfc2l6ZT0wLjI1LCByYW5kb21fc3RhdGU9NDIpXG5mcm9tIHNrbGVhcm4gaW1wb3J0IHN2bVxuc3ZjX21vZGVsID0gc3ZtLlNWQyhnYW1tYT0wLjAwMSwgQz0xMDAuLCBrZXJuZWw9J2xpbmVhcicpXG5zdmNfbW9kZWwuZml0KFhfdHJhaW4sIHlfdHJhaW4pIiwic2FtcGxlIjoiIyBQcmVkaWN0IHRoZSBsYWJlbCBvZiBgWF90ZXN0YFxucHJpbnQoc3ZjX21vZGVsLnByZWRpY3QoX19fX19fKSlcblxuIyBQcmludCBgeV90ZXN0YCB0byBjaGVjayB0aGUgcmVzdWx0c1xucHJpbnQoX19fX19fKSIsInNvbHV0aW9uIjoiIyBQcmVkaWN0IHRoZSBsYWJlbCBvZiBgWF90ZXN0YFxucHJpbnQoc3ZjX21vZGVsLnByZWRpY3QoWF90ZXN0KSlcblxuIyBQcmludCBgeV90ZXN0YCB0byBjaGVjayB0aGUgcmVzdWx0c1xucHJpbnQoeV90ZXN0KSIsInNjdCI6InRlc3RfZnVuY3Rpb24oXG4gICAgXCJwcmludFwiLFxuICAgIDEsXG4gICAgbm90X2NhbGxlZF9tc2c9XCJEaWQgeW91IHByaW50IG91dCB0aGUgcHJlZGljdGVkIGxhYmVscyBvZiBgWF90ZXN0YD9cIixcbiAgICBpbmNvcnJlY3RfbXNnPVwiRG9uJ3QgZm9yZ2V0IHRvIHByaW50IG91dCB0aGUgcHJlZGljdGVkIGxhYmVscyBvZiBgWF90ZXN0YCFcIixcbiAgICBkb19ldmFsPUZhbHNlXG4pXG50ZXN0X2Z1bmN0aW9uKFxuICAgIFwicHJpbnRcIixcbiAgICAyLFxuICAgIG5vdF9jYWxsZWRfbXNnPVwiRGlkIHlvdSBwcmludCBvdXQgdGhlIHRydWUgbGFiZWxzIG9mIGB5X3Rlc3RgP1wiLFxuICAgIGluY29ycmVjdF9tc2c9XCJEb24ndCBmb3JnZXQgdG8gcmV2ZWFsaW5nIHRoZSB0cnVlIGxhYmVscyBieSBwcmludGluZyBvdXQgYHlfdGVzdGAhXCIsXG4gICAgZG9fZXZhbD1GYWxzZVxuKVxuc3VjY2Vzc19tc2coXCJXZWxsIGRvbmUhXCIpIn0=
+</div>
+<p>視覺化手寫數字圖片與預測的結果：</p>
+<pre><code># 使用 SVC 演算法
+from sklearn import datasets
+from sklearn.preprocessing import scale
+from sklearn import cluster
+digits = datasets.load_digits()
+data = scale(digits.data)
+from sklearn.cross_validation import train_test_split
+X_train, X_test, y_train, y_test, images_train, images_test = train_test_split(digits.data, digits.target, digits.images, test_size=0.25, random_state=42)
+from sklearn import svm
+svc_model = svm.SVC(gamma=0.001, C=100., kernel=&#39;linear&#39;)
+svc_model.fit(X_train, y_train)
+
+# 載入 matplotlib
+import matplotlib.pyplot as plt
+
+# 將預測結果指派給 `predicted`
+predicted = svc_model.predict(X_test)
+
+# 將 `images_test` 與 `predicted` 存入 `images_and_predictions`
+images_and_predictions = list(zip(images_test, predicted))
+
+# 繪製前四個元素
+for index, (image, prediction) in enumerate(images_and_predictions[:4]):
+    # 在 1x4 的網格上繪製子圖形
+    plt.subplot(1, 4, index + 1)
+    # 關掉座標軸的刻度
+    plt.axis(&#39;off&#39;)
+    # 色彩用灰階
+    plt.imshow(image, cmap=plt.cm.binary)
+    # 加入標題
+    plt.title(&#39;Predicted: &#39; + str(prediction))
+
+# 顯示圖形
+plt.show()</code></pre>
+<p>這跟我們在探索性分析時作的視覺化非常相似，只是這次我們只顯示了前面四個測試資料與預測結果。</p>
+<div class="figure">
+<img src="plots/plot7.png" />
+
+</div>
+<p>那麼這個模型的表現如何呢？試著依照註解的提示完成程式後點選 <strong>Run</strong> 觀察結果，如果沒有頭緒，可以點選 <strong>Solution</strong> 將程式完成後再點選 <strong>Run</strong> 觀察結果：</p>
+<div data-datacamp-exercise="" data-height="300" data-encoded="true">
+eyJsYW5ndWFnZSI6InB5dGhvbiIsInByZV9leGVyY2lzZV9jb2RlIjoiZnJvbSBza2xlYXJuIGltcG9ydCBkYXRhc2V0c1xuZnJvbSBza2xlYXJuLnByZXByb2Nlc3NpbmcgaW1wb3J0IHNjYWxlXG5mcm9tIHNrbGVhcm4gaW1wb3J0IGNsdXN0ZXJcbmRpZ2l0cyA9IGRhdGFzZXRzLmxvYWRfZGlnaXRzKClcbmRhdGEgPSBzY2FsZShkaWdpdHMuZGF0YSlcbmZyb20gc2tsZWFybi5jcm9zc192YWxpZGF0aW9uIGltcG9ydCB0cmFpbl90ZXN0X3NwbGl0XG5YX3RyYWluLCBYX3Rlc3QsIHlfdHJhaW4sIHlfdGVzdCwgaW1hZ2VzX3RyYWluLCBpbWFnZXNfdGVzdCA9IHRyYWluX3Rlc3Rfc3BsaXQoZGlnaXRzLmRhdGEsIGRpZ2l0cy50YXJnZXQsIGRpZ2l0cy5pbWFnZXMsIHRlc3Rfc2l6ZT0wLjI1LCByYW5kb21fc3RhdGU9NDIpXG5mcm9tIHNrbGVhcm4gaW1wb3J0IHN2bVxuc3ZjX21vZGVsID0gc3ZtLlNWQyhnYW1tYT0wLjAwMSwgQz0xMDAuLCBrZXJuZWw9J2xpbmVhcicpXG5zdmNfbW9kZWwuZml0KFhfdHJhaW4sIHlfdHJhaW4pXG5wcmVkaWN0ZWQgPSBzdmNfbW9kZWwucHJlZGljdChYX3Rlc3QpIiwic2FtcGxlIjoiIyBJbXBvcnQgYG1ldHJpY3NgXG5mcm9tIHNrbGVhcm4gaW1wb3J0IG1ldHJpY3NcblxuIyBQcmludCB0aGUgY2xhc3NpZmljYXRpb24gcmVwb3J0IG9mIGB5X3Rlc3RgIGFuZCBgcHJlZGljdGVkYFxucHJpbnQobWV0cmljcy5jbGFzc2lmaWNhdGlvbl9yZXBvcnQoX19fX19fLCBfX19fX19fX18pKVxuXG4jIFByaW50IHRoZSBjb25mdXNpb24gbWF0cml4IG9mIGB5X3Rlc3RgIGFuZCBgcHJlZGljdGVkYFxucHJpbnQobWV0cmljcy5jb25mdXNpb25fbWF0cml4KF9fX19fXywgX19fX19fX19fKSkiLCJzb2x1dGlvbiI6IiMgSW1wb3J0IGBtZXRyaWNzYFxuZnJvbSBza2xlYXJuIGltcG9ydCBtZXRyaWNzXG5cbiMgUHJpbnQgdGhlIGNsYXNzaWZpY2F0aW9uIHJlcG9ydCBvZiBgeV90ZXN0YCBhbmQgYHByZWRpY3RlZGBcbnByaW50KG1ldHJpY3MuY2xhc3NpZmljYXRpb25fcmVwb3J0KHlfdGVzdCwgcHJlZGljdGVkKSlcblxuIyBQcmludCB0aGUgY29uZnVzaW9uIG1hdHJpeFxucHJpbnQobWV0cmljcy5jb25mdXNpb25fbWF0cml4KHlfdGVzdCwgcHJlZGljdGVkKSkiLCJzY3QiOiJ0ZXN0X2ltcG9ydChcInNrbGVhcm4ubWV0cmljc1wiLCBzYW1lX2FzID0gVHJ1ZSwgbm90X2ltcG9ydGVkX21zZyA9IFwiRGlkIHlvdSBpbXBvcnQgYG1ldHJpY3NgIGZyb20gYHNrbGVhcm5gP1wiLCBpbmNvcnJlY3RfYXNfbXNnID0gXCJEb24ndCBmb3JnZXQgdG8gaW1wb3J0IGBtZXRyaWNzYCBmcm9tIGBza2xlYXJuYCFcIilcbm5vdF9jYWxsZWRfbXNnPVwiRGlkIHlvdSBmaWxsIGluIGB5X3Rlc3RgIGFuZCBgcHJlZGljdGVkYD9cIlxuaW5jb3JyZWN0X21zZz1cIkRvbid0IGZvcmdldCB0byBmaWxsIGluIGB5X3Rlc3RgIGFzIHRoZSBmaXJzdCBhcmd1bWVudCwgYHByZWRpY3RlZGAgYXMgdGhlIHNlY29uZCBhcmd1bWVudCFcIlxudGVzdF9mdW5jdGlvbihcInByaW50XCIsIDEsIGRvX2V2YWw9RmFsc2UsIG5vdF9jYWxsZWRfbXNnID0gbm90X2NhbGxlZF9tc2csIGluY29ycmVjdF9tc2cgPSBpbmNvcnJlY3RfbXNnKVxudGVzdF9mdW5jdGlvbihcInByaW50XCIsIDIsIGRvX2V2YWw9RmFsc2UsIG5vdF9jYWxsZWRfbXNnID0gbm90X2NhbGxlZF9tc2csIGluY29ycmVjdF9tc2cgPSBpbmNvcnJlY3RfbXNnKVxuc3VjY2Vzc19tc2c9XCJXZWxsIGRvbmUhIE5vdywgY2hlY2sgdGhlIHJlc3VsdHMgb2YgdGhlIGNvbmZ1c2lvbiBtYXRyaXguIERvZXMgdGhpcyBtb2RlbCBwZXJmb3JtIGJldHRlcj9cIiJ9
+</div>
+<p>我們很明顯地看出 SVC 表現得比先前的 K-Means 分群好得太多，接著我們利用 <code>Isomap()</code> 視覺化預測結果與目標值：</p>
+<pre><code># 使用 SVC 演算法
+from sklearn import datasets
+from sklearn.preprocessing import scale
+from sklearn import cluster
+import matplotlib.pyplot as plt
+from sklearn.manifold import Isomap
+
+digits = datasets.load_digits()
+data = scale(digits.data)
+from sklearn.cross_validation import train_test_split
+X_train, X_test, y_train, y_test, images_train, images_test = train_test_split(digits.data, digits.target, digits.images, test_size=0.25, random_state=42)
+from sklearn import svm
+svc_model = svm.SVC(gamma=0.001, C=100., kernel=&#39;linear&#39;)
+svc_model.fit(X_train, y_train)
+
+# 對 `digits` 資料降維
+X_iso = Isomap(n_neighbors=10).fit_transform(X_train)
+
+# 使用 SVC 演算法
+predicted = svc_model.predict(X_train)
+
+# 在 1x2 的網格上繪製子圖形
+fig, ax = plt.subplots(1, 2, figsize=(8, 4))
+
+# 調整外觀
+fig.subplots_adjust(top=0.85)
+
+# 繪製散佈圖 
+ax[0].scatter(X_iso[:, 0], X_iso[:, 1], c=predicted)
+ax[0].set_title(&#39;Predicted labels&#39;)
+ax[1].scatter(X_iso[:, 0], X_iso[:, 1], c=y_train)
+ax[1].set_title(&#39;Actual Labels&#39;)
+
+# 加入標題
+fig.suptitle(&#39;Predicted versus actual labels&#39;, fontsize=14, fontweight=&#39;bold&#39;)
+
+# 顯示圖形
+plt.show()</code></pre>
+<p>完成後我們可以看到這張散佈圖： <img src="plots/plot8.png" /></p>
+<p>從上圖我們可以看到非常好的分類結果，這真是天大的好消息 :)</p>
+</div>
+<div id="-1" class="section level3">
+<h3>下一步呢？</h3>
+<div class="section level4">
+<h4>圖片辨識</h4>
+<p>恭喜您完成了這份教學，我們示範了如何對 <code>digits</code> 資料使用監督式與非監督式的機器學習演算法！假如您想要練習更多關於數字圖片辨識的機器學習演算法，那絕對不能錯過 MNIST 資料，您可以在<a href="http://yann.lecun.com/exdb/mnist/">這裡</a>下載。</p>
+<p>處理 MNIST 資料的手法跟這份教學的內容非常相似，除此之外您還可以參閱<a href="http://johnloeber.com/docs/kmeans.html">這個網頁</a>如何對 MNIST 資料使用 K-Means 演算法。</p>
+<p>如果您已經練習過使用 scikit-learn 辨識手寫數字圖片，也許可以考慮挑戰更高難度的字母與數字圖片辨識，這個著名的資料是 Chars74K，包含了 74,000 張除了手寫數字 0 到 9 以外，還有大寫 A 到 Z 以及小寫的 a 到 z 的圖片，您可以在<a href="http://www.ee.surrey.ac.uk/CVSSP/demos/chars74k/">這裡</a>下載。</p>
+</div>
+<div id="-pandas-" class="section level4">
+<h4>資料視覺化與 <code>pandas</code> 套件</h4>
+<p>這份教學主要的內容簡介是 Python 與機器學習，但這只是我們跟 Python 與資料科學旅程的開端而已，如果對於資料視覺化有興趣接下來可以參閱 <a href="https://www.datacamp.com/courses/interactive-data-visualization-with-bokeh">Interactive Data Visualization with Bokeh course</a> 或者對於在 Python 中使用資料框（data frame）有興趣可以參閱 <a href="https://www.datacamp.com/courses/pandas-foundations">pandas Foundation course</a>。</p>
+</div>
+</div>
+</div>
+
+
+
+
+</div>
+
+<script>
+
+// add bootstrap table styles to pandoc tables
+function bootstrapStylePandocTables() {
+  $('tr.header').parent('thead').parent('table').addClass('table table-condensed');
+}
+$(document).ready(function () {
+  bootstrapStylePandocTables();
+});
+
+
+</script>
+
+<!-- dynamically load mathjax for compatibility with self-contained -->
+<script>
+  (function () {
+    var script = document.createElement("script");
+    script.type = "text/javascript";
+    script.src  = "https://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML";
+    document.getElementsByTagName("head")[0].appendChild(script);
+  })();
+</script>
+
+</body>
+</html>
