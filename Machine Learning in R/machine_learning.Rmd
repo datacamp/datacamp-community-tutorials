@@ -1,0 +1,292 @@
+---
+title: "Getting Started With Machine Learning in R"
+author: "Karlijn Willems"
+output: html_notebook
+---
+
+# Introducing: Machine Learning
+
+Machine learning is a branch in computer science that studies the design of algorithms that can learn. Typical machine learning tasks are concept learning, function learning or "predictive modeling", clustering and finding predictive patterns. These tasks are learned through data that were observed through experiences or instructions, for example. Machine learning hopes that including the experience into its tasks will eventually improve the learning. The ultimate goal is to improve the learning in such a way that it becomes automatic, so that humans like ourselves don't need to interfere any more. 
+
+Machine learning has close ties with Knowledge Discovery, Data Mining, Artificial Intelligence and statistics. Typical applications of machine learning can be classified into scientific knowledge discovery and more commercial applications, ranging from the ["Robot Scientist"](https://www.aber.ac.uk/en/cs/research/cb/projects/robotscientist/) to anti-spam filtering and recommender systems.
+
+This small tutorial is meant to introduce you to the basics of machine learning in R: it will show you how to use R to work with the well-known machine learning algorithm called "KNN" or *k*-nearest neighbors.
+
+# Using R For *k*-Nearest Neighbors (KNN)
+
+The KNN or *k*-nearest neighbors algorithm is one of the simplest machine learning algorithms and is an example of instance-based learning, where new data are classified based on stored, labeled instances. More specifically, the distance between the stored data and the new instance is calculated by means of some kind of a similarity measure. This similarity measure is typically expressed by a distance measure such as the Euclidean distance, cosine similarity or the Manhattan distance. In other words, the similarity to the data that was already in the system is calculated for any new data point that you input into the system. Then, you use this similarity value to perform predictive modeling. Predictive modeling is either classification, assigning a label or a class to the new instance, or regression, assigning a value to the new instance. Whether you classify or assign a value to the new instance depends of course on your how you compose your model with KNN. 
+
+The *k*-nearest neighbor algorithm adds to this basic algorithm that after the distance of the new point to all stored data points has been calculated, the distance values are sorted and the *k*-nearest neighbors are determined. The labels of these neighbors are gathered and a majority vote or weighted vote is used for classification or regression purposes. In other words, the higher the score for a certain data point that was already stored, the more likely that the new instance will receive the same classification as that of the neighbor. In the case of regression, the value that will be assigned to the new data point is the mean of its *k* nearest neighbors. 
+
+[Animated PPT]
+
+## Step One. Get Your Data
+
+Machine learning typically starts from observed data. You can take your own data set or browse through other sources to find one. 
+
+### Built-in Datasets of R
+
+This tutorial makes use of the Iris data set, which is well-known in the area of machine learning. This dataset is built into R, so you can take a look at this dataset by typing the following into your console: 
+```{r, eval = FALSE}
+iris
+```
+
+### UC Irvine Machine Learning Repository
+
+If you want to download the data set instead of using the one that is built into R, you can go to the [UC Irvine Machine Learning Repository](http://archive.ics.uci.edu/ml/) and look up the Iris data set. 
+
+**Tip: not only check out the data folder of the Iris data set, but also take a look at the data description page!** 
+
+Then, load in the data set with the following command:
+```{r, eval = FALSE}
+iris <- read.csv(url("http://archive.ics.uci.edu/ml/machine-learning-databases/iris/iris.data"), header = FALSE) 
+```
+
+The command reads the .csv or "Comma Separated Value" file from the website. The `header` argument has been put to `FALSE`, which means that the Iris data set from this source does not give you the attribute names of the data.
+
+Instead of the attribute names, you might see strange column names such as "V1" or "V2". Those are set at random. To simplify the working with the data set, it is a good idea to make one yourself: you can do this through the function `names()`, which gets or sets the names of an object. Concatenate the names of the attributes as you would like them to appear. For the Iris data set, you can use the following R command:
+```{r, eval = FALSE}
+names(iris) <- c("Sepal.Length", "Sepal.Width", "Petal.Length", "Petal.Width", "Species")
+```
+
+## Step Two. Know Your Data
+
+Now that you have loaded the Iris data set into RStudio, you should try to get a thorough understanding of what your data is about. Just looking or reading about your data is certainly not enough to get started!
+
+### Initial Overview Of The Data Set
+
+First, you can already try to get an idea of your data by making some graphs, such as histograms or boxplots. In this case, however, scatter plots can give you a great idea of what you're dealing with: it can be interesting to see how much one variable is affected by another. In other words, you want to see if there is any correlation between two variables. 
+
+You can make scatterplots with the [ggvis package](http://www.rdocumentation.org/packages/ggvis), for example.
+
+**Note** that you first need to load the `ggvis` package:
+```{r}
+library(ggvis)
+```
+
+```{r, message = FALSE}
+iris %>% ggvis(~Sepal.Length, ~Sepal.Width, fill = ~Species) %>% layer_points()
+```
+
+You see that there is a high correlation between the sepal length and the sepal width of the Setosa iris flowers, while the correlation is somewhat less high for the Virginica and Versicolor flowers. 
+
+The scatter plot that maps the petal length and the petal width tells a similar story:
+```{r, message = FALSE}
+iris %>% ggvis(~Petal.Length, ~Petal.Width, fill = ~Species) %>% layer_points()
+```
+
+You see that this graph indicates a positive correlation between the petal length and the petal width for all different species that are included into the Iris data set.
+
+**Tip: are you curious about ggvis, graphs or histograms in particular? Check out our [tutorial on histograms](http://blog.datacamp.com/make-histogram-basic-r/) and/or [our course on ggvis](https://www.datacamp.com/courses/ggvis-data-visualization-r-tutorial).**
+
+After a general visualized overview of the data, you can also view the data set by entering
+```{r eval=FALSE}
+iris
+```
+
+However, as you will see from the result of this command, this really isn't the best way to inspect your data set thoroughly: the data set takes up a lot of space in the console, which will impede you from forming a clear idea about your data. It is therefore a better idea to inspect the data set by executing
+```{r, eval=FALSE}
+head(iris)
+```
+
+or
+```{r, eval=FALSE}
+str(iris)
+```
+
+**Tip: try both of these commands out to see the difference!** 
+
+**Note** that the last command will help you to clearly distinguish the data type `num` and the three levels of the `Species` attribute, which is a factor. This is very convenient, since many R machine learning classifiers require that the target feature is coded as a factor.
+
+**Remember**: factor variables represent categorical variables in R. They can thus take on a limited number of different values.
+
+A quick look at the `Species` attribute through tells you that the division of the species of flowers is 50-50-50:
+```{r, eval=FALSE}
+table(iris$Species) 
+```
+
+If you want to check the percentual division of the `Species` attribute, you can ask for a table of proportions:
+```{r, eval=FALSE}
+round(prop.table(table(iris$Species)) * 100, digits = 1)
+```
+
+**Note** that the `round` argument rounds the values of the first argument, `prop.table(table(iris$Species))*100` to the specified number of digitis, which is one digit after the decimal point. You can easily adjust this by changing the value of the `digits` argument.
+
+### Profound Understanding Of Your Data
+
+Let's not remain on this high-level overview of the data! R gives you the opportunity to go more in-depth with the `summary()` function. This will give you the minimum value, first quantile, median, mean, third quantile and maximum value of the data set Iris for numeric data types. For the class variable, the count of factors will be returned:
+```{r, eval=TRUE, message=FALSE}
+summary(iris) 
+```
+
+**Tip: you can also refine your summary overview by adding specific attributes to the command that was presented above:** 
+```{r, eval=FALSE}
+summary(iris[c("Petal.Width", "Sepal.Width")])
+```
+
+As you can see, the `c()` function is added to the original command: the columns `petal width` and `sepal width` are concatenated and a summary is then asked of just these two columns of the Iris data set. 
+
+##Step Three. Where To Go Now? 
+
+After you have acquired a good understanding of your data, you have to decide on the use cases that would be relevant for your data set. In other words, you think about what your data set might teach you or what you think you can learn from your data. From there on, you can think about what kind of algorithms you would be able to apply to your data set in order to get the results that you think you can obtain. 
+
+**Tip: keep in mind that the more familiar you are with your data, the easier it will be to assess the use cases for your specific data set. The same also holds for finding the appropriate machine algorithm.**
+
+For this tutorial, the Iris data set will be used for classification, which is an example of predictive modeling. The last attribute of the data set, `Species`, will be the target variable or the variable that we want to predict in this example. 
+
+**Note** that you can also take one of the numerical classes as the target variable if you want to use KNN to do regression. 
+
+## Step Four. Prepare Your Workspace
+
+Many of the algorithms used in machine learning are not incorporated by default into R. You will most probably need to download the packages that you want to use when you want to get started with machine learning. 
+
+**Tip: got an idea of which learning algorithm you may use, but not of which package you want or need?  You can find a pretty complete overview of all the packages that are used in R [right here](http://www.rdocumentation.org/domains/MachineLearning).** 
+
+To illustrate the KNN algorithm, this tutorial works with the package `class`. You can type in
+```{r, eval=TRUE}
+library(class)
+```
+
+If you don't have this package yet, you can quickly and easily do so by typing 
+```{r, eval=FALSE}
+install.packages("<package name>")
+```
+
+**Remember** the nerd tip: if you're not sure if you have this package, you can run the following command to find out!
+```{r, eval=FALSE}
+any(grepl("<name of your package>", installed.packages()))
+```
+
+## Step Five. Prepare Your Data
+
+### Normalization
+
+As a part of your data preparation, you might need to normalize your data so that its consistent. For this introductory tutorial, just remember that normalization makes it easier for the KNN algorithm to learn. There are two types of normalization:
+
+* example normalization is the adjustment of each example individually, while
+* feature normalization indicates that you adjust each feature in the same way across all examples. 
+
+So when do you need to normalize your dataset? In short: when you suspect that the data is not consistent. You can easily see this when you go through the results of the `summary()` function. Look at the minimum and maximum values of all the (numerical) attributes. If you see that one attribute has a wide range of values, you will need to normalize your dataset, because this means that the distance will be dominated by this feature. For example, if your dataset has just two attributes, X and Y, and X has values that range from 1 to 1000, while Y has values that only go from 1 to 100, then Y's influence on the distance function will usually be overpowered by X's influence. When you normalize, you actually adjust the range of all features, so that distances between variables with larger ranges will not be over-emphasised.
+
+**Tip: go back to the result of `summary(iris)` and try to figure out if normalization is necessary.**
+
+The Iris data set doesn't need to be normalized: the `Sepal.Length` attribute has values that go from 4.3 to 7.9 and `Sepal.Width` contains values from 2 to 4.4, while `Petal.Length`'s values range from 1 to 6.9 and `Petal.Width` goes from 0.1 to 2.5. All values of all attributes are contained within the range of 0.1 and 7.9, which you can consider acceptable. 
+
+Nevertheless, it's still a good idea to study normalization and its effect, especially if you're new to machine learning. You can perform feature normalization, for example, by first making your own `normalize` argument:
+```{r, eval=TRUE}
+normalize <- function(x) {
+num <- x - min(x)
+denom <- max(x) - min(x)
+return (num/denom)
+}
+```
+
+You can then use this argument in another command, where you put the results of the normalization in a data frame through `as.data.frame()` after the function `lapply()` returns a list of the same length as the data set that you give in. Each element of that list is the result of the application of the `normalize` argument to the data set that served as input:
+```{r, eval=FALSE}
+YourNormalizedDataSet <- as.data.frame(lapply(YourDataSet, normalize))
+```
+
+For the Iris dataset, you would have applied the `normalize` argument on the four numerical attributes of the Iris data set (`Sepal.Length`, `Sepal.Width`, `Petal.Length`, `Petal.Width`) and put the results in a data frame:
+```{r, eval=TRUE}
+iris_norm <- as.data.frame(lapply(iris[1:4], normalize))
+```
+
+**Tip: to more thoroughly illustrate the effect of normalization on the data set, compare the following result to the summary of the Iris data set that was given in step two:** 
+```{r, eval=TRUE}
+summary(iris_norm)
+```
+
+### Training And Test Sets
+
+In order to assess your model's performance later, you will need to divide the data set into two parts: a training set and a test set. The first is used to train the system, while the second is used to evaluate the learned or trained system. In practice, the division of your data set into a test and a training sets is disjoint: the most common splitting choice is to take 2/3 of your original data set as the training set, while the 1/3 that remains will compose the test set.
+
+One last look on the data set teaches you that if you performed the division of both sets on the data set as is, you would get a training class with all species of "Setosa" and "Versicolor", but none of "Virginica". The model would therefore classify all unknown instances as either "Setosa" or "Versicolor", as it would not be aware of the presence of a third species of flowers in the data. In short, you would get incorrect predictions for the test set. 
+
+You thus need to make sure that all three classes of species are present in the training model. What's more, the amount of instances of all three species needs to be more or less _equal_ so that you do not favour one or the other class in your predictions.
+
+To make your training and test sets, you first set a seed. This is a number of R's random number generator. The major advantage of setting a seed is that you can get the same sequence of random numbers whenever you supply the same seed in the random number generator. 
+```{r, eval=TRUE}
+set.seed(1234)
+```
+
+Then, you want to make sure that your Iris data set is shuffled and that you have an equal amount of each species in your training and test sets. You use the `sample()` function to take a sample with a size that is set as the number of rows of the Iris data set, or 150. You sample with replacement: you choose from a vector of 2 elements and assign either 1 or 2 to the 150 rows of the Iris data set. The assignment of the elements is subject to probability weights of 0.67 and 0.33.
+```{r, eval=TRUE}
+ind <- sample(2, nrow(iris), replace=TRUE, prob=c(0.67, 0.33))
+```
+
+**Note** that the `replace` argument is set to `TRUE`: this means that you assign a 1 or a 2 to a certain row and then reset the vector of 2 to its original state. This means that, for the next rows in your data set, you can either assign a 1 or a 2, each time again. The probability of choosing a 1 or a 2 should not be proportional to the weights amongst the remaining items, so you specify probability weights. 
+
+**Remember** that you want your training set to be 2/3 of your original data set: that is why you assign "1" with a probability of 0.67 and the "2"s with a probability of 0.33 to the 150 sample rows.
+
+You can then use the sample that is stored in the variable `ind` to define your training and test sets: 
+```{r, eval=TRUE}
+iris.training <- iris[ind==1, 1:4]
+iris.test <- iris[ind==2, 1:4]
+```
+
+**Note** that, in addition to the 2/3 and 1/3 proportions specified above, you don't take into account all attributes to form the training and test sets. Specifically, you only take `Sepal.Length`, `Sepal.Width`, `Petal.Length` and `Petal.Width`. This is because you actually want to predict the fifth attribute, `Species`: it is your target variable. However, you do want to include it into the KNN algorithm, otherwise there will never be any prediction for it. You therefore need to store the class labels in factor vectors and divide them over the training and test sets: 
+```{r, eval=TRUE}
+iris.trainLabels <- iris[ind==1,5]
+iris.testLabels <- iris[ind==2, 5]
+```
+
+## Step Six. The Actual KNN Model
+
+### Building Your Classifier
+
+After all these preparation steps, you have made sure that all your known (training) data is stored. No actual model or learning was performed up until this moment. Now, you want to find the *k* nearest neighbors of your training set. 
+
+An easy way to do these two steps is by using the `knn()` function, which uses the Euclidian distance measure in order to find the *k*-nearest neighbours to your new, unknown instance. Here, the *k* parameter is one that you set yourself. As mentioned before, new instances are classified by looking at the majority vote or weighted vote. In case of classification, the data point with the highest score wins the battle and the unknown instance receives the label of that winning data point. If there is an equal amount of winners, the classification happens randomly. 
+
+**Note**: the *k* parameter is often an odd number to avoid ties in the voting scores.
+
+To build your classifier, you need to take the `knn()` function and simply add some arguments to it, just like in this example: 
+```{r, eval=TRUE}
+iris_pred <- knn(train = iris.training, test = iris.test, cl = iris.trainLabels, k=3)
+```
+
+You store into `iris_pred` the `knn()` function that takes as arguments the training set, the test set, the train labels and the amount of neighbours you want to find with this algorithm. The result of this function is a factor vector with the predicted classes for each row of the test data. 
+
+**Note** that you don't want to insert the test labels: these will be used to see if your model is good at predicting the actual classes of your instances!
+
+You can retrieve the result of the `knn()` function by typing in the following command:
+```{r, eval=TRUE}
+iris_pred
+```
+
+The result of this command is the factor vector with the predicted classes for each row of the test data. 
+
+## Step Seven. Evaluation of Your Model
+
+An essential next step in machine learning is the evaluation of your model's performance. In other words, you want to analyze the degree of correctness of the model's predictions. For a more abstract view, you can just compare the results of `iris_pred` to the test labels that you had defined earlier:
+```{r, eval=TRUE, message=FALSE, echo=FALSE}
+irisTestLabels <- data.frame(iris.testLabels)
+merge <- data.frame(iris_pred, iris.testLabels)
+names(merge) <- c("Predicted Species", "Observed Species")
+merge
+```
+
+You see that the model makes reasonably accurate predictions, with the exception of one wrong classification in row 29, where "Versicolor" was predicted while the test label is "Virginica".
+ 
+This is already some indication of your model's performance, but you might want to go even deeper into your analysis. For this purpose, you can import the package `gmodels`:  
+```{r, eval=FALSE}
+install.packages("package name")
+```
+
+If you have already installed this package, you can simply enter
+```{r, eval=TRUE}
+library(gmodels)
+```
+
+Then you can make a cross tabulation or a contingency table. This type of table is often used to understand the relationship between two variables. In this case, you want to understand how the classes of your test data, stored in `iris.testLabels` relate to your model that is stored in `iris_pred`:
+```{r, eval=TRUE}
+CrossTable(x = iris.testLabels, y = iris_pred, prop.chisq=FALSE)
+```
+
+**Note** that the last argument `prop.chisq` indicates whether or not the chi-square contribution of each cell is included. The chi-square statistic is the sum of the contributions from each of the individual cells and is used to decide whether the difference between the observed and the expected values is significant. 
+
+From this table, you can derive the number of correct and incorrect predictions: one instance from the testing set was labeled `Versicolor` by the model, while it was actually a flower of species `Virginica`. You can see this in the first row of the "Virginica" species in the `iris.testLabels` column. In all other cases, correct predictions were made. You can conclude that the model's performance is good enough and that you don't need to improve the model!
+
+# Move On To Big Data
+
+This tutorial was mainly concerned with performing basic machine learning algorithm KNN with the help of R. The Iris data set that was used was small and overviewable; But you can do so much more! If you have experimented enough with the basics presented in this tutorial and other machine learning algorithms, you might want to find it interesting to go further into R and data analysis. *[DataCamp can help you to take this step ](https://www.datacamp.com/courses )*.
