@@ -2,7 +2,12 @@
 
 Files related to articles written for the DataCamp Community
 
-## scikit-learn-tutorial
+
+## Machine Learning in R For Beginners
+
+## Python For Finance Tutorial For Beginners
+
+## Scikit-Learn Tutorial: Python Machine Learning
 This scikit-learn tutorial for beginners was published on the DataCamp Community on the 3rd of January. 
 You can find it here: https://www.datacamp.com/community/tutorials/machine-learning-python. 
 
