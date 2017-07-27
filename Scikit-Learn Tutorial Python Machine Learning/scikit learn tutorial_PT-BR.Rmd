@@ -149,7 +149,6 @@ Assim, você observará que ao utilizar a função `print` para apresentar os da
 
 Caso, deseje saber quais os atributos disponíveis para conhecer melhor seus dados basta apenas utilizar o comando `digits.keys()`.
 
-Try this all out in the following DataCamp Light blocks:
 Execute todos os blocos abaixo:
 ```{python ex="digits", type="pre-exercise-code"}
 from sklearn import datasets
@@ -236,12 +235,11 @@ Mas, e agora?!
 
 A primera coisa que você precisa saber sobre seu array de dados é seu formato. Ou seja, o número de dimensões e itens contidos no seu array de dados. O formato de um array é especificado por uma tupla de inteiros que específica o tamanho de cada uma de suas dimensões. Em outras palavras, caso você tenha uma array 3D como por exemplo ```y = np.zeros((2, 3, 4))```, o formato do seu array será ```(2,3,4)```.
 
-['til here!]
-Now let's try to see what the shape is of these three arrays that you have distinguished (the `data`, `target` and `DESCR` arrays). 
+Agora, é a hora de visualizar o formato dos três arrays que encontramos ( `data`,` target` e `DESCR`).
 
-Use first the `data` attribute to isolate the numpy array from the `digits` data and then use the `shape` attribute to find out more. You can do the same for the `target` and `DESCR`. There's also the `images` attribute, which is basically the data in images. You're also going to test this out. 
+Para verificar o formato dos arrays, os passos são basicamente os mesmos, diferindo apenas nos atributos utilizados. Assim, vamos tomar por exemplo o atributo `data`, basta isolar o array numpy do `digits` e então utilizar o atributo `shape`, feito isso você saberá o formato do atributo `data`. O mesmo pode ser aplicado no `target` e `DESCR`. Há ainda o atributo `images`, que basicamente são os dados das imagens. Você agora pode realizar o teste.
 
-Check up on this statement by using the `shape` attribute on the array:
+Observe na declaração abaixo utilzando o atributo `shape` no array:
 
 ```{python ex="digits_shape", type="pre-exercise-code"}
 from sklearn import datasets
@@ -296,20 +294,20 @@ print(digits_images.shape)
 ```
 
 ```{python ex="digits_shape", type="sct"}
-msg_data="Did you add `shape` to get the number of dimensions and items of the `digits_data` array?"
-msg_target="Did you add `shape` to get the number of dimensions and items of the `digits_target` array?"
-msg_image="Did you add `shape` to get the number of dimensions and items of the `digits_images` array?"
+msg_data="Você adicionou o atributo `shape` para verificar o número de dimensões e itens do array `digits_data`?"
+msg_target="Você adicionou o atributo `shape` para verificar o número de dimensões e itens do array `digits_target`?"
+msg_image="Você adicionou o atributo `shape` para verificar o número de dimensões e itens do array `digits_images`?"
 # Test object `digits_data`
-test_object("digits_data", undefined_msg="Did you define the `digits_data` object?", incorrect_msg="Did you use the `data` attribute to isolate the data of `digits`?")
+test_object("digits_data", undefined_msg="Você já definiu o objeto `digits_data`?", incorrect_msg="Você utilizou o atributo `data` para isolar os dados do `digits`?")
 # Test object `digits_target`
-test_object("digits_target", undefined_msg="Did you define the `digits_target` object?", incorrect_msg="Did you use the `target` attribute to isolate the target values of the `digits` data?")
+test_object("digits_target", undefined_msg="Você já definiu o objeto `digits_target`?", incorrect_msg="`target`")
 # Test `shape` of `digits_data`
 #test function print
 test_function(
     "print",
     1,
-    not_called_msg="Did you print out the shape of thedata?",
-    incorrect_msg="Don't forget to print out the shape of the data!",
+    not_called_msg="Você já imprimiu o formatos dos dados??",
+    incorrect_msg="Não se esqueça de imprimir o formato dos dados!",
     do_eval=False
 )
 test_object_accessed("digits_data.shape", not_accessed_msg=msg_data)
@@ -317,39 +315,38 @@ test_object_accessed("digits_data.shape", not_accessed_msg=msg_data)
 test_function(
     "print",
     2,
-    not_called_msg="Did you print out the shape of the target values of the data?",
-    incorrect_msg="Don't forget to print out the shape of the target values of the data!",
+    not_called_msg="Você já imprimiu o formatos dos rórulos dos dados?",
+    incorrect_msg="Não se esqueça de imprimir o formato dos rótulos dos dados!",
     do_eval=False
 )
 # Test access `shape` of `digits_target`
 test_object_accessed("digits_target.shape", not_accessed_msg=msg_target)
 # Test object `number_digits`
-test_object("number_digits", undefined_msg="Did you define the `number_digits` object?", incorrect_msg="Did you use `np.unique()` to give back the unique target values? Don't forget to give back the length of this array with `len()`!")
+test_object("number_digits", undefined_msg="Você já definiu o objeto `number_digits`?", incorrect_msg="Você utilizou o `np.unique()` para retornar os valores únicos dos rótulos de dados? Não se esqueça buscar o tamanho desse array utilizando o `len()`!")
 # Test object `digits_images`
-test_object("digits_images", undefined_msg="Did you define the `digits_images` object?", incorrect_msg="Did you use the `images` attribute to isolate the images of the `digits` data?")
+test_object("digits_images", undefined_msg="Did you define the `digits_images` object?", incorrect_msg="Você utilizaou o atributo `images` para isolar as imagens dos dados do `digits`?")
 # Test `shape` of `digits_images`
 test_object_accessed("digits_images.shape", not_accessed_msg=msg_image)
 # Test `print` 
 test_function(
     "print",
     3,
-    not_called_msg="Did you print out the shape of the images of `digits`?",
-    incorrect_msg="Don't forget to print out the shape of the images of `digits`!",
+    not_called_msg="Você imprimiu o formato das imagens do `digits`?",
+    incorrect_msg="Não se esqueça de imprimir o formato das imagens do `digits`!",
     do_eval=False
 )
-success_msg("Well done!")
+success_msg("Muito bem!")
 ```
 
+Recapitulando: ao inspecionar o `digits.data`, você verá que há 1797 amostras e 64 atributos. Assim, você terá 1797 amostras e 1797 valores de rótulos.
 
-To recap: by inspecting `digits.data`, you see that there are 1797 samples and that there are 64 features. Because you have 1797 samples, you also have 1797 target values. 
+Todos os rótulos contém 10 valores únicos, de 0 a 9. Em outras palavras, todos os 1797 rótulos são formados por números entre 0 e 9. Isso significa que os valores que serão reconhecidos por seu modelo conterão números entre 0 e 9.
 
-But all those target values contain 10 unique values, namely, from 0 to 9. In other words, all 1797 target values are made up of numbers that lie between 0 and 9. This means that the digits that your model will need to recognize are numbers from 0 to 9. 
+Por último, você verá que os dados do atributo `images` contém  três dimensões: há 1797 instâncias de tamanho 8x8 pixels. Você pode visualizar que os atributos `images` e `data` se relacionam, o que pode ser observado ao reformatar o `images` em duas dimensões, utilizando o seguinte código: `digits.images.reshape((1797, 64))`.
 
-Lastly, you see that the `images` data contains three dimensions: there are 1797 instances that are 8 by 8 pixels big. You can visually check that the `images` and the `data` are related by reshaping the `images` array to two dimensions: `digits.images.reshape((1797, 64))`.
+Todavia, caso você queira ter certeza sobre é melhor utilizar o ```print(np.all(digits.images.reshape((1797,64)) == digits.data))```. Com o método `all()` do numpy, você testará se todos os elementos de um array, de um eixo, são iguais ao valor `True`. Nesse caso, você avaliará se o novo formato do array `images` é igual ao array `digits.data`. Nesse caso você verá que o resultado é `True`.
 
-But if you want to be completely sure, better to check with ```print(np.all(digits.images.reshape((1797,64)) == digits.data))```. With the numpy method `all()`, you test whether all array elements along a given axis evaluate to `True`. In this case, you evaluate if it's true that the reshaped `images` array equals `digits.data`. You'll see that the result will be `True` in this case. 
-
-#### Visualize Your Data Images With `matplotlib`
+#### Visualize seus dados de Images com `matplotlib`
 
 Then, you can take your exploration up a notch by visualizing the images that you'll be working with. You can use one of Python's data visualization libraries, such as [matplotlib](http://matplotlib.org/), for this purpose:
 
