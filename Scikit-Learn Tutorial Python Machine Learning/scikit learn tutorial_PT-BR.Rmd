@@ -381,7 +381,7 @@ The code chunk seems quite lenghty at first sight and this might be overwhelming
 - Então, você configurou um novo nível, ajustando as margens: direita e esquerda, superior e inferior. E, por fim a altura e largura. Ressalta que esses ajustes são para o layout.
 - Após isso, você iniciou o preenchimento da figura com o auxílio da estrutura de repetição `for`;
 - Você iniciou os subplotss, um por um, adicionando a cada uma das posições no grids uma imagem de tamanho `8`x`8`.
-- Você apresentou a cada interação uma das imagens em suas posições no grid. Utilizando o mapa de cores, você usou cores binárias, neste caso as cores preta, branca e cinza. Utilizou o método de interpolação `nearest`, o que significa que seus dados foram interpolados de maneira não muito sauve. Caso você queira saber mais sobre o efeito de diferentes métodos de interpolação acesse esse [link](http://matplotlib.org/examples/images_contours_and_fields/interpolation_methods.html).;
+- Você apresentou a cada interação uma das imagens em suas posições no grid. Utilizando o mapa de cores, você usou cores binárias, neste caso as cores preta, branca e cinza. Utilizou o método de interpolação `nearest`, o que significa que seus dados foram interpolados de maneira não muito sauve. Caso você queira saber mais sobre o efeito de diferentes métodos de interpolação acesse esse [link](http://matplotlib.org/examples/images_contours_and_fields/interpolation_methods.html);
 - A cereja do bolo é adição de texto em seu subplots. O rótulos dos dados serão impressos nas coordenadas (0,7) de cada subplot, ou seja, irão se apresentadas no canto inferior-esquerdo de cada um dos subplots;
 - E, é claro não se esqueça de imprimir sua visualização como auxílio do comando `plt.show()`!
 
