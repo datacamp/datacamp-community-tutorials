@@ -346,9 +346,9 @@ Por último, você verá que os dados do atributo `images` contém  três dimens
 
 Todavia, caso você queira ter certeza sobre é melhor utilizar o ```print(np.all(digits.images.reshape((1797,64)) == digits.data))```. Com o método `all()` do numpy, você testará se todos os elementos de um array, de um eixo, são iguais ao valor `True`. Nesse caso, você avaliará se o novo formato do array `images` é igual ao array `digits.data`. Nesse caso você verá que o resultado é `True`.
 
-#### Visualize seus dados de Images com `matplotlib`
+#### Visualize seus dados com `matplotlib`
 
-Then, you can take your exploration up a notch by visualizing the images that you'll be working with. You can use one of Python's data visualization libraries, such as [matplotlib](http://matplotlib.org/), for this purpose:
+Agora, você pode levar a exploração dos seus dados a outro nível, visualizando os dados com que você estará trabalhando. Para tal, você pode utilizar uma das várias bibliotecas para visualização de dados do Python, como a por exemplo a [matplotlib](http://matplotlib.org/):
 
 ```
 # Import matplotlib
@@ -373,21 +373,22 @@ for i in range(64):
 plt.show()
 ```
 
+O código aparenta ser meio complicado e pode ser meio assustador. Entretanto, ele é bastante simples e fácil de se compreender uma vez que você o divida em partes:
 The code chunk seems quite lenghty at first sight and this might be overwhelming. But, what happens in the code chunk above is actually pretty easy once you break it down into parts:
 
-- You import the `matplotlib` library.
-- Next, you set up a figure with a figure size of `6` inches wide and `6` inches long. This is your blank canvas where all the subplots with the images will appear.
-- Then you go to the level of the subplots to adjust some parameters: you set the left side of the suplots of the figure to `0`, the right side of the suplots of the figure to `1`, the bottom to `0` and the top to `1`. The height of the blank space between the suplots is set at `0.005` and the width is set at `0.05`. These are merely layout adjustments. 
-- After that, you start filling up the figure that you have made with the help of a for loop. 
-- You initialize the suplots one by one, adding one at each position in the grid that is `8` by `8` images big.
-- You display each time one of the images at each position in the grid. As a color map, you take binary colors, which in this case will result in black, gray values and white colors. The interpolation method that you use is `'nearest'`, which means that your data is interpolated in such a way that it isn't smooth. You can see the effect of the different interpolation methods [here](http://matplotlib.org/examples/images_contours_and_fields/interpolation_methods.html). 
-- The cherry on the pie is the addition of text to your subplots. The target labels are printed at coordinates (0,7) of each subplot, which in practice means that they will appear in the bottom-left of each of the subplots. 
-- Don't forget to show the plot with `plt.show()`!
+- Você importou a biblioiteca `matplotlib`;
+- A seguir, você configurou uma figura com 6 inches de largura e altura. Esse é o fundo branco, onde, suas imagens serão apresentadas;
+- Então, você configurou um novo nível, ajustando as margens: direita e esquerda, superior e inferior. E, por fim a altura e largura. Ressalta que esses ajustes são para o layout.
+- Após isso, você iniciou o preenchimento da figura com o auxílio da estrutura de repetição `for`;
+- Você iniciou os subplotss, um por um, adicionando a cada uma das posições no grids uma imagem de tamanho `8`x`8`.
+- Você apresentou a cada interação uma das imagens em suas posições no grid. Utilizando o mapa de cores, você usou cores binárias, neste caso as cores preta, branca e cinza. Utilizou o método de interpolação `nearest`, o que significa que seus dados foram interpolados de maneira não muito sauve. Caso você queira saber mais sobre o efeito de diferentes métodos de interpolação acesse esse [link](http://matplotlib.org/examples/images_contours_and_fields/interpolation_methods.html).;
+- A cereja do bolo é adição de texto em seu subplots. O rótulos dos dados serão impressos nas coordenadas (0,7) de cada subplot, ou seja, irão se apresentadas no canto inferior-esquerdo de cada um dos subplots;
+- E, é claro não se esqueça de imprimir sua visualização como auxílio do comando `plt.show()`!
 
-In the end, you'll get to see the following:
+Ao final, você terá como resultado a seguinte visualização:
 [INSERT VISUALIZATION/PLOT1]
 
-On a more simple note, you can also visualize the target labels with an image, just like this:
+Além disso, você ainda pode visualizar os rótulos com as imagens, apenas utilizando esse código:
 
 ```
 # Import matplotlib
@@ -410,38 +411,37 @@ for index, (image, label) in enumerate(images_and_labels[:8]):
 # Show the plot
 plt.show()
 ```
-
-Which will render the following visualization:
+O que resultará nesta visualização:
 [INSERT PICTURE HERE/PLOT2]
 
 
-Note that in this case, after you have imported the `matplotlib` library, you zip the two numpy arrays together and save it into a variable called `images_and_labels`. You'll see now that this list contains suples of each time an instance of `digits.images` and a corresponding `digits.target` value. 
+Observe que nesse caso, após você ter importado a biblioteca `matplotlib`, é necessário que você concatene ambos arrays numpy e os salve na variável `images_and_labels`. Assim, você verá que essa lista conterá todos suplementos da instância de `digits,images` e correspondentes aos valores `digits.target`.
 
-Then, you say that for the first eight elements of `images_and_labels` -note that the index starts at 0!-, you initialize subplots in a grid of 2 by 4 at each position. You turn of the plotting of the axes and you display images in all the subplots with a color map `plt.cm.gray_r` (which returns all grey colors) and the interpolation method used is `nearest`. You give a title to each subplot, and you show it.
+Então, você diz aos primeiros oito elementos de `images_and_labels` -lembre-se que o índice começa em 0! -, inicializem em um subplot de 2x4 em cada posição. Assim, você transforma o gráfico dos eixos e exibe imagens em todas as subplots com um mapa de cores `plt.cm.gray_r` (que retorna todas as cores cinzas), utilizando método de interpolação `nearest`. E, por fim, inclui um título para cada subplot, e apresenta o resultado.
 
-Not too hard, huh? 
+Nem foi tão difícil, né?!
 
-And now you know a very good idea of the data that you'll be working with!
+E, agora você tem uma boa ideia dos dados com os quais você está trabalhando!
 
-#### Visualizing Your Data: Principal Component Analysis (PCA)
+#### Visualizando seus dados: Analise do Componente Principal (ACP)
 
-But what about the data? Is there no other way to visualize it?
+Mas, o que podemos dizer sobre os dados? E, há outra forma para visualizar os dados?
 
-As the `digits` data set contains 64 features, this might prove to be a challenging task. You can imagine that it's very hard to understand the structure and keep the overview of the `digits` data. In such cases, it is said that you're working with a high dimensional data set. 
+Como a conjunto de dados `digits` contem 64 características, isso pode ser uma desafio. Como você pode imaginar é muito difícil de se entender a estrutura e manter um overview do conjunto de dados `digits`. Assim, pode-se dizer que estamos a trabalhar com conjuntos de dados multidimensional.
 
-High dimensionality of data is a direct result of trying to describe the objects via a collection of features. Other examples of high dimensional data are, for example, financial data, climate data, neuroimaging, ... 
+A multidimensionalidade dos dados é um resultado direto da tentativa de se descrever objetos por meio de uma coleção de caracteristicas. Assim, podemos encontrar outros exemplos de dados com essas características em dados financeiros, dados climáticos, neuroimagens, entre outros.
 
-But, as you might have gathered already, this is not always easy. In some cases, high dimensionality can be problematic, as your machine learning algorithms will need to take into account too many features. In such cases, you speak of the curse of dimensionality. Because having a lot of dimensions can also mean that your data points are far away from virtually every other point, which makes the distances between the data points uninformative. 
+Entretanto, como você já deve ter imaginado, trabalhar com essa diversidade de dimenões não é algo fácil. Portanto, em algums casos, essa multidimensionalidade dos dados pode ser um problema, visto que, seus algoritmos de machine learning terão de levar em conta as diferentes facetas dos dados. Assim, esse casos, são conhecidos como a maldição da dimensionalidade. Por conta da grande quantidade de dimensões dos dados, seus dados podem estar virtualmente distantes uns dos outros, fazendo com o que essa distância entre eles não seja informátiva.
 
-Dont' worry, though, because the curse of dimensionality is not simply a matter of counting the number of features. There are also cases in which the effective dimensionality might be much smaller than the number of the features, such as in data sets where some features are irrelevant. 
+Porém, não se preocupe com a maldição não se trata apenas da contagem da quantidade das facetas dos dados. Há outros casos, em que a o tamanho da dimensionalidade pode ser menor que o número de características, casos assim algumas das facetas são, simplesmente, irrelevantes.
 
-In addition, you can also understand that data with only two or three dimensions is easier to grasp and can also be visualized easily.
+Assim sendo, você pode verificar que dados com apenas duas ou três dimensões são mais facéis de se analisar, e, consequentemente visualizar.
 
-That all explains why you're going to visualize the data with the help of one of the Dimensionality Reduction techniques, namely Principal Component Analysis (PCA). The idea in PCA is to find a linear combination of the two variables that contains most of the information. This new variable or "principal component" can replace the two original variables. 
+Portanto tudo isso explica como você irá visualizar os dados com auxílio de técnicas de reduções de dimensionalidade, conhecido como Analise do Componente Principal (ACP). A ideia do ACP é encontra uma combinação linear de duas variáveis que contenham a maioria da informação. Essa nova variável ou "componente principal", poderá substituir as duas variáveis originais.
 
-In short, it's a linear transformation method that yields the directions (principal components) that maximize the variance of the data. Remember that the variance indicates how far a set of data points lie apart. If you want to know more, go to [this page](http://www.lauradhamilton.com/introduction-to-principal-component-analysis-pca). 
+Simplificando, trata-se de um método transformação linear para reduzir as direções (componentes principais), a fim de maximizar a variância dos dados. Não se esqueça, que essa variância indica quando distântes os pontos dos conjuntos de dados estão entre si. Caso queira saber mais, visite [esse link](http://www.lauradhamilton.com/introduction-to-principal-component-analysis-pca). 
 
-You can easily apply PCA do your data with the help of scikit-learn:
+Você pode facilmente aplicar o ACP em seus dados com auxílio do scikit-learn:
 
 ```{python ex="pca", type="pre-exercise-code"}
 from sklearn import datasets
@@ -504,26 +504,25 @@ test_object_accessed("reduced_data_pca.shape", not_accessed_msg=predef_msg)
 test_function(
     "print",
     1,
-    not_called_msg="Did you print out the `reduced_data_rpca` data?",
-    incorrect_msg="Don't forget to print out the `reduced_data_rpca` data!",
+    not_called_msg="Você imprimiu os dados do `reduced_data_rpca`?",
+    incorrect_msg="Não se esqueça de imprimir os dados do `reduced_data_rpca`!",
     do_eval=False
 )
 test_function(
     "print",
     2,
-    not_called_msg="Did you print out the `reduced_data_pca` data?",
-    incorrect_msg="Don't forget to print out the `reduced_data_pca` data!",
+    not_called_msg="Você imprimiu os dados do `reduced_data_pca`?",
+    incorrect_msg="Não se esqueça de imprimir os dados do `reduced_data_pca`!",
     do_eval=False
 )
-success_msg("Amazing!")
+success_msg("Maravilha!")
 ```
 
+**Dica**: Você utilizou o `RandomizedPCA()`, neste caso, pois sua performance é melhor quando há um alto número de dimensões. Assim, você pode substituir esse metódo randômico do módelo ACP ou utilizar um outro método regular do módelo para ver a diferença entre eles.
 
-**Tip**: you have used the `RandomizedPCA()` here because it performs better when there's a high number of dimensions. Try replacing the randomized PCA model or estimator object with a regular PCA model and see what the difference is. 
+Veja, ainda, como você diz explicitamente ao modelo para manter apenas dois componentes. Isso fará com que você a certeza de que seus dados agora são bidimensionais. Note, ainda, como você não passou a classe target com os rótulos para a transformação ACP, isso pois, caso queira investigar se a ACP revela uma distribuição distintas de rótulos, e, se você consegue separar as instâncias entre si.
 
-Note how you explicitly tell the model to only keep two components. This is to make sure that you have two-dimensional data to plot. Also, note that you don't pass the target class with the labels to the PCA transformation because you want to investigate if the PCA reveals the distribution of the different labels and if you can clearly separate the instances from each other. 
-
-You can now build a scatterplot to visualize the data:
+Você pode construir um gráfico de dispersão para visualizar os dados:
 
 ```
 colors = ['black', 'blue', 'purple', 'yellow', 'white', 'red', 'lime', 'cyan', 'orange', 'gray']
@@ -538,26 +537,25 @@ plt.title("PCA Scatter Plot")
 plt.show()
 ```
 
-Which looks like this:
+Sua visualização será semelhante a essa:
 
 [INSERT PICTURE HERE/PLOT3]
 
+Novamente, você utilizou o `matplotlib` para visualizar os dados. Essa biblioteca é excelente para uma visualização rápida dos dados com os quais você está trabalhando, mas você deve sempre pensar em algo mais elegante, caso você esteja a trabalhar em seu portifólio em Ciência de dados.
 
-Again you use matplotlib to visualize the data. It's good for a quick visualization of what you're working with, but you might have to consider something a little bit more fancy if you're working on making this part of your data science portfolio. 
+Ressalta-se que o último método utilizado para plotar a visualização (`plt.show()`) não será necessário caso você esteja trabalhando no Jupyter Notebook, visto que você desejará as colocar a visualização junto ao seu código. Então, sempre que houver dúvidas, você poderá consultar nosso [Guia Definitido do Jupyter Notebook](https://www.datacamp.com/community/tutorials/tutorial-jupyter-notebook). 
 
-Also note that the last call to show the plot (`plt.show()`) is not necessary if you're working in Jupyter Notebook, as you'll want to put the images inline. When in doubt, you can always check out our [Definitive Guide to Jupyter Notebook](https://www.datacamp.com/community/tutorials/tutorial-jupyter-notebook). 
+O código acima, realiza os seguintes passos:
 
-What happens in the code chunk above is the following: 
-
-1. You put your colors together in a list. 
-Note that you list ten colors, which is equal to the number of labels that you have. This way, you make sure that your data points can be colored in according to the labels. Then, you set up a range that goes from 0 to 10. Mind you that this range is not inclusive! Remember that this is the same for indices of a list, for example.
-2. You set up your `x` and `y` coordinates. 
-You take the first or the second column of `reduced_data_rpca`, and you select only those data points for which the label equals the index that you're considering. That means that in the first run, you'll consider the data points with label `0`, then label `1`, ... and so on.
-3. You construct the scatter plot.
-Fill in the `x` and `y` coordinates and assign a color to the batch that you're processing. The first run, you'll give the color `black` to all data points, the next run `blue`, ... and so on.
-4. You add a legend to your scatter plot. Use the `target_names` key to get the right labels for your data points.
-5. Add labels to your `x` and `y` axes that are meaningful. 
-6. Reveal the resulting plot. 
+1. Primeiro, coloca todas as cores que serão utilizadas em uma lista;
+Observe que sua lista de cores, possui a mesma quantidade de rótulos que você possue. Assim, você terá certeza que os pontos em seus dados estão sendo coloridos de acordo com seus rórulos. Assim, você define suas cores num intervalo entre 0 e 10. Tenha sempre em mente que esse intervalo não é inclusivo.
+2. Define as coordenadas `x` e  `y`;
+Assim, você pegará a primeira ou segunda coluna de `reduced_data_rpca`, e selecionará apenas os pontos nos quais os rótulos iguais ao index que você definiu. Isso significa quem em um primeiro momento, você irá considerar os com rótulo `0`, `1` e assim sucessivamente.
+3. Constroe seu gráfico de dispersão.
+Preenchendo as coordenadas `x` e `y`, e, utilzando as cores que você definiu. No primeiro momento, todos marcadores terão a cor `preta`, então `azul`, e o processo continuará até os marcadores estarem todos marcados corretamente.
+4. Adiciona uma legenda ao gráfico. Utilizando para isso o método `target_names` para conseguir os rótulos corretos aos marcadores dos dados;
+5. Adiciona os rótulos significativos aos eixos `x` e `y`;
+6. Apresenta o resultado obtido.
 
 ### Where To Go Now?
 
