@@ -362,11 +362,11 @@ fig.subplots_adjust(left=0, right=1, bottom=0, top=1, hspace=0.05, wspace=0.05)
 
 # Para cada uma das 64 imagens
 for i in range(64):
-    # Initialize the subplots: add a subplot in the grid of 8 by 8, at the i+1-th position
+    # Inicializa os subplots: adiciona um subplot no grid de 8 por 8, na posição i+1
     ax = fig.add_subplot(8, 8, i + 1, xticks=[], yticks=[])
-    # Display an image at the i-th position
+    # Apresenta a imagem na posição i
     ax.imshow(digits.images[i], cmap=plt.cm.binary, interpolation='nearest')
-    # label the image with the target value
+    # Rotula a imagen com o valor do rótulo
     ax.text(0, 7, str(digits.target[i]))
 
 # Apresentando o plot das imagens
@@ -398,13 +398,13 @@ images_and_labels = list(zip(digits.images, digits.target))
 
 # Para cada elemento na lista
 for index, (image, label) in enumerate(images_and_labels[:8]):
-    # initialize a subplot of 2X4 at the i+1-th position
-    plt.subplot(2, 4, index + 1)
-    # Don't plot any axes
+    # Inicializa um subplot de 2 por 4 na posição i+1
+    plt.suplot(2, 4, index + 1)
+    # Oculta os eixos
     plt.axis('off')
-    # Display images in all subplots 
+    # Preenche os subplots com as imagens
     plt.imshow(image, cmap=plt.cm.gray_r,interpolation='nearest')
-    # Add a title to each subplot
+    # Adiciona um título a cada subplot
     plt.title('Training: ' + str(label))
 
 # Apresentando o plot das imagens
@@ -632,7 +632,7 @@ success_msg("Fantástico!")
 
 Ao escalar seus dados, você altera a distribuição de cada atributo para uma média de zero e um desvio padrão de um (unidade de variância).
 
-#### Dividindo seus dados em conjuntos de teste e treinamento
+#### Dividindo seis dados em conjuntos de teste e treinamento
 
 De maneira a avaliar, posteriormente, a performance so seu modelo, você deve dividir seu conjunto de dados em duas partes: conjunto de treinamento e de teste. O primeiro conjunto é utilizado para treinar o sistema, enquanto o segundo para avaliar a aprendizagem o o sistema já treinado.
 
@@ -861,30 +861,30 @@ clf.fit(X_train)
 ```
 
 ```{python ex="predict", type="sample-code"}
-# Predict the labels for `X_test`
+# Predizendo os rótulos para `X_test`
 y_pred=clf.predict(X_test)
 
-# Print out the first 100 instances of `y_pred`
+# Imprimindo as 100 primeiras instâncias do `y_pred`
 print(y_pred[:100])
 
-# Print out the first 100 instances of `y_test`
+# Imprimindo as 100 primeiras instâncias do `y_test`
 print(y_test[:100])
 
-# Study the shape of the cluster centers
+# Estudando o formato dos clusters centrais
 clf.cluster_centers_._____
 ```
 
 ```{python ex="predict", type="solution"}
-# Predict the labels for `X_test`
+# Predizendo os rótulos para `X_test`
 y_pred=clf.predict(X_test)
 
-# Print out the first 100 instances of `y_pred`
+# Imprimindo as 100 primeiras instâncias do `y_pred`
 print(y_pred[:100])
 
-# Print out the first 100 instances of `y_test`
+# Imprimindo as 100 primeiras instâncias do `y_test`
 print(y_test[:100])
 
-# Study the shape of the cluster centers
+# Estudando o formato dos clusters centrais
 clf.cluster_centers_.shape
 ```
 
@@ -893,106 +893,106 @@ test_object("y_pred")
 test_function(
     "print",
     1,
-    not_called_msg="Did you print out the first 100 instances of `y_pred`?",
-    incorrect_msg="Don't forget to print out the first 100 instances of `y_pred`!",
+    not_called_msg="Você imprimiu as primeiras 100 instâncias do `y_pred`?",
+    incorrect_msg="Não se esqueça de imprimir as primeiras 100 instâncias do `y_pred`!",
     do_eval=False
 )
 test_function(
     "print",
     2,
-    not_called_msg="Did you print out the first 100 instances of `y_test`?",
-    incorrect_msg="Don't forget to print out the first 100 instances of `y_test`!",
+    not_called_msg="Você imprimiu as primeiras 100 instâncias do `y_test`?",
+    incorrect_msg="Não se esqueça de imprimir as primeiras 100 instâncias do `y_test`!", 
     do_eval=False
 )
-msg_data="Did you fill in `shape` to print out the shape of the cluster centers?"
+msg_data="Você preencheu o `shape` para imprimir o formato dos cluster centrais?" 
 test_object_accessed("clf.cluster_centers_.shape", not_accessed_msg=msg_data)
-success_msg="Awesome!"
+success_msg="Fantástico!"
 ```
 
+No código acima, você prediz os valores para o conjunto de teste, que contém 450 amostras. E, os armazendo na variável `y_pred`. E, imprime as primeiras 100 instâncias de `y_pred` e `y_test` e apresenta alguns resultados.
 
-In the code chunk above, you predict the values for the test set, which contains 450 samples. You store the result in `y_pred`. You also print out the first 100 instances of `y_pred` and `y_test` and you immediately see some results. 
+Além disso, você ainda estuda o formato dos clusters centrais: observado a primeira vista que há 10 custers com 64 caracteristicas cada.
 
-In addition, you can study the shape of the cluster centers: you immediately see that there are 10 clusters with each 64 features. 
+Infelizmente, isso não lhe diz muita coisa pois fomos nós que definimos os 10 clusters e já sabiamos que nosso conjunto de dados tem 64 caracteristicas.
 
-But this doesn't tell you much because we set the number of clusters to 10 and you already knew that there were 64 features. 
+Mas, talvez uma visualização dos dados seja mais interessante e divertida.
 
-Maybe a visualization would be more helpful. 
-
-Let's visualize the predicted labels:
+Então, sem mais delogas vamos visualizar a predição dos rótulos:
 
 ```
-# Import `Isomap()`
+# Importando o módulo `Isomap()`
 from sklearn.manifold import Isomap
 
-# Create an isomap and fit the `digits` data to it
+# Criando um isomap e inserido os dados do `digits`
 X_iso = Isomap(n_neighbors=10).fit_transform(X_train)
 
-# Compute cluster centers and predict cluster index for each sample
+# Calculando os clusters centrais e predizendo o index do cluster de cada amostra
 clusters = clf.fit_predict(X_train)
 
-# Create a plot with subplots in a grid of 1X2
+# Criando um plot com subplots em um grid 1x2
 fig, ax = plt.subplots(1, 2, figsize=(8, 4))
 
-# Adjust layout
+# Adjustando o layout
 fig.suptitle('Predicted Versus Training Labels', fontsize=14, fontweight='bold')
 fig.subplots_adjust(top=0.85)
 
-# Add scatterplots to the subplots 
+# Adicionando os gráficos de dispersão aos subplots 
 ax[0].scatter(X_iso[:, 0], X_iso[:, 1], c=clusters)
 ax[0].set_title('Predicted Training Labels')
 ax[1].scatter(X_iso[:, 0], X_iso[:, 1], c=y_train)
 ax[1].set_title('Actual Training Labels')
 
-# Show the plots
+# Apresentando os plots
 plt.show()
 ```
 
-You use `Isomap()` as a way to reduce the dimensions of your high-dimensional data set `digits`. The difference with the PCA method is that the Isomap is a non-linear reduction method.
+Utiliza o `Isomap()`, como uma forma de reduzir as dimensões do seu conjunto multidimensional `digits`. A diferenção entre o método ACP e o Isomap é que o último é um método de redução não-linear. 
 
 [INSERT IMAGE HERE/PLOT5]
 
-**Tip**: run the code from above again, but use the PCA reduction method instead of the Isomap to study the effect of reduction methods yourself. 
+**Dica**: execute o código acima novamente, entretanto, utiliza o método de redução ACP ao invés do Isomap e visualize os efeitos distintos dos métodos de redução.
 
-You will find the solution here:
+A solução da **Dica** você confere no código abaixo:
 
 ```
-# Import `PCA()`
+# Importando o `PCA()`
 from sklearn.decomposition import PCA
 
+# Modelando o módelo ACP e preenchendo com os dados `digits`
 # Model and fit the `digits` data to the PCA model
 X_pca = PCA(n_components=2).fit_transform(X_train)
 
-# Compute cluster centers and predict cluster index for each sample
+# Calculando os clusters centrais e predizendo o index do cluster de cada amostra
 clusters = clf.fit_predict(X_train)
 
-# Create a plot with subplots in a grid of 1X2
+# Criando um plot com subplots em um grid 1x2
 fig, ax = plt.subplots(1, 2, figsize=(8, 4))
 
-# Adjust layout
+# Adjustando o layout
 fig.suptitle('Predicted Versus Training Labels', fontsize=14, fontweight='bold')
 fig.subplots_adjust(top=0.85)
 
-# Add scatterplots to the subplots 
+# Adicionando os gráficos de dispersão aos subplots 
 ax[0].scatter(X_pca[:, 0], X_pca[:, 1], c=clusters)
 ax[0].set_title('Predicted Training Labels')
 ax[1].scatter(X_pca[:, 0], X_pca[:, 1], c=y_train)
 ax[1].set_title('Actual Training Labels')
 
-# Show the plots
+# Apresentando os plots
 plt.show()
 ```
 
 [INSERT IMAGE HERE/PLOT6]
 
-At first sight, the visualization doesn't seem to indicate that the model works well.
+A primeira vista, a visualização não parece indicar que o módelo funciona bem.
 
-But this needs some further investigation.
+Mas, precisamos de uma investigação mais minunciosa.
 
-### Evaluation of Your Clustering Model
+### Avaliação do seu modelo de clusterização
 
-And this need for further investigation brings you to the next essential step in machine learning, which is the evaluation of your model's performance. In other words, you want to analyze the degree of correctness of the model's predictions.
+A necessidade de uma investigação mais minunciosa, traz a tona um passo essencial em Machine learning, conhecido como avaliação da performance do módelo. Em outras palavras, nesse passo queremos analisar o grau de efetividade do nosso módelo.
 
-Let's print out a confusion matrix:
+Então, vamos imprimir nossa matriz de confusão:
 
 ```{python ex="confusion", type="pre-exercise-code"}
 from sklearn import datasets
@@ -1008,18 +1008,18 @@ y_pred=clf.predict(X_test)
 ```
 
 ```{python ex="confusion", type="sample-code"}
-# Import `metrics` from `sklearn`
+# Importando o módulo `metrics` do `sklearn`
 from sklearn import _______
 
-# Print out the confusion matrix with `confusion_matrix()`
+# Imprimindo a matriz confusão com o método `confusion_matrix()`
 print(metrics.confusion_matrix(y_test, y_pred))
 ```
 
 ```{python ex="confusion", type="solution"}
-# Import `metrics` from `sklearn`
+# Importando o módulo `metrics` do `sklearn`
 from sklearn import metrics
 
-# Print out the confusion matrix with `confusion_matrix()`
+# Imprimindo a matriz confusão com o método `confusion_matrix()`
 print(metrics.confusion_matrix(y_test, y_pred))
 ```
 
@@ -1027,19 +1027,18 @@ print(metrics.confusion_matrix(y_test, y_pred))
 test_import("sklearn.metrics", same_as = True, not_imported_msg = "Did you import `metrics` from `sklearn`?", incorrect_as_msg = "Don't forget to import `metrics` from `sklearn`!")
 test_function(
     "print",
-    not_called_msg="Did you print out the confusion matrix?",
-    incorrect_msg="Don't forget to print out the confusion matrix!",
+    not_called_msg="Você imprimiu a matriz confusão?", 
+    incorrect_msg="Não se esqueça de imprimir a matriz confusão!",
     do_eval=False
 )
-success_msg="Well done! Now, what do the results tell you?"
+success_msg="Maravilha! Agora, o que os resultados nos contam?"
 ```
 
+A primeira vista, os resultados parecem confirmar nossas primeiras impressões, as reunidas da visualização. O digito `5` foi classificado corretamente em 41 dos casos. O digito `8` por sua vez foi classificado corretamente em 11 instâncias. Infelizmente, não podemos chamar essa classificação de um sucesso.
 
-At first sight, the results seem to confirm our first thoughts that you gathered from the visualizations. Only the digit `5` was classified correctly in 41 cases. Also, the digit `8` was classified correctly in 11 instances. But this is not really a success. 
+Assim, você precisará saber um pouco mais sobre seus resultados, do que apenas a matriz confusão.
 
-You might need to know a bit more about the results than just the confusion matrix. 
-
-Let's try to figure out something more about the quality of the clusters by applying different cluster quality metrics. That way, you can judge the goodness of fit of the cluster labels to the correct labels.
+Então, vamos tentar descobrir algo mais sobre a qualidade dos clusters, aplicando uma métrica de qualidade dos cluster diferente. Dessa forma, você poderá julgar a qualidade dos rótulos dos cluster em relação aos rótulos corretamente classificados.
 
 ```{python ex="clustering_performance", type="pre-exercise-code"}
 from sklearn import datasets
@@ -1068,30 +1067,28 @@ print('%i   %.3f   %.3f   %.3f   %.3f   %.3f    %.3f'
       silhouette_score(X_test, y_pred, metric='euclidean')))
 ```
 
+Assim, iremos verificar que há alguns pontos a se considerar sobre as métricas:
 
-You'll see that there are quite some metrics to consider:
+* A pontuação de homogeneidade apresenta a amplitde de todos os clusters que possuem apenas pontos de dados que são membros de uma única classe.
+* A pontuação de completude calcula a amplitude de todos os pontos que são participantes de uma determinada classe e que também são elementos de um mesmo cluster.
+* A pontuação V é média harmônica entre a homogeneidade e completude.
+* A pontuação de ajuste Rand calcula a similaridade entre dois clusters e considera para tal todos os pares de uma amostra e enumera os pares atribuidos ao mesmo ou a diferentes clusters em agrupamentos preditos ou verdadeiros.
+* A pontuação de ajuste de informação mútua (AIM) é utilizada para comparar clusters. Além disso, é utilizada para mensurar a similaridade entre pontos que estão clusterizados, contabilizando as chances de agrupamento e definindo o valor máximo de 1, quando os agrupamentos são equivalentes.
+* A pontuação silhouette mede quão similar um objeto é aos seu próprio cluster comparado a outro. A pontuação silhouette, varia entre o intervalo de -1 a 1, onde um maior valor indica que um objeto é compatível ao seu cluster em comparação aos clusters vizinhos. Caso vários pontos tenham valores altos, a configuração do cluster é boa.
 
-* The homogeneity score tells you to what extent all of the clusters contain only data points which are members of a single class.
-* The completeness score measures the extent to which all of the data points that are members of a given class are also elements of the same cluster.
-* The V-measure score is the harmonic mean between homogeneity and completeness.
-* The adjusted Rand score measures the similarity between two clusterings and considers all pairs of samples and counting pairs that are assigned in the same or different clusters in the predicted and true clusterings.
-* The Adjusted Mutual Info (AMI) score is used to compare clusters. It measures the similarity between the data points that are in the clusterings, accounting for chance groupings and takes a maximum value of 1 when clusterings are equivalent.
-* The silhouette score measures how similar an object is to its own cluster compared to other clusters. The silhouette scores ranges from -1 to 1, where a higher value indicates that the object is better matched to its own cluster and worse mached to neighboring clusters. If many points have a high value, the clusteirng configuration is good. 
+Você pode observar claramente que essas pontuações não são fantásticas: por exemplo, quando o valor da pontuação silhouette é próximo a 0, indica que nossa amostra de dados está ou é muito próxima ao limite de decisão entre dois clusters vizinhos. Assim, isso pode indicar que a amostra pode ter sido alocadas ao cluster errado.
 
+A métrica AIM parece indicar que nem todos os pontos de dados de um determinado cluster são similares e a pontuação de completude nos informa que há pontos de dados que definitivamente não foram colocados no cluster correto.
 
-You clearly see that these scores aren't fantastic: for example, you see that the value for the silhouette score is close to 0, which indicates that the sample is on or very close to the decision boundary between two neighboring clusters. This could indicate that the samples could have been assigned to the wrong cluster. 
+Assim, seria interessante considerar outra medida avaliativa para predizer os rótulos aos dados `digits`.
 
-Also the ARI measure seems to indicate that not all data points in a given cluster are similar and the completeness score tells you that there are definitely data points that weren't put in the right cluster. 
+### Testando outro módelo: Support Vector Machines (SVM)
 
-Clearly, you should consider another estimator to predict the labels for the `digits` data.
+Como visto anteriormente, quando você sintetizar toda a informação obtida pela exploração dos dados, enão você poderá construir um modelo de Machine learning para prever quais digitos pertencem a uma determinada imagem. Ressalta que a clusterização supõe que você não conhece os rótulos.
 
-### Trying Out Another Model: Support Vector Machines (SVM)
+Assuma que você partiu de um pont onde os rótulos de dados e dados do `digits` são conhecidos. Isso significa que você pode também classificar as instâncias enquanto conhece os rótulos. Esse é o processo de classificação.
 
-You saw before that, when you recap all of the information that you have gathered out of the data exploration, that you could build a machine learning model to predict which digit belongs to an image. Clustering assumes that you don't know the labels.
-
-Let's assume that you depart from the case where the `digits` data and the labels for the data are known. That means that you could also classify the instances while knowing the labels. This is a classification task.
-
-If you follow the scikit-learn machine learning map, you'll see that the first model that you meet is the linear SVC. Let's apply this now to the `digits` data:
+Caso siga o mapa de machine learning do scikit-learn, verá que o primeiro modelo apresentado é o SVC linear. Então, que tal aplicarmos isso aos dados `digits`, agora:
 
 ```{python ex="svm", type="pre-exercise-code"}
 from sklearn import datasets
@@ -1102,57 +1099,56 @@ data = scale(digits.data)
 ```
 
 ```{python ex="svm", type="sample-code"}
-# Import `train_test_split`
+# Importando o módulo `train_test_split`
 from sklearn.cross_validation import train_test_split
 
-# Split the data into training and test sets 
+# Dividindo os dados em conjuntos de teste e treinamento
 X_train, X_test, y_train, y_test, images_train, images_test = train_test_split(digits.data, digits.target, digits.images, test_size=0.25, random_state=42)
 
-# Import the `svm` model
+# Importando o modelo `svm`
 from sklearn import svm
 
-# Create the SVC model 
+# Criando o modelo SVC
 svc_model = svm.SVC(gamma=0.001, C=100., kernel='linear')
 
-# Fit the data to the SVC model
+# Inserindo os dados no modelo SVC
 svc_model.fit(X_train, y_train)
 ```
 
 ```{python ex="svm", type="solution"}
-# Import `train_test_split`
+# Importando o módulo `train_test_split`
 from sklearn.cross_validation import train_test_split
 
-# Split the data into training and test sets 
+# Dividindo os dados em conjuntos de teste e treinamento 
 X_train, X_test, y_train, y_test, images_train, images_test = train_test_split(digits.data, digits.target, digits.images, test_size=0.25, random_state=42)
 
-# Import the `svm` model
+# Importando o modelo `svm`
 from sklearn import svm
 
-# Create the SVC model 
+# Criando o modelo SVC 
 svc_model = svm.SVC(gamma=0.001, C=100., kernel='linear')
 
-# Fit the data to the SVC model
+# Inserindo os dados no modelo SVC
 svc_model.fit(X_train, y_train)
 ```
 
 ```{python ex="svm", type="sct"}
-test_import("sklearn.cross_validation.train_test_split", same_as = True, not_imported_msg = "Did you import `train_test_split` from `sklearn.cross_validation`?", incorrect_as_msg = "Don't forget to import `train_test_split` from `sklearn.cross_validation`!")
-test_object("X_train", do_eval=False, undefined_msg="did you define `X_train`?")
-test_object("X_test", do_eval=False, undefined_msg="did you define `X_test`?")
-test_object("y_train", do_eval=False, undefined_msg="did you define `y_train`?")
-test_object("y_test", do_eval=False, undefined_msg="did you define `y_test`?")
-test_object("images_train", do_eval=False, undefined_msg="did you define `images_train`?")
-test_object("images_test", do_eval=False, undefined_msg="did you define `images_test`?")
-test_import("sklearn.svm", same_as = True, not_imported_msg = "Did you import `svm` from `sklearn`?", incorrect_as_msg = "Don't forget to import `svm` from `sklearn`!")
+test_import("sklearn.cross_validation.train_test_split", same_as = True, not_imported_msg = "Você importou o módulo `train_test_split` do `sklearn.cross_validation`?", incorrect_as_msg = "Não se esqueça de importar o módulo `train_test_split` do `sklearn.cross_validation`!")
+test_object("X_train", do_eval=False, undefined_msg="Você definiu o `X_train`?")
+test_object("X_test", do_eval=False, undefined_msg="Você definiu o `X_test`?")
+test_object("y_train", do_eval=False, undefined_msg="Você definiu o `y_train`?")
+test_object("y_test", do_eval=False, undefined_msg="Você definiu o `y_test`?")
+test_object("images_train", do_eval=False, undefined_msg="Você definiu a `images_train`?")
+test_object("images_test", do_eval=False, undefined_msg="Você definiu a `images_test`?")
+test_import("sklearn.svm", same_as = True, not_imported_msg = "Você importou o módulo `svm` do `sklearn`?", incorrect_as_msg = "Não se esqueça de importar o módulo `svm` do `sklearn`!")
 test_object("svc_model", do_eval=False)
 test_function("svc_model.fit", do_eval=False)
-success_msg="Great job!"
+success_msg="Excelente trabalho!"
 ```
 
+Observe que neste exemplo nós definimos o valor do `gamma` manualmente. Ressalta-se que é possível encontrar automáticamente bons valores para esse parâmetro, utilizando ferramentas como grid de busca e validação cruzada. Entretanto, não será o foco deste tutorial.
 
-Note that in this example we set the value of `gamma` manually. It is possible to automatically find good values for the parameters by using tools such as grid search and cross validation. However, this will not be the focus for this tutorial. 
-
-If you would have used grid search to adjust your parameters, you would have done something like the following:
+Caso queira utilizar o grid de busca para ajustar seus parâmetros, basta fazer algo como o exemplo abaixo:
 
 ```{python ex="grid_search", type="pre-exercise-code"}
 from sklearn import svm
@@ -1162,33 +1158,32 @@ digits = datasets.load_digits()
 ```
 
 ```{python ex="grid_search", type="sample-code"}
-# Split the `digits` data into two equal sets
+# Dividindo os dados `digits` em dois conjuntos iguais
 X_train, X_test, y_train, y_test = train_test_split(digits.data, digits.target, test_size=0.5, random_state=0)
 
-# Import GridSearchCV
+# Importando o módulo GridSearchCV
 from sklearn.grid_search import GridSearchCV
 
-# Set the parameter candidates
+# Definindo os parâmetros candidatos
 parameter_candidates = [
   {'C': [1, 10, 100, 1000], 'kernel': ['linear']},
   {'C': [1, 10, 100, 1000], 'gamma': [0.001, 0.0001], 'kernel': ['rbf']},
 ]
 
-# Create a classifier with the parameter candidates
+# Criando um classificados com os parâmetros candidatos
 clf = GridSearchCV(estimator=svm.SVC(), param_grid=parameter_candidates, n_jobs=-1)
 
-# Train the classifier on training data
+# Treinando o classificador com os dados de treinamento
 clf.fit(X_train, y_train)
 
-# Print out the results 
+# Imprimindo os resultados
 print('Best score for training data:', clf.best_score_)
 print('Best `C`:',clf.best_estimator_.C)
 print('Best kernel:',clf.best_estimator_.kernel)
 print('Best `gamma`:',clf.best_estimator_.gamma)
 ```
 
-
-Next, you use the classifier with the classifier and parameter candidates that you have just created to apply it to the second part of your data set. Next, you also train a new classifier using the best parameters found by the grid search. You score the result to see if the best parameters that were found in the grid search are actually working. 
+Agora, você utilizou o classificador com os parâmetros candidatos e um classificador que você criou apenas para aplicar na segunda parte de seu conjunto de dados. Assim, você também treinou um novo classificador utilizando os melhores parâmetros encontrados pelo grid de busca. E, então você apresentou os resultados para verificar se os melhores parâmetros encontrados pelo grid, foram realmente utilizados.
 
 ```{python ex="fit_grid_search", type="pre-exercise-code"}
 from sklearn import svm
@@ -1206,31 +1201,31 @@ clf.fit(X_train, y_train)
 ```
 
 ```{python ex="fit_grid_search", type="sample-code"}
-# Apply the classifier to the test data, and view the accuracy score
+# Aplicando o classificador nos dados de teste e verificando sua acuracidade
 clf.score(X_test, y_test)  
 
-# Train and score a new classifier with the grid search parameters
+# Treinando e pontuando um novo classificador com os parâmetros do grid de busca
 svm.SVC(C=10, kernel='rbf', gamma=0.001).fit(X_train, y_train).score(X_test, y_test)
 ```
 
 
-The parameters indeed work well!
+Os parâmentros funcionam perfeitamente!
 
-Now what does this new knowledge tell you about the SVC classifier that you had modeled before you had done the grid search?
+Com posse desse novo conhecimento o que podemos dizer sobre o classificador SVC, que modelamos e o fizemos com o auxilio do grid de busca?
 
-Let's back up to the model that you had made before.
+Voltemos ao modelo que você fez anteriomente.
 
-You see that in the SVM classifier, the penalty parameter `C` of the error term is specified at `100.`. Lastly, you see that the kernel has been explicitly specified as a `linear` one. The `kernel `argument specifies the kernel type that you're going to use in the algorithm and by default, this is `rbf`. In other cases, you can specify others such as `linear`, `poly`, ... 
+Você pode observar que no classificador SVM, o parâmetro de penalty `C` do termo de erro é especificado como `100`. E, por fim nosso kernel foi explicitamente especificado como linear. Os argumentos do `kernel` especifica o tipo do kernel que você irá utilizar no algoritmo e por padrão esse valor é `rbf`. Em outros casos, você pode especificar outros como `linear`, `poly` e etc..
 
-But what is a kernel exactly?
+Mas o que exatamenteo é um kernel?
 
-A kernel is a similarity function, which is used to compute similarity between the training data points. When you provide a kernel to a machine learning algorithm, together with the training data and the labels, you will get a classifier, as is the case here. You will have trained a model that assigns new unseen objects into a particular category. For the SVM, you will typicall try to linearly divide your data points.  
+Um kernel é similar a uma função, que é utilizado para calcular a similaridade entre os pontos de treinamento. Quando você provê um kernel para um algoritmo de machine learning, juntamente com os dados de treinamento e rótulos, você terá um classificador, como no caso apresentado. Assim, você terá treinado um modelo para alocar novos objetos em uma categoria especifica. Portanto, para um SVM, você tipicamente terá tentado dividir linearmente seu pontos de dados.
 
-However, the grid search tells you that an `rbf` kernel would've worked better. The penalty parameter and the gamma were specified correctly. 
+Entretanto, a grid de busca nos mostra que um kernel `rbf` seria uma escolha melhor. O parâmettro penalty e gamma foram especificicado corretamente.
 
-**Tip:** try out the classifier with an `rbf` kernel.
+**Dica** Tente classificar com um kernel `rbf`.
 
-For now, let's just say you just continue with a linear kernel and predict the values for the test set:
+Por hora, vamos dizer que você continue com um kernel linear e prediza os valores para o conjunto de teste:
 
 ```{python ex="svm_predict", type="pre-exercise-code"}
 from sklearn import datasets
@@ -1246,18 +1241,18 @@ svc_model.fit(X_train, y_train)
 ```
 
 ```{python ex="svm_predict", type="sample-code"}
-# Predict the label of `X_test`
+# Predizendo os rótulos de `X_test`
 print(svc_model.predict(______))
 
-# Print `y_test` to check the results
+# Imprimindo `y_test` para checar os resultados
 print(______)
 ```
 
 ```{python ex="svm_predict", type="solution"}
-# Predict the label of `X_test`
+# Predizendo os rótulos de `X_test`
 print(svc_model.predict(X_test))
 
-# Print `y_test` to check the results
+# Imprimindo `y_test` para checar os resultados
 print(y_test)
 ```
 
@@ -1265,55 +1260,55 @@ print(y_test)
 test_function(
     "print",
     1,
-    not_called_msg="Did you print out the predicted labels of `X_test`?",
-    incorrect_msg="Don't forget to print out the predicted labels of `X_test`!",
+    not_called_msg="Você imprimiu os rótulos preditos de `X_test`?",
+    incorrect_msg="Não se esqueça de imprimir os rótulos preditos de `X_test`!",
     do_eval=False
 )
 test_function(
     "print",
     2,
-    not_called_msg="Did you print out the true labels of `y_test`?",
-    incorrect_msg="Don't forget to revealing the true labels by printing out `y_test`!",
+    not_called_msg="Você imprimiu os verdadeiros rótulos de`y_test`?",
+    incorrect_msg="Não se esqueça de revelar os verdadeiros rótulos, imprimindo o `y_test`!",
     do_eval=False
 )
-success_msg("Well done!")
+success_msg("Perfeito!")
 ```
 
 
-You can also visualize the images and their predicted labels:
+Você pode ainda visualizar as imagens e prever seus rótulos:
 
 ```
-# Import matplotlib
+# Importando matplotlib
 import matplotlib.pyplot as plt
 
-# Assign the predicted values to `predicted`
+# Aloca os valores preditosna variável `predicted`
 predicted = svc_model.predict(X_test)
 
-# Zip together the `images_test` and `predicted` values in `images_and_predictions`
+# Compacta os valores de`images_test` e `predicted` na variável `images_and_predictions`
 images_and_predictions = list(zip(images_test, predicted))
 
-# For the first 4 elements in `images_and_predictions`
+# Para os 4 elementos em `images_and_predictions`
 for index, (image, prediction) in enumerate(images_and_predictions[:4]):
-    # Initialize subplots in a grid of 1 by 4 at positions i+1
+    # Inicializa os subplots no grid 1 por 4 na posição i+1
     plt.subplot(1, 4, index + 1)
-    # Don't show axes
+    # Não apresenta os eixos
     plt.axis('off')
-    # Display images in all subplots in the grid
+    # Coloca imagens em todoos os subplots da grid
     plt.imshow(image, cmap=plt.cm.gray_r, interpolation='nearest')
-    # Add a title to the plot
+    # Adiciona um título ao plot
     plt.title('Predicted: ' + str(prediction))
 
-# Show the plot
+# Apresentando o plot
 plt.show()
 ```
 
-This plot is very similar to the plot that you made when you were exploring the data:
+Esse plot é bastante similar ao que fizemos na exploração dos dados:
 
 [INSERT IMAGE/PLOT7]
 
-Only this time, you zip together the images and the predicted values and you only take the first 4 elements of `images_and_predictions`.  
+Desta vez, você compactou as imagens e os valores de predição e apenas pegou os 4 primeiros elementos de `images_and_predictions`. 
 
-But now the biggest question: how does this model perform?
+Agora, vamos a questão que não quer calar: Como foi a performance desse modelo?
 
 ```{python ex="svc_performance", type="pre-exercise-code"}
 from sklearn import datasets
@@ -1330,40 +1325,39 @@ predicted = svc_model.predict(X_test)
 ```
 
 ```{python ex="svc_performance", type="sample-code"}
-# Import `metrics`
+# Importando o módulo `metrics`
 from sklearn import metrics
 
-# Print the classification report of `y_test` and `predicted`
+# Imprimindo o relatório de classificação do `y_test` e do `predicted`
 print(metrics.classification_report(______, _________))
 
-# Print the confusion matrix of `y_test` and `predicted`
+# Imprimindo a matriz confusão do `y_test` e do `predicted`
 print(metrics.confusion_matrix(______, _________))
 ```
 
 ```{python ex="svc_performance", type="solution"}
-# Import `metrics`
+# Importando o módulo `metrics`
 from sklearn import metrics
 
-# Print the classification report of `y_test` and `predicted`
+# Imprimindo o relatório de classificação do `y_test` e do `predicted`
 print(metrics.classification_report(y_test, predicted))
 
-# Print the confusion matrix
+# Imprimindo a matriz confusão do `y_test` e do `predicted`
 print(metrics.confusion_matrix(y_test, predicted))
 ```
 
 ```{python ex="svc_performance", type="sct"}
-test_import("sklearn.metrics", same_as = True, not_imported_msg = "Did you import `metrics` from `sklearn`?", incorrect_as_msg = "Don't forget to import `metrics` from `sklearn`!")
-not_called_msg="Did you fill in `y_test` and `predicted`?"
-incorrect_msg="Don't forget to fill in `y_test` as the first argument, `predicted` as the second argument!"
+test_import("sklearn.metrics", same_as = True, not_imported_msg = "Você importou o módulo `metrics` do `sklearn`?", incorrect_as_msg = "Não se esqueça de importar o módulo `metrics` do `sklearn`!")
+not_called_msg="Você preencheu as variáveis `y_test` e `predicted`?"
+incorrect_msg="Não esqueça de informar `y_test` como o primeiro argumento e `predicted` como o segundo argumento!"
 test_function("print", 1, do_eval=False, not_called_msg = not_called_msg, incorrect_msg = incorrect_msg)
 test_function("print", 2, do_eval=False, not_called_msg = not_called_msg, incorrect_msg = incorrect_msg)
-success_msg="Well done! Now, check the results of the confusion matrix. Does this model perform better?"
+success_msg="Perfeito! Agora, verifique os resultados da matriz confusão. Esse módelo foi melhor?"
 ```
 
+Agora, você pode perceber que esse módelo é muito melhor que o utilizado anteriomente.
 
-You clearly see that this model performs a whole lot better than the clustering model that you used earlier.
-
-You can also see it when you visualize the predicted and the actual labels with the help of `Isomap()`:
+Você também pode visualizar a predição dos rótulos e os rótulos atuais com o auxílio do `Isomap()`:
 
 ```
 # Importando o módulo `Isomap()`
@@ -1416,4 +1410,4 @@ Um conjunto de dados bastante conhecido e que você pode utilizar neste problema
 
 #### Visualização de dados e `pandas`
 
-Esse tuturial foi desenvolvido para lhe introduzir o Machine Learning com Python. Entretatno, isso não é, definitivamente, o fim de sua jornada na Ciência de dados com Python: assim, conheça nosso [curso de Visualização interativa de dados com Bokeh](https://www.datacamp.com/courses/interactive-data-visualization-with-bokeh) e vá ainda mais fundo em visualização de dados com Python com nossos [curos Fundamentos em pandas](https://www.datacamp.com/courses/pandas-foundations), to learn more about working with data frames in Python. 
+Esse tuturial foi desenvolvido para lhe introduzir o Machine Learning com Python. Entretatno, isso não é, definitivamente, o fim de sua jornada na Ciência de dados com Python: assim, conheça nosso [curso de Visualização interativa de dados com Bokeh](https://www.datacamp.com/courses/interactive-data-visualization-with-bokeh) e vá ainda mais fundo em visualização de dados com Python com nossos [curos Fundamentos em pandas](https://www.datacamp.com/courses/pandas-foundations), to learn more about working with data frames in Python.
