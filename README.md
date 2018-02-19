@@ -21,3 +21,6 @@ The tutorial was written in R Markdown in combination with [DataCamp Light](http
 A TensorFlow tutorial for beginners, first published on the DataCamp Community on the 13th of July, 2017. Read the full tutorial [here](https://www.datacamp.com/community/tutorials/tensorflow-tutorial).
 
 The file that is included in this repository is the Jupyter Notebook that contains the code that I used to write the tutorial. The tutorial is meant as a relatively short and step-by-step guide for beginners who want to get started with Deep Learning (DL) with [TensorFlow](tensorflow.org). 
+
+## Usage
+The code in this repository is released under the MIT license. Read more at the Open Source Initiative. All text remains the Intellectual Property of DataCamp. If you wish to reuse, adapt or remix, get in touch with me at karlijn at datacamp com to request permission.
