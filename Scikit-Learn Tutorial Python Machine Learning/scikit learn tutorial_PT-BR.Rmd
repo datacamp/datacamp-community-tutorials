@@ -1,0 +1,1413 @@
+---
+title: "Scikit-Learn Tutorial: Python Machine Learning"
+output:
+  html_document:
+    self_contained: false
+---
+
+```{r, include=FALSE}
+tutorial::go_interactive()
+```
+
+## Aprendizagem de Máquina com Python
+
+O Machine learning, em português Aprendizado de Máquina, é um ramo da ciência da computação que estuda do desenvolvimento de algoritmos que podem aprender.
+
+Assim, as tarefas relativas ao Machine Learning são, típicamente, conceitos de aprendizagem, funções de aprendizem ou "modelagem preditiva", clusterização ou agrupamento e reconhecimento preditivo de padrões. Essa tarefas são aprendidas pela avaliação de dados, que são observadas através de experiências ou instruções dada aos algoritmos, por exemplo.
+
+Espera-se que os algoritmos de Machine learning incluam, eventualmente, em sua jornada de apredizagem, experiências que aperfeiçoem gradativamente seu aprendizado. Além disso, espera-se que a evolução no aprendizado ocorra de maneira similar ao aprendizado humano, de maneira automática e sem interferências, que nada mais é que o objetivo primordial do Machine learning.
+
+O Machine learning possui bastantes similaridades e compartilha disciplinas com campos como: Descobrimento de conhecimento, Mineração de dados, Inteligência Artificial e Estatística. Ressalta-se que as aplicação de Machine learning podem ser classificadas em dois campos: o descobrimento de conhecimento cientifico e aplicações comerciais, variando entre "Rôbos Cientistas", filtros anti-spam e sistemas de recomendação.
+
+Dessa maneira, caso você queira se aventurar ou mesmo ser um expert no campo da Ciência de dados, conhecer o Machine Learning é algo crucial.
+
+Assim, o tutorial de hoje tem o objetivo de lhe introduzir ao básico do Machine learning com Pyhton: E, iremos lhe mostrar passo a passo, como utilizar Python para trabalhar com os conhecidos algoritmos de aprendizado de máquina não supervisionado.
+
+Caso você se interesse ainda mais pelo assunto, há um tutorial que cobre machine learning com R, que você pode encontrar em [Machine Learning com R para Iniciantes](https://www.datacamp.com/community/tutorials/machine-learning-in-r)
+
+### Carregando seu conjunto de dados
+
+Em Data Science, ou Ciência de dados, o primeiro passo antes de qualquer coisa é carregar ou importar seus dados. E, que também é o ponto de partida deste tutorial.
+
+A aprendizagem de máquina, trabalha principalmente com a observação dos dados. Assim, os dados utilizados, podem ser coletados por você ou ainda coletados por intermédido de fontes que disponibilizem bases e/ou amostras de dados. Entretanto, se você ainda não é um pequisador ou está envolvido com pesquisas, você provalmente deixará isso para outro momento.
+
+Se você é novo na área de aprendizado de máquina ou gostaria de inciar sua caminhada em problemas desta área, encontrar amostras de dados pode ser um verdadeiro trabalho de Hércules. Porém, você pode encontrar vários bons conjuntos de dados em repositórios como [UCI Machine Learning Repository](http://archive.ics.uci.edu/ml/datasets) ou em sites como [Kaggle](www.kaggle.com). Além destes, você pode encontrar mais bases de dados [nessa lista de recursos do KD Nuggets](http://www.kdnuggets.com/datasets/index.html). 
+
+Por hora, você pode se aquecer, apenas carregando o conjunto de dados `digits` já contida no pacote de aprendizado de máquina do python, o scikit-learn, sem se preocupar em correr atrás de bases de dados.
+
+Curiosidade: Você sabia que o nome desse pacote é uma `caixa de ferramentas` construída ao redor da biblioteca Scipy? Que a propósito, é muito mais que apenas um [kit cientifico](https://scikits.appspot.com/scikits). Esse kit contém módulos especialmentes constuídos à aprendizagem de máquina e mineração de dados, o que além disso dá nome ao pacote. :)
+
+Para carregar os dados, você deve importar o módulo `datasets` do `sklearn`. E, então usar o método `load_digits()` do `datasets` para carregar os dados:
+
+```{python ex="scikit_load", type="sample-code"}
+# Importe o `datasets` do `sklearn`
+from sklearn import ________
+
+# Carregando os dados no `digits`
+digits = datasets.load_digits()
+
+# Imprimindo os dados contidos no `digits` 
+print(______)
+```
+
+```{python ex="scikit_load", type="solution"}
+# Importe o `datasets` do `sklearn`
+from sklearn import datasets
+
+# Carregando os dados no `digits`
+digits = datasets.load_digits()
+
+# Imprimindo os dados contidos no `digits` 
+print(digits)
+```
+
+```{python ex="scikit_load", type="sct"}
+import_msg="Você importou o `datasets` de `sklearn`?"
+incorrect_import_msg="Acho que você esqueceu de carregar o módulo `datasets` de `sklearn`!"
+not_called_msg="Você utilizou o `datasets.load_digits()` para carregar os dados em `digits`?"
+incorrect_msg="Não se esqueça de utilizar `datasets.load_digits()` para carregar os dados do `digits`!"
+predef_msg="Você chamou a função `print()`?"
+test_import("sklearn.datasets", same_as = True, not_imported_msg = import_msg, incorrect_as_msg = incorrect_import_msg)
+test_function("sklearn.datasets.load_digits", not_called_msg = not_called_msg, incorrect_msg = incorrect_msg)
+# Test `print()` function
+test_function(
+    "print",
+    not_called_msg=predef_msg,
+    incorrect_msg=predef_msg,
+    do_eval=False
+)
+success_msg="Perfeito! Você está pronto para continuar!"
+```
+
+Note que o módulo `datasets` contém outros métodos para carregar e buscar conjuntos de dados populares, e, você ainda pode contar com este módulo caso haja a necessidade de gerar dados artifíciais. Além disso, esse conjunto de dados está disponível através do Repositório UCI Machine Learning: onde você pode encontrar esses [dados](http://archive.ics.uci.edu/ml/machine-learning-databases/optdigits/).
+
+Caso você queira utilizar os dados diretamente do Repositório UCI, seu código deverá ser similar a este:
+
+```{python ex="pandas_load", type="sample-code"}
+# Importe a biblioteca `pandas` como `pd`
+import ______ as __
+
+# Carregando os dados com o `read_csv()`
+digits = pd.read_csv("http://archive.ics.uci.edu/ml/machine-learning-databases/optdigits/optdigits.tra", header=None)
+
+# Imprimindo os dados contidos no `digits` 
+print(______)
+```
+
+```{python ex="pandas_load", type="solution"}
+# Importe a biblioteca `pandas` como `pd`
+import pandas as pd
+
+# Carregando os dados com o `read_csv()`
+digits = pd.read_csv("http://archive.ics.uci.edu/ml/machine-learning-databases/optdigits/optdigits.tra", header=None)
+
+# Imprimindo os dados contidos no `digits` 
+print(digits)
+```
+
+```{python ex="pandas_load", type="sct"}
+import_msg="Você utilizou algum código para importar `pandas` como `pd`?"  
+incorrect_import_msg="Não esqueça de importar a bibloteca 'pandas' como `pd`!"
+csv_msg="Você utilizou o método `read_csv()` from pandas para carregar os dados?"
+csv_incorrect_msg="Use `read_csv()` da biblioteca pandas para carregar os dados "
+predef_msg="Você utilizou a função `print()`?"
+# Test import `pandas`
+test_import("pandas", same_as = True, not_imported_msg = import_msg, incorrect_as_msg = incorrect_import_msg)
+# Test `read_csv()`
+test_function("pandas.read_csv", not_called_msg = csv_msg, incorrect_msg = csv_incorrect_msg)
+# Test `print()` function
+test_function(
+    "print",
+    not_called_msg=predef_msg,
+    incorrect_msg=predef_msg,
+    do_eval=False
+)
+success_msg("Bom trabalho!")
+```
+
+Note que caso tenha efetuado o download da base de dados do Repositório UCI Machine Learning, os dados estarão divididos em dois conjuntos, um de treinamento e outro de teste, indicados respectivamente pelos arquivos com extensões `.tra` e `.tes`. Então, será necessário fazer o upload de ambos arquivos para seu projeto de machine learning. Vale lembrar que com os códigos acima, você apenas carregou o conjunto de treinamento.
+
+Dica: Se você quiser saber mais sobre como importar dados com a biblioteca Pandas de manipulação de dados em python, seria interessante você conhecer o [Curso de importação de dados em Python](https://www.datacamp.com/courses/importing-data-in-python-part-1) do DataCamp.
+
+### Explorando seus dados
+
+Como tudo começa com seu conjunto de dados, é sempre uma boa ideia olhar a descrição dos dados e ver o que já podemos aprender sobre a base, se disponível. Porém, quando estamos utilizando a scikit-learn, você não precisa ter essa informação prontamente disponível, entretanto, caso você utilize uma base de dados de fontes como o Repositório UCI Machine Learning, essa informação é suficiente para reunir alguns insights dos seus dados.
+
+Entretanto, os insights provenientes das descrições dos dados não são suficiente às analises que você realizará. Assim, você precisará ter um conhecimento mais profundo sobre seu conjunto de dados.
+
+Contudo, realizar uma analise exploratória dos dados desse conjunto de dados, como o deste tutorial pode parecer um pouco difícil.
+
+Então, por onde podemos começar a explorar os dados contindos no `digits`?
+
+#### Reunindo informações básicas sobre nossos dados
+
+Imaginemos que você ainda não olhou a descrição dos dados (ou mesmo gostaria de verificar novamente os dados que você tem em mãos).
+
+Você, muito provavelmente, deverá começar reunindo informações básicas.
+
+Assim, você observará que ao utilizar a função `print` para apresentar os dados contidos em `digits`, após ter o carregado com o auxílio do módulo `datasets` do scikit-learn, que há uma quantidade considerável de informação disponível. Dessa forma, você terá o conhecimento de dos cabeçalhos e descrição dos seus dados. Ressalta que você poderá acessar os dados contidos em `digits` através do atributo `data`. E, ainda acessar os rótulos de dados por intermédio do atributo `target` e a descrição dos dados como atributo `DESC`.
+
+Caso, deseje saber quais os atributos disponíveis para conhecer melhor seus dados basta apenas utilizar o comando `digits.keys()`.
+
+Execute todos os blocos abaixo:
+```{python ex="digits", type="pre-exercise-code"}
+from sklearn import datasets
+digits = datasets.load_digits()
+```
+
+```{python ex="digits", type="sample-code"}
+# Imprimindo os atributos do `digits`
+print(digits.______)
+
+# Imprimindo os dados
+print(digits.____)
+
+# Imprimindo os rótulos dos dados
+print(digits.______)
+
+# Imprimindo a descrição dos dados de `digits`
+print(digits.DESCR)
+```
+
+```{python ex="digits", type="solution"}
+# Imprimindo os atributos do `digits`
+print(digits.keys())
+
+# Imprimindo os dados
+print(digits.data)
+
+# Imprimindo os rótulos dos dados
+print(digits.target)
+
+# Imprimindo a descrição dos dados de `digits`
+print(digits.DESCR)
+```
+
+```{python ex="digits", type="sct"}
+# Test `print` 
+test_function(
+    "print",
+    1,
+    not_called_msg="Você descobriu todos os paramêtros disponíveis ao `digits`?",
+    incorrect_msg="Não se esqueça de descobrir todas as chaves do `digits`!",
+    do_eval=False
+)
+# Test `print`
+test_function(
+    "print",
+    2,
+    not_called_msg="Acho que você esqueceu de imprimir os dados?",
+    incorrect_msg="Não se esqueça de visualizar seus dados!",
+    do_eval=False
+)
+# Test `print`
+test_function(
+    "print",
+    3,
+    not_called_msg="Você não se esqueceu de verificar os rótulos dos seus dados?",
+    incorrect_msg=" Não se esqueça de verificar os rótulos dos seus dados!",
+    do_eval=False
+)
+# Test `print` 
+test_function(
+    "print",
+    4,
+    not_called_msg="Você não se esqueceu de verificar a descrição do `digits`?",
+    incorrect_msg="Não se esqueça de verificar a descrição do `digits`!",
+    do_eval=False
+)
+success_msg("Fantástico!")
+```
+
+O próximo passo que você deve fazer é verificar novamente o tipo dos seus dados.
+
+Caso você tenha utilizado o `read_csv()` para importar seus dados, seus dados estarão contidos em um `DataFrame`. Nesse caso não haverá nenhum componente para descrição dos dados, mas você poderá verificar, por exemplo, os dados contidos no inicio ou final do se conjunto de dados, respectivamente, utilizando os métodos `head()` ou `tail()` da biblioteca Pandas. Em casos como este, verificar a descrição dos dados é sempre algo inteligente à se fazer!
+
+Porém, esse tutorial assume que você que você utilizará os dados do scikit-learn e o tipo de dados da variável `digits` lhe auxiliará, caso você não esteja familiarizado com a biblioteca. Observe o retorno do primeiro conjunto de código. Nele, você verá que o `digits` contém um  numpy array!
+
+O que por si só já uma informação muito importante. Mas, como podemos acessar esses arrays?
+
+Na verdade isso é algo extremamente fácil. Basta apenas você utilizar atributos para acessar os arrays que lhe sejam relevantes.
+
+Só não se esqueça que você já viu os atributos disponíveis ao utilizar o comando `digits.keys()`. Por exemplo, você pode utilizar o método `data` para isolar os dados, o `target` para ver os rótulos de dados  e o `DESCR` para a descrição dos dados...
+
+Mas, e agora?!
+
+A primera coisa que você precisa saber sobre seu array de dados é seu formato. Ou seja, o número de dimensões e itens contidos no seu array de dados. O formato de um array é especificado por uma tupla de inteiros que específica o tamanho de cada uma de suas dimensões. Em outras palavras, caso você tenha uma array 3D como por exemplo ```y = np.zeros((2, 3, 4))```, o formato do seu array será ```(2,3,4)```.
+
+Agora, é a hora de visualizar o formato dos três arrays que encontramos (`data`,` target` e `DESCR`).
+
+Para verificar o formato dos arrays, os passos são basicamente os mesmos, diferindo apenas nos atributos utilizados. Assim, vamos tomar por exemplo o atributo `data`, basta isolar o array numpy do `digits` e então utilizar o atributo `shape`, feito isso você saberá o formato do atributo `data`. O mesmo pode ser aplicado no `target` e `DESCR`. Há ainda o atributo `images`, que basicamente são os dados das imagens. Você agora pode realizar o teste.
+
+Observe na declaração abaixo utilzando o atributo `shape` no array:
+
+```{python ex="digits_shape", type="pre-exercise-code"}
+from sklearn import datasets
+import numpy as np
+digits = datasets.load_digits()
+```
+
+```{python ex="digits_shape", type="sample-code"}
+# Isolando os dados de `digits`
+digits_data = digits.data
+
+# Inspecionando o formato
+print(digits_data.shape)
+
+# Isolando os rórulos com `target`
+digits_target = digits.______
+
+# Inspecionando o formato
+print(digits_target._____)
+
+# imprimindo o número de rótulos únicos
+number_digits = len(np.unique(digits.target))
+
+# Isolando o atributo `images`
+digits_images = digits.images
+
+# Inspecionando o formato
+print(digits_images.shape)
+```
+
+```{python ex="digits_shape", type="solution"}
+# Isolando os dados de `digits`
+digits_data = digits.data
+
+# Inspecionando o formato
+print(digits_data.shape)
+
+# Isolando os rórulos com `target`
+digits_target = digits.target
+
+# Inspecionando o formato
+print(digits_target.shape)
+
+# imprimindo o número de rótulos únicos
+number_digits = len(np.unique(digits.target))
+
+# Isolando o atributo `images`
+digits_images = digits.images
+
+# Inspecionando o formato
+print(digits_images.shape)
+```
+
+```{python ex="digits_shape", type="sct"}
+msg_data="Você adicionou o atributo `shape` para verificar o número de dimensões e itens do array `digits_data`?"
+msg_target="Você adicionou o atributo `shape` para verificar o número de dimensões e itens do array `digits_target`?"
+msg_image="Você adicionou o atributo `shape` para verificar o número de dimensões e itens do array `digits_images`?"
+# Test object `digits_data`
+test_object("digits_data", undefined_msg="Você já definiu o objeto `digits_data`?", incorrect_msg="Você utilizou o atributo `data` para isolar os dados do `digits`?")
+# Test object `digits_target`
+test_object("digits_target", undefined_msg="Você já definiu o objeto `digits_target`?", incorrect_msg="`target`")
+# Test `shape` of `digits_data`
+#test function print
+test_function(
+    "print",
+    1,
+    not_called_msg="Você já imprimiu o formatos dos dados??",
+    incorrect_msg="Não se esqueça de imprimir o formato dos dados!",
+    do_eval=False
+)
+test_object_accessed("digits_data.shape", not_accessed_msg=msg_data)
+# Test `print`
+test_function(
+    "print",
+    2,
+    not_called_msg="Você já imprimiu o formatos dos rórulos dos dados?",
+    incorrect_msg="Não se esqueça de imprimir o formato dos rótulos dos dados!",
+    do_eval=False
+)
+# Test access `shape` of `digits_target`
+test_object_accessed("digits_target.shape", not_accessed_msg=msg_target)
+# Test object `number_digits`
+test_object("number_digits", undefined_msg="Você já definiu o objeto `number_digits`?", incorrect_msg="Você utilizou o `np.unique()` para retornar os valores únicos dos rótulos de dados? Não se esqueça buscar o tamanho desse array utilizando o `len()`!")
+# Test object `digits_images`
+test_object("digits_images", undefined_msg="Did you define the `digits_images` object?", incorrect_msg="Você utilizaou o atributo `images` para isolar as imagens dos dados do `digits`?")
+# Test `shape` of `digits_images`
+test_object_accessed("digits_images.shape", not_accessed_msg=msg_image)
+# Test `print` 
+test_function(
+    "print",
+    3,
+    not_called_msg="Você imprimiu o formato das imagens do `digits`?",
+    incorrect_msg="Não se esqueça de imprimir o formato das imagens do `digits`!",
+    do_eval=False
+)
+success_msg("Muito bem!")
+```
+
+Recapitulando: ao inspecionar o `digits.data`, você verá que há 1797 amostras e 64 atributos. Assim, você terá 1797 amostras e 1797 valores de rótulos.
+
+Todos os rótulos contém 10 valores únicos, de 0 a 9. Em outras palavras, todos os 1797 rótulos são formados por números entre 0 e 9. Isso significa que os valores que serão reconhecidos por seu modelo conterão números entre 0 e 9.
+
+Por último, você verá que os dados do atributo `images` contém  três dimensões: há 1797 instâncias de tamanho 8x8 pixels. Você pode visualizar que os atributos `images` e `data` se relacionam, o que pode ser observado ao reformatar o `images` em duas dimensões, utilizando o seguinte código: `digits.images.reshape((1797, 64))`.
+
+Todavia, caso você queira ter certeza sobre, é melhor utilizar o ```print(np.all(digits.images.reshape((1797,64)) == digits.data))```. Com o método `all()` do numpy, você testará se todos os elementos de um array, de um eixo, são iguais ao valor `True`. Nesse caso, você avaliará se o novo formato do array `images` é igual ao array `digits.data`. Nesse caso você verá que o resultado é `True`, ou verdadeiro.
+
+#### Visualize seus dados com `matplotlib`
+
+Agora, você pode levar a exploração dos seus dados a outro nível, visualizando os dados com que você estará trabalhando. Para tal, você pode utilizar uma das várias bibliotecas para visualização de dados do Python, como a por exemplo a [matplotlib](http://matplotlib.org/):
+
+```
+# Importando matplotlib
+import matplotlib.pyplot as plt
+
+# Delimeitando o tamanho de nossa figura (altura e largura) em polegadas
+fig = plt.figure(figsize=(6, 6))
+
+# Ajustando os subplots
+fig.subplots_adjust(left=0, right=1, bottom=0, top=1, hspace=0.05, wspace=0.05)
+
+# Para cada uma das 64 imagens
+for i in range(64):
+    # Inicializa os subplots: adiciona um subplot no grid de 8 por 8, na posição i+1
+    ax = fig.add_subplot(8, 8, i + 1, xticks=[], yticks=[])
+    # Apresenta a imagem na posição i
+    ax.imshow(digits.images[i], cmap=plt.cm.binary, interpolation='nearest')
+    # Rotula a imagen com o valor do rótulo
+    ax.text(0, 7, str(digits.target[i]))
+
+# Apresentando o plot das imagens
+plt.show()
+```
+
+O código aparenta ser meio complicado e pode ser meio assustador. Entretanto, ele é bastante simples e fácil de se compreender uma vez que você o divida em partes:
+
+- Você importou a biblioiteca `matplotlib`;
+- A seguir, você configurou uma figura com 6 inches de largura e altura. Esse é o fundo branco, onde, suas imagens serão apresentadas;
+- Então, você configurou um novo nível, ajustando as margens: direita e esquerda, superior e inferior. E, por fim a altura e largura. Ressalta que esses ajustes são para o layout.
+- Após isso, você iniciou o preenchimento da figura com o auxílio da estrutura de repetição `for`;
+- Você iniciou os subplotss, um por um, adicionando a cada uma das posições no grids uma imagem de tamanho `8`x`8`.
+- Você apresentou a cada interação uma das imagens em suas posições no grid. Utilizando o mapa de cores, você usou cores binárias, neste caso as cores preta, branca e cinza. Utilizou o método de interpolação `nearest`, o que significa que seus dados foram interpolados de maneira não muito sauve. Caso você queira saber mais sobre o efeito de diferentes métodos de interpolação acesse esse [link](http://matplotlib.org/examples/images_contours_and_fields/interpolation_methods.html);
+- A cereja do bolo é adição de texto em seu subplots. O rótulos dos dados serão impressos nas coordenadas (0,7) de cada subplot, ou seja, irão se apresentadas no canto inferior-esquerdo de cada um dos subplots;
+- E, é claro não se esqueça de imprimir sua visualização como auxílio do comando `plt.show()`!
+
+Ao final, você terá como resultado a seguinte visualização:
+[INSERT VISUALIZATION/PLOT1]
+
+Além disso, você ainda pode visualizar os rótulos com as imagens, apenas utilizando esse código:
+
+```
+# Importando o matplotlib
+import matplotlib.pyplot as plt 
+
+# Incluindo as imagens e rótulos em uma lista
+images_and_labels = list(zip(digits.images, digits.target))
+
+# Para cada elemento na lista
+for index, (image, label) in enumerate(images_and_labels[:8]):
+    # Inicializa um subplot de 2 por 4 na posição i+1
+    plt.suplot(2, 4, index + 1)
+    # Oculta os eixos
+    plt.axis('off')
+    # Preenche os subplots com as imagens
+    plt.imshow(image, cmap=plt.cm.gray_r,interpolation='nearest')
+    # Adiciona um título a cada subplot
+    plt.title('Training: ' + str(label))
+
+# Apresentando o plot das imagens
+plt.show()
+```
+O que resultará nesta visualização:
+[INSERT PICTURE HERE/PLOT2]
+
+
+Observe que nesse caso, após você ter importado a biblioteca `matplotlib`, é necessário que você concatene ambos arrays numpy e os salve na variável `images_and_labels`. Assim, você verá que essa lista conterá todos suplementos da instância de `digits.images`, correspondentes aos valores `digits.target`.
+
+Então, você diz aos primeiros oito elementos de `images_and_labels` -lembre-se que o índice começa em 0! -, inicializem em um subplot de 2x4 em cada posição. Assim, você transforma o gráfico dos eixos e exibe imagens em todas as subplots com um mapa de cores `plt.cm.gray_r` (que retorna todas as cores cinzas), utilizando método de interpolação `nearest`. E, por fim, inclui um título para cada subplot, e apresenta o resultado.
+
+Nem foi tão difícil, né?!
+
+Agora você tem uma boa ideia dos dados com os quais você está trabalhando!
+
+#### Visualizando seus dados: Analise do Componente Principal (ACP)
+
+Mas, o que podemos dizer sobre os dados? E, há outra forma para visualizar os dados?
+
+Como a conjunto de dados `digits` contem 64 características, isso pode ser uma desafio. Como você pode imaginar é muito difícil de se entender a estrutura e manter uma visualização do conjunto de dados `digits`. Assim, pode-se dizer que estamos a trabalhar com conjuntos de dados multidimensional.
+
+A multidimensionalidade dos dados é um resultado direto da tentativa de se descrever objetos por meio de uma coleção de caracteristicas. Assim, podemos encontrar outros exemplos de dados que possuem essas características como em dados financeiros, dados climáticos, neuroimagens, entre outros.
+
+Entretanto, como você já deve ter imaginado, trabalhar com essa diversidade de dimenões não é algo fácil. Portanto, em algums casos, essa multidimensionalidade dos dados pode ser um problema, visto que, seus algoritmos de machine learning terão de levar em conta as diferentes facetas dos dados. Assim, esse casos, são conhecidos como a maldição da dimensionalidade. Por conta da grande quantidade de dimensões dos dados, seus dados podem estar virtualmente distantes uns dos outros, fazendo com o que essa distância entre eles não seja informativa.
+
+Porém, não se preocupe com a maldição, ela não se trata apenas da contagem da quantidade das facetas dos dados. Há outros casos, em que a o tamanho da dimensionalidade pode ser menor que o número de características, casos assim algumas das facetas são, simplesmente, irrelevantes.
+
+Assim sendo, você pode verificar que dados com apenas duas ou três dimensões são mais facéis de se analisar, e, consequentemente visualizar.
+
+Portanto, você irá visualizar os dados com auxílio de técnicas de reduções de dimensionalidade, conhecidos como Analise do Componente Principal (ACP). A ideia do ACP é encontrar uma combinação linear de duas variáveis que contenham a maioria da informação. Essa nova variável ou "componente principal", poderá substituir as duas variáveis originais.
+
+Simplificando, trata-se de um método transformação linear para reduzir as direções (componentes principais), a fim de maximizar a variância dos dados. Não se esqueça, que essa variância indica quando distântes os pontos dos conjuntos de dados estão entre si. Caso queira saber mais, visite [esse link](http://www.lauradhamilton.com/introduction-to-principal-component-analysis-pca). 
+
+Você pode facilmente aplicar o ACP em seus dados com auxílio do scikit-learn:
+
+```{python ex="pca", type="pre-exercise-code"}
+from sklearn import datasets
+digits = datasets.load_digits()
+from sklearn.decomposition import RandomizedPCA
+from sklearn.decomposition import PCA
+import numpy as np
+```
+
+```{python ex="pca", type="sample-code"}
+# Cria um modelos Randomizado ACP que pegue dois componentes
+randomized_pca = RandomizedPCA(n_components=2)
+
+# Transforma e preenche os dados no modelo
+reduced_data_rpca = randomized_pca.fit_transform(digits.data)
+
+# Cria um modelos regular de ACP
+pca = PCA(n_components=2)
+
+# Transforma e preenche os dados no modelo
+reduced_data_pca = pca.fit_transform(digits.data)
+
+# Inspeciona o formato
+reduced_data_pca.shape
+
+#Imprime os dados
+print(reduced_data_rpca)
+print(reduced_data_pca)
+```
+
+```{python ex="pca", type="solution"}
+
+# Cria um modelos Randomizado ACP que pegue dois componentes
+randomized_pca = RandomizedPCA(n_components=2)
+
+# Transforma e preenche os dados no modelo
+reduced_data_rpca = randomized_pca.fit_transform(digits.data)
+
+# Cria um modelos regular de ACP
+pca = PCA(n_components=2)
+
+# Transforma e preenche os dados no modelo
+reduced_data_pca = pca.fit_transform(digits.data)
+
+# Inspeciona o formato
+reduced_data_pca.shape
+
+#Imprime os dados
+print(reduced_data_rpca)
+print(reduced_data_pca)
+```
+
+```{python ex="pca", type="sct"}
+test_object("randomized_pca", do_eval=False)
+test_object("reduced_data_rpca", do_eval=False)
+test_object("pca", do_eval=False)
+test_object("reduced_data_pca", do_eval=False)
+predef_msg="Did you inspect the shape of `reduced_data_pca`?"
+test_object_accessed("reduced_data_pca.shape", not_accessed_msg=predef_msg)
+# Test `print` 
+test_function(
+    "print",
+    1,
+    not_called_msg="Você imprimiu os dados do `reduced_data_rpca`?",
+    incorrect_msg="Não se esqueça de imprimir os dados do `reduced_data_rpca`!",
+    do_eval=False
+)
+test_function(
+    "print",
+    2,
+    not_called_msg="Você imprimiu os dados do `reduced_data_pca`?",
+    incorrect_msg="Não se esqueça de imprimir os dados do `reduced_data_pca`!",
+    do_eval=False
+)
+success_msg("Maravilha!")
+```
+
+**Dica**: Você utilizou o `RandomizedPCA()`, neste caso, pois sua performance é melhor quando há um alto número de dimensões. Assim, você pode substituir esse metódo randômico do módelo ACP ou utilizar um outro método regular do módelo para ver a diferença entre eles.
+
+Veja ainda, como você diz explicitamente ao modelo para manter apenas dois componentes. Isso dará você a certeza de que seus dados agora são bidimensionais. Note ainda, como você não passou a classe target com os rótulos para a transformação ACP, isso pois, caso queira investigar se a ACP revela uma distribuição distintas de rótulos, e, se você consegue separar as instâncias entre si.
+
+Você pode construir um gráfico de dispersão para visualizar os dados:
+
+```
+colors = ['black', 'blue', 'purple', 'yellow', 'white', 'red', 'lime', 'cyan', 'orange', 'gray']
+for i in range(len(colors)):
+    x = reduced_data_rpca[:, 0][digits.target == i]
+    y = reduced_data_rpca[:, 1][digits.target == i]
+    plt.scatter(x, y, c=colors[i])
+plt.legend(digits.target_names, bbox_to_anchor=(1.05, 1), loc=2, borderaxespad=0.)
+plt.xlabel('First Principal Component')
+plt.ylabel('Second Principal Component')
+plt.title("PCA Scatter Plot")
+plt.show()
+```
+
+Sua visualização será semelhante a essa:
+
+[INSERT PICTURE HERE/PLOT3]
+
+Novamente, você utilizou o `matplotlib` para visualizar os dados. Essa biblioteca é excelente para uma visualização rápida dos dados com os quais você está trabalhando, mas você deve sempre pensar em algo mais elegante, caso você esteja a trabalhar em seu portifólio em Ciência de dados.
+
+Ressalta-se que o último método utilizado para plotar a visualização (`plt.show()`) não será necessário caso você esteja trabalhando no Jupyter Notebook, visto que você desejará as colocar a visualização junto ao seu código. Então, sempre que houver dúvidas, você poderá consultar nosso [Guia Definitido do Jupyter Notebook](https://www.datacamp.com/community/tutorials/tutorial-jupyter-notebook). 
+
+O código acima, realiza os seguintes passos:
+
+1. Primeiro, coloca todas as cores que serão utilizadas em uma lista;
+Observe que sua lista de cores, possui a mesma quantidade de rótulos que você possue. Assim, você terá certeza que os pontos em seus dados estão sendo coloridos de acordo com seus rórulos. Assim, você define suas cores num intervalo entre 0 e 10. Tenha sempre em mente que esse intervalo não é inclusivo.
+2. Define as coordenadas `x` e  `y`;
+Assim, você pegará a primeira ou segunda coluna de `reduced_data_rpca`, e selecionará apenas os pontos nos quais os rótulos iguais ao index que você definiu. Isso significa quem em um primeiro momento, você irá considerar os com rótulo `0`, `1` e assim sucessivamente.
+3. Constroe seu gráfico de dispersão.
+Preenchendo as coordenadas `x` e `y`, e, utilzando as cores que você definiu. No primeiro momento, todos marcadores terão a cor `preta`, então `azul`, e o processo continuará até os marcadores estarem todos marcados corretamente.
+4. Adiciona uma legenda ao gráfico. Utilizando para isso o método `target_names` para conseguir os rótulos corretos aos marcadores dos dados;
+5. Adiciona os rótulos significativos aos eixos `x` e `y`;
+6. Apresenta o resultado obtido.
+
+### E agora, para onde ir?
+
+Agora, você possui ainda mais informações sobre seu conjunto de dados e uma visualização pronta, mas parece que seus pontos de dados são apenas um grupo e você observa que há algumas sobreposições nos pontos.
+
+Isso é algo bastante interessante e que deve ser investigado a fundo.
+
+Você acha que, no caso de haver 10 possibildades de rótulos aos dados, mas você não possui acesso aos rótulos, as observações deverão ser agrupadas ou clusterizadas por algum critério que pode infererir os rótulos?
+
+Essa é nossa questão de pesquisa!
+
+Em geral, quando você adquirir um bom entendimeneto dos seus dados, você irá decidir o que será relevante pesquisar. Em outras palavras, você irá pensar sobre o que seu conjunto de dados poderá lhe ensinar e o que você pode aprender com eles.
+
+De agora em diante, você irá pensar sobre o tipo de algoritmos você poderá aplicar em seu conjunto de dados, no intuito de obter resultados que desejas.
+
+**Dica:** quanto mais familiarizado você tiver com seus dados, mas fácil será para avaliar em como analisá-lo. O mesmo vale para encontrar o algoritmo de machine learning apropriado à sua analise.
+
+Entretanto, quando você estiver iniciando com o scikit-learn, você verá que essa pacote é muito mais vasto e poderoso do que estamos apresentando neste tutorial e pode querer aplicar mais nas analises efetuadas em seu conjunto de dados. Por isso [esse mapa sobre machine learning com scikit-learn](http://scikit-learn.org/stable/tutorial/machine_learning_map/), pode ser uma mão na roda.
+
+Observe que esse mapa não requer conhecimento sobre algoritmos machine learning que estão inclusos no pacote scikit-learn. Isso, a propósito, segura alguma verdade sobre tomar o próximo passo em seu projeto em machine learning: se você tem ideia di que é possível fazer com o machine learning, será quase que impossível decidir o que realizar com seus dados.
+
+Com seu caso de uso foi para clusterização ou agrupamento, você poderá seguir o caminho no machine learning "KMeans". Você verá que este caso de uso apenas requer que, você tenha mais de 50 amostra ("Isso temos!"), e rótulos nos dados ("Também temos!"), para saber as categórias que queremos prever ("Temos!") e ter menos que 10 mil amostra ("Temos também!").
+
+Mas, o que exatamente é um algoritimo K-Means?!
+
+K-Means, é simplesmente o algoritmos de apredizagem não supervisionado mais utilizado para resolver problemas de clusterização. O procedimento segue a mais simples e fácil maneira de classificar um certo conjunto de dados, atrávez de um número de cluster previamente definido por você, antes da execução do algoritmo. Esse número de clusters é chamado 'k' e você o seleciona aleatoriamente.
+
+Então, o algoritmo k-means irá encontrar o cluster mais próximo do centro de cada ponto, e, irá definir um ponto próximo a esse cluster.
+
+Uma vez, que todos os pontos forem alocados a um cluster, os clusters centrais serão recalculados. Em outras palavras, os novos cluster centrais irão emergir da média dos valores dos clusters dos pontos de dados. Assim, esse processo será repetido até que os pontos de dados sejam ligados ao mesmo cluster. E, claro os membros do cluster se estabilizem.
+
+Você já pode ver isso, porque os algoritmos k-means trabalham da seguinte forma, o conjunto inicial de clusters centrais que você desconsiderar, terão um grande efeito nos clusters que você eventualmente encontrar. Você pode, claro, manipular melhor esse efeito, como você verá adiante.
+
+Porém, antes de colocarmos a mão na massa em nosso modelo para nossos dados, você definitivamente de preparar seus dados à esse propósito.
+
+### Pré-processando seus dados
+
+Como você leu nas seções anteriores, antes de modelar seus dados, deverá prepará-lo. Esse passo de preparação é conhecido com, "pré-processamento".
+
+#### Normalização dos dados
+
+O primeiro passo é pré-processar os dados. Você pode padronizar seus dados no `digits`, por exemplo, utilizando o método `scale()`:
+
+```{python ex="normalization", type="pre-exercise-code"}
+from sklearn import datasets
+digits = datasets.load_digits()
+```
+
+```{python ex="normalization", type="sample-code"}
+# Import
+from sklearn.preprocessing import scale
+
+# Aplicando `scale()` aos dados do `digits`
+data = _____(digits.data)
+```
+
+```{python ex="normalization", type="solution"}
+# Import
+from sklearn.preprocessing import scale
+
+# Aplicando `scale()` aos dados do `digits`
+data = scale(digits.data)
+```
+
+```{python ex="normalization", type="sct"}
+test_function(
+    "sklearn.preprocessing.scale",
+    not_called_msg="Você não esqueceu de padronizar os dados do `digits`?",
+    incorrect_msg="Não esqueceu de padronizar `digits` com `scale()`!",
+    do_eval=False
+)
+success_msg("Fantástico!")
+```
+
+Ao escalar seus dados, você altera a distribuição de cada atributo para uma média de zero e um desvio padrão de um (unidade de variância).
+
+#### Dividindo seis dados em conjuntos de teste e treinamento
+
+De maneira a avaliar, posteriormente, a performance so seu modelo, você deve dividir seu conjunto de dados em duas partes: conjunto de treinamento e de teste. O primeiro conjunto é utilizado para treinar o sistema, enquanto o segundo para avaliar a aprendizagem o o sistema já treinado.
+
+Na prática, a divisão do seu conjunto de dados em teste e treinamento é um desmembramenteo de conjuntos: o divisão mais comum de se realizar em caso assim é tomar 2/3 do seu conjunto de dados original para o treinamento, e os 1/3 restantes para o conjunto de teste.
+
+Aqui você irá fazer isso, também. No código abaixo a divisão é 'tradicional' e a escolha é respeitada: nos argumentos do método `train_test_split()`, você verá claramente que o tamanho do `test_size` é de `0.25`, ou seja, 1/3 do seu conjunto de dados original.
+You will try to do this also here. You see in the code chunk below that this 'traditional' splitting choice is respected: in the arguments of the `train_test_split()` method, you clearly see that the `test_size` is set to `0.25`. 
+
+Além disso, você observará que o argumento `random_state` têm o valor `42`. Assim, com esse argumento, nós garantimoos que a divisão sempre será a mesma. Isso é particularmente conveniente, caso queria reproduzir os resultados.
+
+```{python ex="train_test_split", type="pre-exercise-code"}
+from sklearn import datasets
+digits = datasets.load_digits()
+from sklearn.preprocessing import scale
+data = scale(digits.data)
+```
+
+```{python ex="train_test_split", type="sample-code"}
+# Importando o `train_test_split`
+from sklearn.cross_validation import ________________
+
+# Dividindo o conjunto de dados `digits` em conjunto de treinamento e teste
+# Split the `digits` data into training and test sets
+X_train, X_test, y_train, y_test, images_train, images_test = train_test_split(data, digits.target, digits.images, test_size=0.25, random_state=42)
+```
+
+```{python ex="train_test_split", type="solution"}
+# Importando o `train_test_split`
+from sklearn.cross_validation import train_test_split
+
+# Dividindo o conjunto de dados `digits` em conjunto de treinamento e teste
+X_train, X_test, y_train, y_test, images_train, images_test = train_test_split(data, digits.target, digits.images, test_size=0.25, random_state=42)
+```
+
+```{python ex="train_test_split", type="sct"}
+import_msg="Você importou o `train_test_split` do `sklearn.cross_validation`?"
+predef_msg="Não se esqueça de preencher o valor da variável `train_test_split`!"
+test_import("sklearn.cross_validation.train_test_split", same_as = True, not_imported_msg = import_msg, incorrect_as_msg = predef_msg)
+test_object("X_train", do_eval=False,  undefined_msg="Você não definiu a variável `X_train` ou outra variável?")
+test_object("X_test", do_eval=False, undefined_msg="Você definiu a variável `X_test`?")
+test_object("y_train", do_eval=False, undefined_msg="Você definiu a variável `y_train`?")
+test_object("y_test", do_eval=False, undefined_msg="Você definiu a variável `y_test`?")
+test_object("images_train", do_eval=False, undefined_msg="Você definiu a variável `images_train`?")
+test_object("images_test", do_eval=False, undefined_msg="Você definiu a variável `images_test`?")
+success_msg("Bom trabalho!")
+```
+
+Após você dividir seu conjunto de dados em conjunto de treinamento e teste, você pode rápidamente inspecionar os números antes de ir ao modelo de dados:
+
+```{python ex="inspect", type="pre-exercise-code"}
+from sklearn import datasets
+from sklearn.cross_validation import train_test_split
+from sklearn.preprocessing import scale
+import numpy as np
+digits = datasets.load_digits()
+data = scale(digits.data)
+X_train, X_test, y_train, y_test, images_train, images_test = train_test_split(data, digits.target, digits.images, test_size=0.25, random_state=42)
+```
+
+```{python ex="inspect", type="sample-code"}
+# Número de caracteristicas de treinamento
+n_samples, n_features = X_train.shape
+
+# Imprimindo `n_samples`
+print(_________)
+
+# Imprimindo `n_features`
+print(__________)
+
+# Número de rótulos de treinamento
+n_digits = len(np.unique(y_train))
+
+# Inspecionando `y_train`
+print(len(_______))
+```
+
+```{python ex="inspect", type="solution"}
+# Número de caracteristicas de treinamento
+n_samples, n_features = X_train.shape
+
+# Imprimindo `n_samples`
+print(n_samples)
+
+# Imprimindo `n_features`
+print(n_features)
+
+# Número de rótulos de treinamento
+n_digits = len(np.unique(y_train))
+
+# Inspecionando `y_train`
+print(len(y_train))
+```
+
+```{python ex="inspect", type="sct"}
+test_object("n_samples", undefined_msg="did you leave out `n_samples` or `n_features`?")
+test_object("n_features")
+test_function(
+    "print",
+    1,
+    not_called_msg="Você se esqueceu de imprimir o número de amostra de dados de treinamento do `digits`",
+    incorrect_msg="Não se esqueça de imprimir o número de amostras!",
+    do_eval=False
+)
+test_function(
+    "print",
+    2,
+    not_called_msg="Você se esqueceu de imprimir o número de caracteristicas de dados de treinamento do `digits`?",
+    incorrect_msg="Não se esqueça de imprimir o número de caracteristicas!",
+    do_eval=False
+)
+test_object("n_digits", incorrect_msg="Você definiu a variável `n_digits` corretamente?!") 
+test_function(
+    "print",
+    3,
+    not_called_msg="Você imprimiu o número de rótulos de treinamento os dados `digits`?", 
+    incorrect_msg="Não se esqueça de imprimir o número de rótulos de treinamentos da variável `len(y_train)`!", 
+    do_eval=False
+)
+success_msg("Excelente!")
+```
+
+Assim, você verá que o conjunto de treinamento `X_train` contém, agora, 1347 amostras, o que é exatamente 2/3 da amostra original, e, 64 caracteristicas número que não alterou. Além disso, a variável `y_train`, contém 2/3 dos rótulos de dados do conjunto original. Isso, significa que o conjunto de teste `X_train` e `y_train` contém 450 amostras.
+
+### Clusterizando os dados do `digits`
+
+Agora, após todos os passos de preparação, você tem certeza de que todos seus dados conhecidos (conjunto de treinamento) estão armazenados. Entretanto, nenhum modelos ou apredizagem foi aplicado até agora.
+
+Então, é hora de finalmente encontrar os clusters em seu conjunto de treinamento. Utilize o `KMeans()` do módulo `cluster` para definir seu modelo. Uma vez feito isso, você deverá informa valores para três métodos: `init`, `n_clusters` e `random_state`.
+
+Você pode lembra deste último argumento, uma vez que o utilizamos, quando dividimos nossos dados em dois conjuntos diferentes. Esse argumento basicamente garante que possamos repoduzir nossos resultados.
+
+```{python ex="kmeans_model", type="pre-exercise-code"}
+from sklearn import datasets
+from sklearn.cross_validation import train_test_split
+from sklearn.preprocessing import scale
+import numpy as np
+digits = datasets.load_digits()
+data = scale(digits.data)
+X_train, X_test, y_train, y_test, images_train, images_test = train_test_split(data, digits.target, digits.images, test_size=0.25, random_state=42)
+```
+
+```{python ex="kmeans_model", type="sample-code"}
+# Importando o módulo `cluster`
+from sklearn import ________
+
+# Criando o módelo KMeans
+clf = cluster.KMeans(init='k-means++', n_clusters=10, random_state=42)
+
+# Preenchendo o módelo com os dados de treinamento `X_train`
+clf.fit(________)
+```
+
+```{python ex="kmeans_model", type="solution"}
+# Importando o módulo `cluster`
+from sklearn import cluster
+
+# Criando o módelo KMeans
+clf = cluster.KMeans(init='k-means++', n_clusters=10, random_state=42)
+
+# Preenchendo o módelo com os dados de treinamento
+clf.fit(X_train)
+```
+
+```{python ex="kmeans_model", type="sct"}
+import_msg="Você importar o módulo `cluster` do `sklearn`?"
+predef_msg="Não se esqueça de importar o módulo `cluster do `sklearn`!"
+test_import("sklearn.cluster", same_as = True, not_imported_msg = import_msg, incorrect_as_msg = predef_msg)
+test_object("clf", do_eval=False, incorrect_msg="Você criou o módelos KMeans corretamente?")
+test_function("clf.fit", do_eval=False)
+success_msg("Uauuu!")
+```
+
+Apesar de o argumento `init` indicar que a inicalização ao método ter como padrão o ‘k-means++’, você o verá explicitamente voltando ao código. Isso significa que você pode parar a execução quando desejar. Verifique isso no código acima!
+
+A seguir, você também verá que o argumento de `n_clusters` é 10. Esse número não apenas indica o número de clusters ou grupos que você deseja formar com seus dadso, mas também o número de centróides. Lembre-se que o centróide é o centro de um cluster.
+
+Você ainda de se lembra quais as possíveis desvantagens do algoritmo K-Means, mencionado na seção anterior?
+
+Isto é, que o conjunto inicial de clusters poderia causar um grande efeito nos clusters que enventualmente encontraríamos?
+
+Normalmente, você tentará lidar com esse efeito com diversps conjuntos iniciais em multiplas execuções, selecionando um conjunto de cluster com a soma mínima erros. Em outras palavras, você deseja minimizar a distância entre cada ponto no cluster com a média ou o centóide do cluster.
+
+Portanto, ao adicionar o argumento `n-init` ao `KMeans()`, você determinará a quantidade de configurações que o algoritmo irá avaliar aos diferentes centróides.
+
+**Observe** novamente, que você não precisa inserir rótulos de teste quando você está preenchendo o módelo com seus dados: esse serão utilizados para verificar quando bom seu módelo é ao predizer as atuais classes de suas instâncias.
+
+Você ainda pode visualizar as imagens que serão os centros dos seus cluster, como segue:
+
+```
+# Importando matplotlib
+import matplotlib.pyplot as plt
+
+# Definindo o tamanho da figura
+fig = plt.figure(figsize=(8, 3))
+
+# Adicionando o Título
+fig.suptitle('Cluster Center Images', fontsize=14, fontweight='bold')
+
+# Para todos rótulos (0-9)
+for i in range(10):
+    # Initialize subplots in a grid of 2X5, at i+1th position
+    ax = fig.add_subplot(2, 5, 1 + i)
+    # Display images
+    ax.imshow(clf.cluster_centers_[i].reshape((8, 8)), cmap=plt.cm.binary)
+    # Don't show the axes
+    plt.axis('off')
+
+# Apresentando o plot
+plt.show()
+```
+
+[INSERT IMAGES HERE/PLOT4]
+
+O próximo passo é predizer os rótulos do conjunto de teste:
+
+```{python ex="predict", type="pre-exercise-code"}
+from sklearn import datasets
+from sklearn.cross_validation import train_test_split
+from sklearn.preprocessing import scale
+from sklearn import cluster
+digits = datasets.load_digits()
+data = scale(digits.data)
+X_train, X_test, y_train, y_test, images_train, images_test = train_test_split(data, digits.target, digits.images, test_size=0.25, random_state=42)
+clf = cluster.KMeans(init='k-means++', n_clusters=10, random_state=42)
+clf.fit(X_train)
+```
+
+```{python ex="predict", type="sample-code"}
+# Predizendo os rótulos para `X_test`
+y_pred=clf.predict(X_test)
+
+# Imprimindo as 100 primeiras instâncias do `y_pred`
+print(y_pred[:100])
+
+# Imprimindo as 100 primeiras instâncias do `y_test`
+print(y_test[:100])
+
+# Estudando o formato dos clusters centrais
+clf.cluster_centers_._____
+```
+
+```{python ex="predict", type="solution"}
+# Predizendo os rótulos para `X_test`
+y_pred=clf.predict(X_test)
+
+# Imprimindo as 100 primeiras instâncias do `y_pred`
+print(y_pred[:100])
+
+# Imprimindo as 100 primeiras instâncias do `y_test`
+print(y_test[:100])
+
+# Estudando o formato dos clusters centrais
+clf.cluster_centers_.shape
+```
+
+```{python ex="predict", type="sct"}
+test_object("y_pred")
+test_function(
+    "print",
+    1,
+    not_called_msg="Você imprimiu as primeiras 100 instâncias do `y_pred`?",
+    incorrect_msg="Não se esqueça de imprimir as primeiras 100 instâncias do `y_pred`!",
+    do_eval=False
+)
+test_function(
+    "print",
+    2,
+    not_called_msg="Você imprimiu as primeiras 100 instâncias do `y_test`?",
+    incorrect_msg="Não se esqueça de imprimir as primeiras 100 instâncias do `y_test`!", 
+    do_eval=False
+)
+msg_data="Você preencheu o `shape` para imprimir o formato dos cluster centrais?" 
+test_object_accessed("clf.cluster_centers_.shape", not_accessed_msg=msg_data)
+success_msg="Fantástico!"
+```
+
+No código acima, você prediz os valores para o conjunto de teste, que contém 450 amostras. E, os armazendo na variável `y_pred`. E, imprime as primeiras 100 instâncias de `y_pred` e `y_test` e apresenta alguns resultados.
+
+Além disso, você ainda estuda o formato dos clusters centrais: observado a primeira vista que há 10 custers com 64 caracteristicas cada.
+
+Infelizmente, isso não lhe diz muita coisa pois fomos nós que definimos os 10 clusters e já sabiamos que nosso conjunto de dados tem 64 caracteristicas.
+
+Mas, talvez uma visualização dos dados seja mais interessante e divertida.
+
+Então, sem mais delogas vamos visualizar a predição dos rótulos:
+
+```
+# Importando o módulo `Isomap()`
+from sklearn.manifold import Isomap
+
+# Criando um isomap e inserido os dados do `digits`
+X_iso = Isomap(n_neighbors=10).fit_transform(X_train)
+
+# Calculando os clusters centrais e predizendo o index do cluster de cada amostra
+clusters = clf.fit_predict(X_train)
+
+# Criando um plot com subplots em um grid 1x2
+fig, ax = plt.subplots(1, 2, figsize=(8, 4))
+
+# Adjustando o layout
+fig.suptitle('Predicted Versus Training Labels', fontsize=14, fontweight='bold')
+fig.subplots_adjust(top=0.85)
+
+# Adicionando os gráficos de dispersão aos subplots 
+ax[0].scatter(X_iso[:, 0], X_iso[:, 1], c=clusters)
+ax[0].set_title('Predicted Training Labels')
+ax[1].scatter(X_iso[:, 0], X_iso[:, 1], c=y_train)
+ax[1].set_title('Actual Training Labels')
+
+# Apresentando os plots
+plt.show()
+```
+
+Utiliza o `Isomap()`, como uma forma de reduzir as dimensões do seu conjunto multidimensional `digits`. A diferenção entre o método ACP e o Isomap é que o último é um método de redução não-linear. 
+
+[INSERT IMAGE HERE/PLOT5]
+
+**Dica**: execute o código acima novamente, entretanto, utiliza o método de redução ACP ao invés do Isomap e visualize os efeitos distintos dos métodos de redução.
+
+A solução da **Dica** você confere no código abaixo:
+
+```
+# Importando o `PCA()`
+from sklearn.decomposition import PCA
+
+# Modelando o módelo ACP e preenchendo com os dados `digits`
+# Model and fit the `digits` data to the PCA model
+X_pca = PCA(n_components=2).fit_transform(X_train)
+
+# Calculando os clusters centrais e predizendo o index do cluster de cada amostra
+clusters = clf.fit_predict(X_train)
+
+# Criando um plot com subplots em um grid 1x2
+fig, ax = plt.subplots(1, 2, figsize=(8, 4))
+
+# Adjustando o layout
+fig.suptitle('Predicted Versus Training Labels', fontsize=14, fontweight='bold')
+fig.subplots_adjust(top=0.85)
+
+# Adicionando os gráficos de dispersão aos subplots 
+ax[0].scatter(X_pca[:, 0], X_pca[:, 1], c=clusters)
+ax[0].set_title('Predicted Training Labels')
+ax[1].scatter(X_pca[:, 0], X_pca[:, 1], c=y_train)
+ax[1].set_title('Actual Training Labels')
+
+# Apresentando os plots
+plt.show()
+```
+
+[INSERT IMAGE HERE/PLOT6]
+
+A primeira vista, a visualização não parece indicar que o módelo funciona bem.
+
+Mas, precisamos de uma investigação mais minunciosa.
+
+### Avaliação do seu modelo de clusterização
+
+A necessidade de uma investigação mais minunciosa, traz a tona um passo essencial em Machine learning, conhecido como avaliação da performance do módelo. Em outras palavras, nesse passo queremos analisar o grau de efetividade do nosso módelo.
+
+Então, vamos imprimir nossa matriz de confusão:
+
+```{python ex="confusion", type="pre-exercise-code"}
+from sklearn import datasets
+from sklearn.cross_validation import train_test_split
+from sklearn.preprocessing import scale
+from sklearn import cluster
+digits = datasets.load_digits()
+data = scale(digits.data)
+X_train, X_test, y_train, y_test, images_train, images_test = train_test_split(data, digits.target, digits.images, test_size=0.25, random_state=42)
+clf = cluster.KMeans(init='k-means++', n_clusters=10, random_state=42)
+clf.fit(X_train)
+y_pred=clf.predict(X_test)
+```
+
+```{python ex="confusion", type="sample-code"}
+# Importando o módulo `metrics` do `sklearn`
+from sklearn import _______
+
+# Imprimindo a matriz confusão com o método `confusion_matrix()`
+print(metrics.confusion_matrix(y_test, y_pred))
+```
+
+```{python ex="confusion", type="solution"}
+# Importando o módulo `metrics` do `sklearn`
+from sklearn import metrics
+
+# Imprimindo a matriz confusão com o método `confusion_matrix()`
+print(metrics.confusion_matrix(y_test, y_pred))
+```
+
+```{python ex="confusion", type="sct"}
+test_import("sklearn.metrics", same_as = True, not_imported_msg = "Did you import `metrics` from `sklearn`?", incorrect_as_msg = "Don't forget to import `metrics` from `sklearn`!")
+test_function(
+    "print",
+    not_called_msg="Você imprimiu a matriz confusão?", 
+    incorrect_msg="Não se esqueça de imprimir a matriz confusão!",
+    do_eval=False
+)
+success_msg="Maravilha! Agora, o que os resultados nos contam?"
+```
+
+A primeira vista, os resultados parecem confirmar nossas primeiras impressões, as reunidas da visualização. O digito `5` foi classificado corretamente em 41 dos casos. O digito `8` por sua vez foi classificado corretamente em 11 instâncias. Infelizmente, não podemos chamar essa classificação de um sucesso.
+
+Assim, você precisará saber um pouco mais sobre seus resultados, do que apenas a matriz confusão.
+
+Então, vamos tentar descobrir algo mais sobre a qualidade dos clusters, aplicando uma métrica de qualidade dos cluster diferente. Dessa forma, você poderá julgar a qualidade dos rótulos dos cluster em relação aos rótulos corretamente classificados.
+
+```{python ex="clustering_performance", type="pre-exercise-code"}
+from sklearn import datasets
+from sklearn.cross_validation import train_test_split
+from sklearn.preprocessing import scale
+from sklearn import cluster
+from sklearn.metrics import homogeneity_score, completeness_score, v_measure_score, adjusted_rand_score, adjusted_mutual_info_score, silhouette_score
+digits = datasets.load_digits()
+data = scale(digits.data)
+X_train, X_test, y_train, y_test, images_train, images_test = train_test_split(data, digits.target, digits.images, test_size=0.25, random_state=42)
+clf = cluster.KMeans(init='k-means++', n_clusters=10, random_state=42)
+clf.fit(X_train)
+y_pred=clf.predict(X_test)
+```
+
+```{python ex="clustering_performance", type="sample-code"}
+from sklearn.metrics import homogeneity_score, completeness_score, v_measure_score, adjusted_rand_score, adjusted_mutual_info_score, silhouette_score
+print('% 9s' % 'inertia    homo   compl  v-meas     ARI AMI  silhouette')
+print('%i   %.3f   %.3f   %.3f   %.3f   %.3f    %.3f'
+          %(clf.inertia_,
+      homogeneity_score(y_test, y_pred),
+      completeness_score(y_test, y_pred),
+      v_measure_score(y_test, y_pred),
+      adjusted_rand_score(y_test, y_pred),
+      adjusted_mutual_info_score(y_test, y_pred),
+      silhouette_score(X_test, y_pred, metric='euclidean')))
+```
+
+Assim, iremos verificar que há alguns pontos a se considerar sobre as métricas:
+
+* A pontuação de homogeneidade apresenta a amplitde de todos os clusters que possuem apenas pontos de dados que são membros de uma única classe.
+* A pontuação de completude calcula a amplitude de todos os pontos que são participantes de uma determinada classe e que também são elementos de um mesmo cluster.
+* A pontuação V é média harmônica entre a homogeneidade e completude.
+* A pontuação de ajuste Rand calcula a similaridade entre dois clusters e considera para tal todos os pares de uma amostra e enumera os pares atribuidos ao mesmo ou a diferentes clusters em agrupamentos preditos ou verdadeiros.
+* A pontuação de ajuste de informação mútua (AIM) é utilizada para comparar clusters. Além disso, é utilizada para mensurar a similaridade entre pontos que estão clusterizados, contabilizando as chances de agrupamento e definindo o valor máximo de 1, quando os agrupamentos são equivalentes.
+* A pontuação silhouette mede quão similar um objeto é aos seu próprio cluster comparado a outro. A pontuação silhouette, varia entre o intervalo de -1 a 1, onde um maior valor indica que um objeto é compatível ao seu cluster em comparação aos clusters vizinhos. Caso vários pontos tenham valores altos, a configuração do cluster é boa.
+
+Você pode observar claramente que essas pontuações não são fantásticas: por exemplo, quando o valor da pontuação silhouette é próximo a 0, indica que nossa amostra de dados está ou é muito próxima ao limite de decisão entre dois clusters vizinhos. Assim, isso pode indicar que a amostra pode ter sido alocadas ao cluster errado.
+
+A métrica AIM parece indicar que nem todos os pontos de dados de um determinado cluster são similares e a pontuação de completude nos informa que há pontos de dados que definitivamente não foram colocados no cluster correto.
+
+Assim, seria interessante considerar outra medida avaliativa para predizer os rótulos aos dados `digits`.
+
+### Testando outro módelo: Support Vector Machines (SVM)
+
+Como visto anteriormente, quando você sintetizar toda a informação obtida pela exploração dos dados, enão você poderá construir um modelo de Machine learning para prever quais digitos pertencem a uma determinada imagem. Ressalta que a clusterização supõe que você não conhece os rótulos.
+
+Assuma que você partiu de um pont onde os rótulos de dados e dados do `digits` são conhecidos. Isso significa que você pode também classificar as instâncias enquanto conhece os rótulos. Esse é o processo de classificação.
+
+Caso siga o mapa de machine learning do scikit-learn, verá que o primeiro modelo apresentado é o SVC linear. Então, que tal aplicarmos isso aos dados `digits`, agora:
+
+```{python ex="svm", type="pre-exercise-code"}
+from sklearn import datasets
+from sklearn.preprocessing import scale
+from sklearn import cluster
+digits = datasets.load_digits()
+data = scale(digits.data)
+```
+
+```{python ex="svm", type="sample-code"}
+# Importando o módulo `train_test_split`
+from sklearn.cross_validation import train_test_split
+
+# Dividindo os dados em conjuntos de teste e treinamento
+X_train, X_test, y_train, y_test, images_train, images_test = train_test_split(digits.data, digits.target, digits.images, test_size=0.25, random_state=42)
+
+# Importando o modelo `svm`
+from sklearn import svm
+
+# Criando o modelo SVC
+svc_model = svm.SVC(gamma=0.001, C=100., kernel='linear')
+
+# Inserindo os dados no modelo SVC
+svc_model.fit(X_train, y_train)
+```
+
+```{python ex="svm", type="solution"}
+# Importando o módulo `train_test_split`
+from sklearn.cross_validation import train_test_split
+
+# Dividindo os dados em conjuntos de teste e treinamento 
+X_train, X_test, y_train, y_test, images_train, images_test = train_test_split(digits.data, digits.target, digits.images, test_size=0.25, random_state=42)
+
+# Importando o modelo `svm`
+from sklearn import svm
+
+# Criando o modelo SVC 
+svc_model = svm.SVC(gamma=0.001, C=100., kernel='linear')
+
+# Inserindo os dados no modelo SVC
+svc_model.fit(X_train, y_train)
+```
+
+```{python ex="svm", type="sct"}
+test_import("sklearn.cross_validation.train_test_split", same_as = True, not_imported_msg = "Você importou o módulo `train_test_split` do `sklearn.cross_validation`?", incorrect_as_msg = "Não se esqueça de importar o módulo `train_test_split` do `sklearn.cross_validation`!")
+test_object("X_train", do_eval=False, undefined_msg="Você definiu o `X_train`?")
+test_object("X_test", do_eval=False, undefined_msg="Você definiu o `X_test`?")
+test_object("y_train", do_eval=False, undefined_msg="Você definiu o `y_train`?")
+test_object("y_test", do_eval=False, undefined_msg="Você definiu o `y_test`?")
+test_object("images_train", do_eval=False, undefined_msg="Você definiu a `images_train`?")
+test_object("images_test", do_eval=False, undefined_msg="Você definiu a `images_test`?")
+test_import("sklearn.svm", same_as = True, not_imported_msg = "Você importou o módulo `svm` do `sklearn`?", incorrect_as_msg = "Não se esqueça de importar o módulo `svm` do `sklearn`!")
+test_object("svc_model", do_eval=False)
+test_function("svc_model.fit", do_eval=False)
+success_msg="Excelente trabalho!"
+```
+
+Observe que neste exemplo nós definimos o valor do `gamma` manualmente. Ressalta-se que é possível encontrar automáticamente bons valores para esse parâmetro, utilizando ferramentas como grid de busca e validação cruzada. Entretanto, não será o foco deste tutorial.
+
+Caso queira utilizar o grid de busca para ajustar seus parâmetros, basta fazer algo como o exemplo abaixo:
+
+```{python ex="grid_search", type="pre-exercise-code"}
+from sklearn import svm
+from sklearn import datasets
+from sklearn.cross_validation import train_test_split
+digits = datasets.load_digits()
+```
+
+```{python ex="grid_search", type="sample-code"}
+# Dividindo os dados `digits` em dois conjuntos iguais
+X_train, X_test, y_train, y_test = train_test_split(digits.data, digits.target, test_size=0.5, random_state=0)
+
+# Importando o módulo GridSearchCV
+from sklearn.grid_search import GridSearchCV
+
+# Definindo os parâmetros candidatos
+parameter_candidates = [
+  {'C': [1, 10, 100, 1000], 'kernel': ['linear']},
+  {'C': [1, 10, 100, 1000], 'gamma': [0.001, 0.0001], 'kernel': ['rbf']},
+]
+
+# Criando um classificados com os parâmetros candidatos
+clf = GridSearchCV(estimator=svm.SVC(), param_grid=parameter_candidates, n_jobs=-1)
+
+# Treinando o classificador com os dados de treinamento
+clf.fit(X_train, y_train)
+
+# Imprimindo os resultados
+print('Best score for training data:', clf.best_score_)
+print('Best `C`:',clf.best_estimator_.C)
+print('Best kernel:',clf.best_estimator_.kernel)
+print('Best `gamma`:',clf.best_estimator_.gamma)
+```
+
+Agora, você utilizou o classificador com os parâmetros candidatos e um classificador que você criou apenas para aplicar na segunda parte de seu conjunto de dados. Assim, você também treinou um novo classificador utilizando os melhores parâmetros encontrados pelo grid de busca. E, então você apresentou os resultados para verificar se os melhores parâmetros encontrados pelo grid, foram realmente utilizados.
+
+```{python ex="fit_grid_search", type="pre-exercise-code"}
+from sklearn import svm
+from sklearn import datasets
+from sklearn.cross_validation import train_test_split
+digits = datasets.load_digits()
+X_train, X_test, y_train, y_test = train_test_split(digits.data, digits.target, test_size=0.5, random_state=0)
+from sklearn.grid_search import GridSearchCV
+parameter_candidates = [
+  {'C': [1, 10, 100, 1000], 'kernel': ['linear']},
+  {'C': [1, 10, 100, 1000], 'gamma': [0.001, 0.0001], 'kernel': ['rbf']},
+]
+clf = GridSearchCV(estimator=svm.SVC(), param_grid=parameter_candidates, n_jobs=-1)
+clf.fit(X_train, y_train)
+```
+
+```{python ex="fit_grid_search", type="sample-code"}
+# Aplicando o classificador nos dados de teste e verificando sua acuracidade
+clf.score(X_test, y_test)  
+
+# Treinando e pontuando um novo classificador com os parâmetros do grid de busca
+svm.SVC(C=10, kernel='rbf', gamma=0.001).fit(X_train, y_train).score(X_test, y_test)
+```
+
+
+Os parâmentros funcionam perfeitamente!
+
+Com posse desse novo conhecimento o que podemos dizer sobre o classificador SVC, que modelamos e o fizemos com o auxilio do grid de busca?
+
+Voltemos ao modelo que você fez anteriomente.
+
+Você pode observar que no classificador SVM, o parâmetro de penalty `C` do termo de erro é especificado como `100`. E, por fim nosso kernel foi explicitamente especificado como linear. Os argumentos do `kernel` especifica o tipo do kernel que você irá utilizar no algoritmo e por padrão esse valor é `rbf`. Em outros casos, você pode especificar outros como `linear`, `poly` e etc..
+
+Mas o que exatamenteo é um kernel?
+
+Um kernel é similar a uma função, que é utilizado para calcular a similaridade entre os pontos de treinamento. Quando você provê um kernel para um algoritmo de machine learning, juntamente com os dados de treinamento e rótulos, você terá um classificador, como no caso apresentado. Assim, você terá treinado um modelo para alocar novos objetos em uma categoria especifica. Portanto, para um SVM, você tipicamente terá tentado dividir linearmente seu pontos de dados.
+
+Entretanto, a grid de busca nos mostra que um kernel `rbf` seria uma escolha melhor. O parâmettro penalty e gamma foram especificicado corretamente.
+
+**Dica** Tente classificar com um kernel `rbf`.
+
+Por hora, vamos dizer que você continue com um kernel linear e prediza os valores para o conjunto de teste:
+
+```{python ex="svm_predict", type="pre-exercise-code"}
+from sklearn import datasets
+from sklearn.preprocessing import scale
+from sklearn import cluster
+digits = datasets.load_digits()
+data = scale(digits.data)
+from sklearn.cross_validation import train_test_split
+X_train, X_test, y_train, y_test, images_train, images_test = train_test_split(digits.data, digits.target, digits.images, test_size=0.25, random_state=42)
+from sklearn import svm
+svc_model = svm.SVC(gamma=0.001, C=100., kernel='linear')
+svc_model.fit(X_train, y_train)
+```
+
+```{python ex="svm_predict", type="sample-code"}
+# Predizendo os rótulos de `X_test`
+print(svc_model.predict(______))
+
+# Imprimindo `y_test` para checar os resultados
+print(______)
+```
+
+```{python ex="svm_predict", type="solution"}
+# Predizendo os rótulos de `X_test`
+print(svc_model.predict(X_test))
+
+# Imprimindo `y_test` para checar os resultados
+print(y_test)
+```
+
+```{python ex="svm_predict", type="sct"}
+test_function(
+    "print",
+    1,
+    not_called_msg="Você imprimiu os rótulos preditos de `X_test`?",
+    incorrect_msg="Não se esqueça de imprimir os rótulos preditos de `X_test`!",
+    do_eval=False
+)
+test_function(
+    "print",
+    2,
+    not_called_msg="Você imprimiu os verdadeiros rótulos de`y_test`?",
+    incorrect_msg="Não se esqueça de revelar os verdadeiros rótulos, imprimindo o `y_test`!",
+    do_eval=False
+)
+success_msg("Perfeito!")
+```
+
+
+Você pode ainda visualizar as imagens e prever seus rótulos:
+
+```
+# Importando matplotlib
+import matplotlib.pyplot as plt
+
+# Aloca os valores preditosna variável `predicted`
+predicted = svc_model.predict(X_test)
+
+# Compacta os valores de`images_test` e `predicted` na variável `images_and_predictions`
+images_and_predictions = list(zip(images_test, predicted))
+
+# Para os 4 elementos em `images_and_predictions`
+for index, (image, prediction) in enumerate(images_and_predictions[:4]):
+    # Inicializa os subplots no grid 1 por 4 na posição i+1
+    plt.subplot(1, 4, index + 1)
+    # Não apresenta os eixos
+    plt.axis('off')
+    # Coloca imagens em todoos os subplots da grid
+    plt.imshow(image, cmap=plt.cm.gray_r, interpolation='nearest')
+    # Adiciona um título ao plot
+    plt.title('Predicted: ' + str(prediction))
+
+# Apresentando o plot
+plt.show()
+```
+
+Esse plot é bastante similar ao que fizemos na exploração dos dados:
+
+[INSERT IMAGE/PLOT7]
+
+Desta vez, você compactou as imagens e os valores de predição e apenas pegou os 4 primeiros elementos de `images_and_predictions`. 
+
+Agora, vamos a questão que não quer calar: Como foi a performance desse modelo?
+
+```{python ex="svc_performance", type="pre-exercise-code"}
+from sklearn import datasets
+from sklearn.preprocessing import scale
+from sklearn import cluster
+digits = datasets.load_digits()
+data = scale(digits.data)
+from sklearn.cross_validation import train_test_split
+X_train, X_test, y_train, y_test, images_train, images_test = train_test_split(digits.data, digits.target, digits.images, test_size=0.25, random_state=42)
+from sklearn import svm
+svc_model = svm.SVC(gamma=0.001, C=100., kernel='linear')
+svc_model.fit(X_train, y_train)
+predicted = svc_model.predict(X_test)
+```
+
+```{python ex="svc_performance", type="sample-code"}
+# Importando o módulo `metrics`
+from sklearn import metrics
+
+# Imprimindo o relatório de classificação do `y_test` e do `predicted`
+print(metrics.classification_report(______, _________))
+
+# Imprimindo a matriz confusão do `y_test` e do `predicted`
+print(metrics.confusion_matrix(______, _________))
+```
+
+```{python ex="svc_performance", type="solution"}
+# Importando o módulo `metrics`
+from sklearn import metrics
+
+# Imprimindo o relatório de classificação do `y_test` e do `predicted`
+print(metrics.classification_report(y_test, predicted))
+
+# Imprimindo a matriz confusão do `y_test` e do `predicted`
+print(metrics.confusion_matrix(y_test, predicted))
+```
+
+```{python ex="svc_performance", type="sct"}
+test_import("sklearn.metrics", same_as = True, not_imported_msg = "Você importou o módulo `metrics` do `sklearn`?", incorrect_as_msg = "Não se esqueça de importar o módulo `metrics` do `sklearn`!")
+not_called_msg="Você preencheu as variáveis `y_test` e `predicted`?"
+incorrect_msg="Não esqueça de informar `y_test` como o primeiro argumento e `predicted` como o segundo argumento!"
+test_function("print", 1, do_eval=False, not_called_msg = not_called_msg, incorrect_msg = incorrect_msg)
+test_function("print", 2, do_eval=False, not_called_msg = not_called_msg, incorrect_msg = incorrect_msg)
+success_msg="Perfeito! Agora, verifique os resultados da matriz confusão. Esse módelo foi melhor?"
+```
+
+Agora, você pode perceber que esse módelo é muito melhor que o utilizado anteriomente.
+
+Você também pode visualizar a predição dos rótulos e os rótulos atuais com o auxílio do `Isomap()`:
+
+```
+# Importando o módulo `Isomap()`
+from sklearn.manifold import Isomap
+
+# Criando um isomap e preenchendo com os dados do `digits`
+X_iso = Isomap(n_neighbors=10).fit_transform(X_train)
+
+# Calculando os cluster centrais e prevendo o indicie dos cluster para cada amostra
+predicted = svc_model.predict(X_train)
+
+# Criando um plot com subplots em um grid de 1X2
+fig, ax = plt.subplots(1, 2, figsize=(8, 4))
+
+# Adjustando o  layout
+fig.subplots_adjust(top=0.85)
+
+# Adicionando os gráficos de dispersão nos subplots
+ax[0].scatter(X_iso[:, 0], X_iso[:, 1], c=predicted)
+ax[0].set_title('Predicted labels')
+ax[1].scatter(X_iso[:, 0], X_iso[:, 1], c=y_train)
+ax[1].set_title('Actual Labels')
+
+
+# Adicionando um título
+fig.suptitle('Predicted versus actual labels', fontsize=14, fontweight='bold')
+
+# Apresentando o plot
+plt.show()
+```
+
+Esse será o gráfico de dispersão:
+[INSERT IMAGE/PLOT8]
+
+Você verá que essa visualização confirma seu relatório de classificação, o que é uma nóticia espetacular. :)
+
+### E, agora?
+
+#### Reconhecimento de digitos em imagens naturais
+
+Parabéns, você chegou ao fim deste tutorial que apresentou como você pode utilizar técnincas supervisionadas e não supervisionadas de machine learning com o conjunto de dados `digits`.
+
+Se você deseja iniciar seu próprio projeto em machine learning, você pode utilizar o conjunto de dados MNIST, que pode ser baixado [aqui](http://yann.lecun.com/exdb/mnist/). 
+
+Os passos a serem utiliados em seu projeto são bastantes similares aos que você viu neste tutorial, mas caso você sinta necessidade de mais ajuda e dicas, você deve ir [a essa página](http://johnloeber.com/docs/kmeans.html), onde eles aplicam os algoritmos KMeans aos conjunto de dados MNIST.
+
+Trabalhar com o conjunto de dados digits foi o primeiro passo na classificação de caracteres com scikit-learn. Se você já se satisfez, você gostaria de um desafio ainda mais interessante, a classificação de caracteres alfanúmericos em imagens naturais, pode ser o seu grande desafio.
+
+Um conjunto de dados bastante conhecido e que você pode utilizar neste problema é o Chars74K, que contém mais de 74.000 imagens de digitos de 0 a 9 e letras maíusculas e minusculas do alfabelto inglês, como 'a' e 'A'. Você pode baixar esse conjunto de dados [aqui](http://www.ee.surrey.ac.uk/CVSSP/demos/chars74k/).
+
+#### Visualização de dados e `pandas`
+
+Esse tuturial foi desenvolvido para lhe introduzir o Machine Learning com Python. Entretatno, isso não é, definitivamente, o fim de sua jornada na Ciência de dados com Python: assim, conheça nosso [curso de Visualização interativa de dados com Bokeh](https://www.datacamp.com/courses/interactive-data-visualization-with-bokeh) e vá ainda mais fundo em visualização de dados com Python com nossos [curos Fundamentos em pandas](https://www.datacamp.com/courses/pandas-foundations), to learn more about working with data frames in Python.
